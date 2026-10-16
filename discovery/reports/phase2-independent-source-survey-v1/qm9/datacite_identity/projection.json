@@ -1,0 +1,61 @@
+{
+  "attributes": {
+    "created": "2014-07-31T12:01:53.000Z",
+    "dates": [
+      {
+        "date": "2014-03-31",
+        "dateType": "Created"
+      },
+      {
+        "date": "2017-06-06",
+        "dateType": "Updated"
+      },
+      {
+        "date": "2014",
+        "dateType": "Issued"
+      }
+    ],
+    "doi": "10.6084/m9.figshare.978904",
+    "publicationYear": 2014,
+    "publisher": "Figshare",
+    "relatedIdentifiers": [
+      {
+        "relatedIdentifier": "10.1038/sdata.2014.22",
+        "relatedIdentifierType": "DOI",
+        "relationType": "IsSupplementTo"
+      }
+    ],
+    "rightsList": [
+      {
+        "rights": "CC BY 4.0",
+        "rightsUri": "https://creativecommons.org/licenses/by/4.0"
+      }
+    ],
+    "schemaVersion": null,
+    "titles": [
+      {
+        "title": "Quantum chemistry structures and properties of 134 kilo molecules"
+      }
+    ],
+    "types": {
+      "bibtex": "misc",
+      "citeproc": "article",
+      "resourceType": "Collection",
+      "resourceTypeGeneral": "Collection",
+      "ris": "GEN",
+      "schemaOrg": "Collection"
+    },
+    "updated": "2020-07-26T16:43:27.000Z",
+    "url": "https://springernature.figshare.com/collections/Quantum_chemistry_structures_and_properties_of_134_kilo_molecules/978904/4",
+    "version": null
+  },
+  "creator_names": [
+    "Raghunathan Ramakrishnan",
+    "Dral, Pavlo",
+    "Dral, Pavlo O.",
+    "Rupp, Matthias",
+    "O. Anatole Von Lilienfeld"
+  ],
+  "descriptions_or_data_values_disclosed": false,
+  "record_id": "10.6084/m9.figshare.978904"
+}

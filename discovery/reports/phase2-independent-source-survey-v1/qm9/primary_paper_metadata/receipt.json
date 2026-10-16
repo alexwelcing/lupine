@@ -1,0 +1,15 @@
+{
+  "bytes": 14112,
+  "finished_at": "2026-10-16T16:57:10.332220+00:00",
+  "headers": {
+    "Content-Type": "application/json"
+  },
+  "over_cap": false,
+  "requests": 1,
+  "retries": 0,
+  "sha256": "2a61e12f548e2c456e127dd0066efc519a3bc213b57bc6d1ef4f0dc7eee5bc78",
+  "started_at": "2026-10-16T16:57:09.805727+00:00",
+  "status": 200,
+  "transport_error": null,
+  "url": "https://api.crossref.org/works/10.1038/sdata.2014.22"
+}

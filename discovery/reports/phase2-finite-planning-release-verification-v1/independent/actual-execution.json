@@ -1,0 +1,10 @@
+{
+  "exit_code": 0,
+  "finished_at": "2026-10-16T16:51:50.354103+00:00",
+  "process_seconds": 4.503886800004693,
+  "started_at": "2026-10-16T16:51:45.849524+00:00",
+  "stderr_bytes": 0,
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stdout_bytes": 2696,
+  "stdout_sha256": "46f8730717b43063dbd27d01d95ab38634ac7fde1d1141335a462f77ed55b84f"
+}

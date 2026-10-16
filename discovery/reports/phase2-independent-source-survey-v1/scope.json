@@ -1,0 +1,19 @@
+{
+  "schema":"lupine.discovery.independent_source_survey.scope.v1",
+  "status":"FROZEN_BEFORE_NEW_REQUESTS",
+  "candidate_source":"AFLOW public AEL/AGL calculation archive; metadata/methods only",
+  "purpose":"Assess one distinct archived-calculation source for a possible fixed-label objective-plus-feasibility task by comparing documented endpoint pairing and family/provenance roles before selecting any task. No benchmark or target choices are made.",
+  "existing_exclusions":["Exposed MPEA/JARVIS/Rhizo/BAM targets","Blocked Li source and denied Dryad README download; no alternative access","NIMS registration/no-scraping route and denied NETL route","Materials Project/matminer elastic and dielectric leads already considered; no fresh-population inference from a different mirror"],
+  "maximum_requests":4,
+  "requests":[
+    {"id":"aflux_help","url":"https://aflow.org/API/aflux/?help","maximum_bytes":1048576,"purpose":"Official AFLUX documentation only; never issue a material/property search query."},
+    {"id":"aflux_property_help","url":"https://aflow.org/API/aflux/?help(properties)","maximum_bytes":2097152,"requires":"The first response documents this exact help command as property/schema help; otherwise do not guess or execute it.","purpose":"Metadata descriptions of AEL/AGL, formation-energy and source/structure identifiers; suppress example values/results."},
+    {"id":"aflow_home","url":"https://aflow.org/","maximum_bytes":1048576,"purpose":"Official project/provenance and terms-link metadata; no database-record or observation page."},
+    {"id":"declared_terms","url":"UNBOUND_UNTIL_EXACT_OFFICIAL_LINK_OBSERVED","maximum_bytes":524288,"requires":"A unique explicit terms/license/data-use link from the already acquired official documentation/homepage, remaining on aflow.org. No inference from software license or paper terms.","purpose":"Applicable archive-use declaration only; no new data/source search."}
+  ],
+  "transport":"Ordinary HTTPS GET,30s per response,at most one same-aflow.org HTTPS canonical redirect per request,no credentials,retries0. Preserve first access failure; stop affected route on denial and do not try an alternate host/API/mirror.",
+  "projection":"Whole bounded documentation response may contain numeric examples, aggregate counts or help examples at machine level. Researcher sees only schema/type/unit/method/grouping/rights prose with numeric examples masked, explicit property/identifier names, and exact source/terms links. No material records, numeric target values, outcome tables or performance claims are requested or quoted.",
+  "limits":"AEL/AGL shared-record field declarations do not prove complete actual pairs or independent samples. Derived Debye/thermal/elastic quantities can share computational inputs and leak each other. Prototype/composition/source groups need exact semantics and later frame construction. Different calculation archive does not establish no structure/corpus overlap or future physical prediction.",
+  "retention":"Exact bounded response bytes and status/time/hash locally retained; raw bodies and arbitrary help examples excluded from public output. Compact own-paraphrase finding, selected metadata, receipts and source bindings only.",
+  "forbidden":["Data/record queries or numeric dataset downloads","Li/Dryad access retries or alternate routes","Full numeric target tables or quoted outcome performance","Third-party contact,paidcompute,newDFT","Fits,feature/threshold/split/allocation/protocol selection or scientific admission"]
+}

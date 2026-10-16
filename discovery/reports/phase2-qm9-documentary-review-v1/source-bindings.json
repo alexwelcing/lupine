@@ -1,0 +1,113 @@
+{
+  "at": "2026-10-16T17:10:34.012138+00:00",
+  "files": [
+    {
+      "bytes": 6976,
+      "path": ".cache/phase2-independent-source-survey-v1/README.md",
+      "scope": "Allowlisted documentary report, metadata, schema or permission projection; no observed records.",
+      "sha256": "88f6484413f84b1311df185bb9a657d7a45fd1894f248661c013993ca91169a7"
+    },
+    {
+      "bytes": 3242,
+      "path": ".cache/phase2-independent-source-survey-v1/selected-findings.json",
+      "scope": "Allowlisted documentary report, metadata, schema or permission projection; no observed records.",
+      "sha256": "360eef26489e600b1a4157d4cb9dcd3284421d560a11bb1778ffcd1f5ea390df"
+    },
+    {
+      "bytes": 4106,
+      "path": ".cache/phase2-independent-source-survey-v1/source-bindings.json",
+      "scope": "Allowlisted documentary report, metadata, schema or permission projection; no observed records.",
+      "sha256": "097df77e227392480e73c14774e01d30a0ecbfd40cb060676057b214440ea1b2"
+    },
+    {
+      "bytes": 1717,
+      "path": ".cache/phase2-independent-source-survey-v1/exposure-ledger.json",
+      "scope": "Allowlisted documentary report, metadata, schema or permission projection; no observed records.",
+      "sha256": "9571de9063c3bebea4895b9a477481f2a5eaaeeefe5abbcc33222610f6e178c5"
+    },
+    {
+      "bytes": 12568,
+      "path": ".cache/phase2-independent-source-survey-v1/inventory.json",
+      "scope": "Allowlisted documentary report, metadata, schema or permission projection; no observed records.",
+      "sha256": "81c603b0311da30c93d05b52d662128edd021721d88a4f4ca7d5878abf8e3603"
+    },
+    {
+      "bytes": 2154,
+      "path": ".cache/phase2-independent-source-survey-v1/handoff.json",
+      "scope": "Allowlisted documentary report, metadata, schema or permission projection; no observed records.",
+      "sha256": "5e2623c34df55f2e91786cffefda3a8896ba7c881b3b9ac477799dab89aadfe9"
+    },
+    {
+      "bytes": 2991,
+      "path": ".cache/phase2-independent-source-survey-v1/qm9/primary_schema/dictionary-projection.json",
+      "scope": "Allowlisted documentary report, metadata, schema or permission projection; no observed records.",
+      "sha256": "2b21821005fbc6850f8df6c66f8c78c0ee3071b01b83558987dd6f7cba38e73b"
+    },
+    {
+      "bytes": 825,
+      "path": ".cache/phase2-independent-source-survey-v1/qm9/primary_schema/method-label-projection.json",
+      "scope": "Allowlisted documentary report, metadata, schema or permission projection; no observed records.",
+      "sha256": "c3b8f1171c64894d0fc0c0e3b86f4365645de9370e1eb4da3cc1f4cfc4a07f2d"
+    },
+    {
+      "bytes": 1136,
+      "path": ".cache/phase2-independent-source-survey-v1/qm9/primary_schema/unit-markup-projection.json",
+      "scope": "Allowlisted documentary report, metadata, schema or permission projection; no observed records.",
+      "sha256": "844379e8443557b40d9d10550b598bffe53b2cad92ad25ca2ed13ec3ae51fa11"
+    },
+    {
+      "bytes": 3000,
+      "path": ".cache/phase2-independent-source-survey-v1/qm9/primary_schema/layout-projection.json",
+      "scope": "Only license_prose_numeric_redacted was displayed; metadata projection parsed to select this field.",
+      "sha256": "d44b63f51cc5b71717741ee9f5e4abf20aeeaa0a5a9afcceed24c2affecccdbd"
+    },
+    {
+      "bytes": 615,
+      "path": ".cache/phase2-independent-source-survey-v1/qm9/primary_schema/permissions-selected.json",
+      "scope": "Allowlisted documentary report, metadata, schema or permission projection; no observed records.",
+      "sha256": "11f832f0d29e25359e191208d6cfdc5dc9cf58c68d0ed850880f1865d760ad39"
+    },
+    {
+      "bytes": 1545,
+      "path": ".cache/phase2-independent-source-survey-v1/qm9/datacite_identity/projection.json",
+      "scope": "Allowlisted documentary report, metadata, schema or permission projection; no observed records.",
+      "sha256": "63a2d078526a680d2a26ff17c181a9542e5d3af6652af0f48a31c96577bc011e"
+    },
+    {
+      "bytes": 1348,
+      "path": ".cache/phase2-independent-source-survey-v1/qm9/primary_paper_metadata/projection.json",
+      "scope": "Allowlisted documentary report, metadata, schema or permission projection; no observed records.",
+      "sha256": "253d05fe3a68b4bdb3ebf0216b11ea5049379f3570ebc068fdded26d1b16fa28"
+    },
+    {
+      "bytes": 206,
+      "path": ".cache/phase2-independent-source-survey-v1/qm9/primary_identity/projection.json",
+      "scope": "Allowlisted documentary report, metadata, schema or permission projection; no observed records.",
+      "sha256": "f49fcf162b510c5d0a81db812c461bb9ae15900e27c9acaf8464bbf97c13bb0e"
+    },
+    {
+      "bytes": 539,
+      "path": ".cache/phase2-independent-source-survey-v1/aflow-disposition.json",
+      "scope": "Allowlisted documentary report, metadata, schema or permission projection; no observed records.",
+      "sha256": "4befac726bab93526e8fbdf558c6b0dcab188ee3a8ad3185093afd0ceaf1e3d3"
+    },
+    {
+      "bytes": 6425,
+      "path": ".cache/phase2-independent-source-survey-v1/aflux_property_help/projection.json",
+      "scope": "Allowlisted documentary report, metadata, schema or permission projection; no observed records.",
+      "sha256": "54ffe994fedc06395756d404f78735d32908cb8d615b2ec33ee8a63107ad5245"
+    },
+    {
+      "bytes": 444,
+      "path": ".cache/phase2-independent-source-survey-v1/qm9/figshare_metadata/receipt.json",
+      "scope": "Allowlisted documentary report, metadata, schema or permission projection; no observed records.",
+      "sha256": "33f34c1839a2dbbf69f9fde7c3e8ca171f5a9d3a4da32a802b80a417dc7c3ad3"
+    }
+  ],
+  "held_reviewed_bytes_and_survey_inventory_unchanged": true,
+  "network_requests": 0,
+  "schema": "lupine.qm9.documentary-independent-bindings.v1",
+  "scope": "Identity verification and selected documentary consistency review; not execution or physical validation.",
+  "source_archive_or_numeric_records_read": false,
+  "whole_raw_article_read_by_reviewer": false
+}

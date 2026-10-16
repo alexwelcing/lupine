@@ -1,0 +1,28 @@
+{
+  "command": [
+    "python",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "tests",
+    "-p",
+    "test_package_source_readiness.py",
+    "-v"
+  ],
+  "started_at": "2026-10-16T16:57:53.532770+00:00",
+  "exit_code": 0,
+  "seconds": 0.2468634960023337,
+  "source_held": true,
+  "claims": "Exact snapshot/transport checks only; source meaning independently reviewed, not proven by these tests.",
+  "held_files": {
+    "scripts/package_smoke.py": "db99cb2406c57f68f03497ac13508e3ee462b336bea17f04f7e6dc8236dcfdda",
+    "scripts/verify_retained_artifacts.py": "4a1c0e1cf078cbde3a6b9de210b46b065c19576394e052c97e95bfea5ac09840",
+    "tests/test_retained_mpea_transport.py": "f75ff714c84f9b4e9918ca2d9f4ff857dc3a1479cc45bfc5371393a7ecdc5453",
+    "tests/test_package_retention.py": "e3a2112241a03646c9b5a8b60b7483f36305fb7e528fdb6ffcae587c87a14309",
+    "tests/test_package_retention_review.py": "4934d597cb6b64dd97c6ecabac91a783b025e09ded9831314f78d944881db8f2",
+    "tests/test_package_source_readiness.py": "6afc85434950e0fc29b1ef595849e5423e29b7475116e8b915307f9673683cf8"
+  },
+  "resource_sha256": "9abad97d5675f416cc38a325bcd1e108825af001b2fdfccaa1f5c7dfb66f3f0b",
+  "postcheck": "Compared candidate and overlay files to pre-run copyset; all match."
+}

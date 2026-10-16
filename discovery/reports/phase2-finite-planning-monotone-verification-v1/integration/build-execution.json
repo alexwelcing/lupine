@@ -1,0 +1,19 @@
+{
+  "command": [
+    "/home/agent/.elan/bin/lake",
+    "--wfail",
+    "build"
+  ],
+  "cwd": "formal",
+  "exit_code": 0,
+  "timed_out": false,
+  "started_ns": 1792169855300756315,
+  "finished_ns": 1792169874686981593,
+  "process_seconds": 19.386225385002035,
+  "source_held": true,
+  "runtime_345_held": true,
+  "stdout_sha256": "8dcc7ceba83d601894b2e8af32dcfa98cbc3e79ad727982a6702ab30838af064",
+  "stdout_bytes": 20491,
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stderr_bytes": 0
+}

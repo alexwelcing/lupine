@@ -1,0 +1,8 @@
+{
+  "max_bytes": 2097152,
+  "max_same_host_redirects": 1,
+  "method": "GET",
+  "retries": 0,
+  "started_at": "2026-10-16T16:50:25.985971+00:00",
+  "url": "https://aflow.org/API/aflux/?help(properties)"
+}

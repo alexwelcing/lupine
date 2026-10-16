@@ -1,0 +1,22 @@
+{
+  "compile_exit_code": 0,
+  "inventory_sha256": "19f5053e54234dde799131727218b972061f2d5818a1868fe12a0fb719e1173d",
+  "no_python_refinement": true,
+  "no_scientific_change": true,
+  "publish_files": [
+    "README.md",
+    "compile_review.py",
+    "first/LupineFinitePlanningMonotone.lean",
+    "first/execution.json",
+    "first/start.json",
+    "first/stderr.txt",
+    "first/stdout.txt",
+    "review.json",
+    "inventory.json",
+    "handoff.json"
+  ],
+  "review_sha256": "c9dbf7d89075ae2d20b3a69f692817dee8d2fedc88de254a6c55805a7699206f",
+  "schema": "lupine.finite-planning-monotone.independent-handoff.v1",
+  "source_sha256": "fa1dedddf324fbd66a96de9eef1d775babccbc3668a81fd48726287dffe2268d",
+  "verdict": "NO_BLOCKING_FINDING"
+}

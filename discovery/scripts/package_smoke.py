@@ -179,6 +179,27 @@ def check_optional_mpea(resources, observed_reports, url):
             'javascript': 'packaged_and_exactly_served'}
 
 
+def check_source_readiness(resources, observed_reports, url, cli_report):
+    """Check the installed documentary snapshot and exact transport, not science."""
+    raw = resources.joinpath('resources', 'source-readiness-v1.json').read_bytes()
+    assert sha256(raw).hexdigest() == '9abad97d5675f416cc38a325bcd1e108825af001b2fdfccaa1f5c7dfb66f3f0b', 'source readiness resource changed'
+    packaged = json.loads(raw)
+    exact = lambda value: json.dumps(value, sort_keys=True, separators=(',', ':'),
+                                    ensure_ascii=True, allow_nan=False)
+    assert packaged['schema'] == 'lupine.source-readiness.v1'
+    assert packaged['snapshot_commit'] == '88d512cbf40a7a7d11fb45aa24cd5462f8a7e81d'
+    assert [x['id'] for x in packaged['sources']] == ['li-tensile-v3', 'dryad-dielectric']
+    assert [x['status'] for x in packaged['sources']] == ['BLOCKED_SCHEMA', 'BLOCKED_ACCESS']
+    assert all(x['scientific_admission'] == 'NOT_ADMITTED' for x in packaged['sources'])
+    assert exact(cli_report) == exact(packaged), 'source readiness CLI differs from installed snapshot'
+    assert 'source_readiness' in observed_reports, 'source readiness missing from HTTP'
+    assert exact(observed_reports['source_readiness']) == exact(packaged), 'source readiness HTTP differs from installed snapshot'
+    asset = resources.joinpath('web', 'source-readiness.js').read_bytes()
+    assert asset, 'source readiness JavaScript missing'
+    with urlopen(url + '/source-readiness.js', timeout=10) as response:
+        assert response.status == 200 and response.read() == asset, 'source readiness HTTP asset differs'
+
+
 resources = files('lupine_discovery')
 for name in ('index.html', 'app.js', 'styles.css', 'mpea.js'):
     assert resources.joinpath('web', name).read_bytes(), 'missing web asset'
@@ -218,6 +239,7 @@ try:
         assert observed_reports['constrained_archived'] == constrained
         assert observed_reports['training_tail'] == training_tail
     mpea_check = check_optional_mpea(resources, observed_reports, url)
+    check_source_readiness(resources, observed_reports, url, planning_command('source-readiness'))
     assert json.dumps(observed_reports['recorded_census'], sort_keys=True, separators=(',', ':')) == json.dumps(census, sort_keys=True, separators=(',', ':'))
     with urlopen(url + '/recorded-census.js', timeout=10) as response:
         assert response.status == 200 and response.read() == census_asset
@@ -284,7 +306,8 @@ print(json.dumps({'status': 'passed', 'python': sys.version.split()[0],
                              'finite_population_zero_failure_cli_http_exact_scope',
                              'optional_mpea_resource_presence_and_http_agreement',
                              'mpea_javascript_packaged_and_served',
-                             'fixed_stored_census_identity_scope_and_http_asset_agreement']},
+                             'fixed_stored_census_identity_scope_and_http_asset_agreement',
+                             'source_readiness_snapshot_cli_http_asset_agreement']},
                  sort_keys=True))
 '''
 

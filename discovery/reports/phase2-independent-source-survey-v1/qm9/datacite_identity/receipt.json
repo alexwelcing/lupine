@@ -1,0 +1,16 @@
+{
+  "bytes": 8834,
+  "finished_at": "2026-10-16T16:56:14.626735+00:00",
+  "headers": {
+    "Content-Type": "application/json; charset=utf-8",
+    "ETag": "W/\"0b6b0cfc17334d2c9fed993c76cb6c2f\""
+  },
+  "over_cap": false,
+  "requests": 1,
+  "retries": 0,
+  "sha256": "0b6b0cfc17334d2c9fed993c76cb6c2f4b89b7431993e0d87717e010827e5ac8",
+  "started_at": "2026-10-16T16:56:13.457143+00:00",
+  "status": 200,
+  "transport_error": null,
+  "url": "https://api.datacite.org/dois/10.6084/m9.figshare.978904"
+}

@@ -1,0 +1,26 @@
+{
+  "baseline_commit": "88d512cbf40a7a7d11fb45aa24cd5462f8a7e81d",
+  "claims": [
+    "Evaluation-size nonincrease on admissible sample sizes",
+    "Cap feasibility equivalence",
+    "Unique least qualifying positive count and exact qualifying suffix"
+  ],
+  "imported_formal_object_sha256": "f3541e405ea58b3a763f6e2f0d3e7c76a69c965fd243affa34f10032964b2a99",
+  "mathematics_only": true,
+  "no_protocol_or_scientific_change": true,
+  "no_python_refinement": true,
+  "root_approved": true,
+  "schema": "lupine.finite-planning-monotone.scope.v1",
+  "source_bindings": {
+    "docs/finite-population-planning.md": "049d2c794c1e7085bcdc1cdb05920552fdf5a4948a592da6bf6c4bbcbfeae08d",
+    "formal/AXIOMS.txt": "1386bccd866f772b801b50c692bc50bebbeae492ca08b41b833bbf3260f0a6e8",
+    "formal/LupineFinitePlanning.lean": "391b03aefda0f7bac5bd380347b81febc8a4ebbd329ae3a099981784803973bd",
+    "formal/README.md": "7782fb9495e94714aeb75b85f44906c54a90de02ec49d88133d16b270897f63f",
+    "formal/audit_axioms.py": "1a30e19f3e38d5481ac321be5ece1efc7025925a4a218e51ff5f5f0b49756386",
+    "formal/lake-manifest.json": "641a25267cd8312c08757ff0f0f5738f3adb67598b8205603dbf8ac2255f9275",
+    "formal/lakefile.toml": "c8250ba2c032f8950501da16d50f9001cad13dc8fb204970cb15c3ac37484363",
+    "formal/lean-toolchain": "651c8accb402b0c071cd336e9d3dc0a55516b1bfb434ddc4801f14936785b1d2",
+    "formal/theorem-inventory.json": "ae31d83d3fa136bf52c2d3cb8f2e94b349066eefa2d7f7e2eb672c68ce6b715b",
+    "src/lupine_discovery/finite_planning.py": "027785ccdf24f6e8cf9b7a8ac98987b821fcdb19c875bbe8d2ba52d2fc3895f8"
+  }
+}

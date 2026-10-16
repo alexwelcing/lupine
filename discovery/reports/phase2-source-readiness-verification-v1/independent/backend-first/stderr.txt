@@ -1,0 +1,15 @@
+test_cli_output_and_no_source_path_or_retry_option (test_source_readiness_review.SourceReadinessIndependentTests.test_cli_output_and_no_source_path_or_retry_option) ... ok
+test_cli_server_object_equality_for_success_and_each_failure (test_source_readiness_review.SourceReadinessIndependentTests.test_cli_server_object_equality_for_success_and_each_failure) ... ok
+test_closed_top_level_and_source_members (test_source_readiness_review.SourceReadinessIndependentTests.test_closed_top_level_and_source_members) ... ok
+test_failure_states_no_stale_snapshot_or_exception_text (test_source_readiness_review.SourceReadinessIndependentTests.test_failure_states_no_stale_snapshot_or_exception_text) ... ok
+test_forged_status_admission_and_bounded_scalar_values (test_source_readiness_review.SourceReadinessIndependentTests.test_forged_status_admission_and_bounded_scalar_values) ... ok
+test_loader_reads_only_fixed_resource_bounded_once (test_source_readiness_review.SourceReadinessIndependentTests.test_loader_reads_only_fixed_resource_bounded_once) ... ok
+test_readiness_claims_remain_blocked_and_exposure_explicit (test_source_readiness_review.SourceReadinessIndependentTests.test_readiness_claims_remain_blocked_and_exposure_explicit) ... ok
+test_safe_looking_semantic_rewrites_and_injection_are_rejected (test_source_readiness_review.SourceReadinessIndependentTests.test_safe_looking_semantic_rewrites_and_injection_are_rejected) ... ok
+test_strict_raw_decoder_and_resource_limits (test_source_readiness_review.SourceReadinessIndependentTests.test_strict_raw_decoder_and_resource_limits) ... ok
+test_valid_wire_order_whitespace_and_detached_return (test_source_readiness_review.SourceReadinessIndependentTests.test_valid_wire_order_whitespace_and_detached_return) ... ok
+
+----------------------------------------------------------------------
+Ran 10 tests in 0.064s
+
+OK

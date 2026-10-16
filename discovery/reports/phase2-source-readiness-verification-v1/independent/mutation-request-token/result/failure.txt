@@ -1,0 +1,7 @@
+Traceback (most recent call last):
+  File "/workspace/lupine-discovery-branch/discovery/.cache/phase2-source-readiness-independent-v1/browser_mutation_review.py", line 67, in <module>
+    checked('older fetch cannot revive newer missing result',page.locator('.source-readiness-card').count()==0)
+  File "/workspace/lupine-discovery-branch/discovery/.cache/phase2-source-readiness-independent-v1/browser_mutation_review.py", line 21, in checked
+    if not condition:raise AssertionError(label)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: older fetch cannot revive newer missing result

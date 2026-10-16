@@ -1,0 +1,26 @@
+{
+  "actual_http_full_app_execution": "Root pending; no pass claim.",
+  "actual_source_operations": 0,
+  "added_check_call": "check_source_readiness_workbench",
+  "at": "2026-10-16T17:06:23.704198+00:00",
+  "existing_browser_check_calls_unchanged_in_order": true,
+  "expected_added_named_checks": 6,
+  "files": {
+    "scripts/browser_smoke.py": {
+      "bytes": 79101,
+      "sha256": "e1311385b7b3ec4c382b8e56b274107b819702d37015865267999d27e9b92339"
+    },
+    "scripts/source_readiness_browser_checks.py": {
+      "bytes": 11121,
+      "sha256": "fe3de053e1c390c5119cfe05bf41c0084d53de99ec0da268d4014ae728080882"
+    }
+  },
+  "python_AST_parse": "PASS",
+  "status": "HELD_NEW_DURABLE_TESTS_SOURCE_ONLY_NOT_EXECUTED",
+  "web_assets_held": {
+    "overlay/src/lupine_discovery/web/app.js": true,
+    "overlay/src/lupine_discovery/web/index.html": true,
+    "overlay/src/lupine_discovery/web/source-readiness.js": true,
+    "overlay/src/lupine_discovery/web/styles.css": true
+  }
+}

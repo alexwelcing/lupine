@@ -1,0 +1,19 @@
+{
+  "command": [
+    "python",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "tests",
+    "-p",
+    "test_package_source_readiness.py",
+    "-v"
+  ],
+  "started_at": "2026-10-16T16:55:50.865849+00:00",
+  "exit_code": 0,
+  "elapsed_seconds": 0.34906051399593707,
+  "probe_sha256": "17e0109a120a56730ea533819305de080a4a2ff17f27d529988b764af23d73c7",
+  "source_sha256": "6afc85434950e0fc29b1ef595849e5423e29b7475116e8b915307f9673683cf8",
+  "scientific_data_read": false
+}

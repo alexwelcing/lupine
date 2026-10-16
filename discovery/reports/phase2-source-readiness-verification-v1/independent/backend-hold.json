@@ -1,0 +1,9 @@
+{
+  "files": {
+    ".cache/phase2-source-readiness-backend-v1/overlay/docs/source-readiness.md": "a62f93a7b450f5d5d508dd11a538ff2b44adb5cfd9b7623291c85584f1088e5a",
+    ".cache/phase2-source-readiness-backend-v1/overlay/src/lupine_discovery/cli.py": "6af272356429e7fabcbe81f0be34c3a201ad5d5655537d74ecefd4ba9c587965",
+    ".cache/phase2-source-readiness-backend-v1/overlay/src/lupine_discovery/resources/source-readiness-v1.json": "9abad97d5675f416cc38a325bcd1e108825af001b2fdfccaa1f5c7dfb66f3f0b",
+    ".cache/phase2-source-readiness-backend-v1/overlay/src/lupine_discovery/server.py": "5e665bb32d1d80b902a8a64c9e2e66efa9e38b7b5a481e80408f4af8716f3390",
+    ".cache/phase2-source-readiness-backend-v1/overlay/src/lupine_discovery/source_readiness.py": "dbb76ec1aa6a82490b30fe19883a94b56cf0cddfd3ebc14cc555f17f927ca42c"
+  }
+}

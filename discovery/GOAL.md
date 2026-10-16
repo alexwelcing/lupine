@@ -90,31 +90,35 @@ previously unused source with paired outcomes and credible study grouping.
 | G34 | One categorical all-entry Li header diagnostic with exact first-rejection preservation and explicit unchecked dependencies | DONE; BLOCKED_SCHEMA preserved | [Verified a064a2c0 and actual pair](reports/phase2-growth-predicate-verification-v1/ROOT-CHECKPOINT.md): all four CI jobs, clean package and independent artifacts pass. Two identical receipts report only MEMBER_KIND_PROFILE failing; 31 families pass, none unchecked. All 335 runtime files held; zero member/XML decoding. Independent public review passes 410 checks, with its first harness failure preserved. |
 | G35 | Fixed exposed Rhizo census and exact readable workbench, preserving unknown physical scope | COMPLETE / repaired source verified | [144 pairs, 16 groups and 36 reference checks](reports/phase2-rhizo-stored-census-v1/README.md), independent arithmetic/scope reviews; [80 browser checks and final 97 focused tests](reports/phase2-rhizo-census-integration-v1/README.md). Exact public values and exports; no winner, tolerance criterion or fresh scientific admission. |
 | G36 | One complete bounded Li compatibility/documentary/frame route | ACTUAL A1 BLOCKED; A2/B/C not run | [Verified source and first actual failure](reports/phase2-li-complete-layout-verification-v1/README.md): XML_PROFILE_UNSUPPORTED, source unchanged, cleanup complete. No manifest or scientific admission; preserve the failure and stop this route. |
-| G37 | Formalize the finite-population zero-failure counting bound with explicit premises | INTEGRATED / 143-statement audit PASS; new-commit CI pending | [Thirteen new statements and independent compilation](reports/phase2-finite-planning-formal-verification-v1/README.md); exact ceiling null, count ratio and census boundary. All ten prior modules and 345 runtime files unchanged; no Python refinement or scientific admission. |
+| G37 | Formalize the finite-population zero-failure counting bound with explicit premises | DONE at `88d512c` | [Exact four-job CI, clean package and independent artifact audit pass](reports/phase2-finite-planning-release-verification-v1/README.md). Thirteen statements extend the audit to 143; all ten earlier modules and 345 runtime files held. No Python refinement or scientific admission. |
+| G38 | Prove finite-population evaluation monotonicity, capped feasibility and the unique first qualifying count | INTEGRATED / local 147-statement audit PASS | [Four independently compiled statements](reports/phase2-finite-planning-monotone-verification-v1/README.md); strict twelve-module build, fresh axiom audit and eleven parser tests pass. All 143 earlier inventory entries held. Publication and exact-commit CI are next. |
+| G39 | Make blocked-source readiness inspectable in CLI, HTTP, browser and installed package | INTEGRATED / focused Python142 and full browser86 PASS | [Actual integrated checks and independent review](reports/phase2-source-readiness-verification-v1/README.md). Fixed documentary Li/Dryad snapshot, explicit unavailable states and exact exports; no source admission or acquisition. Clean installed eighteen-check gate and exact new-commit CI remain pending. |
 
-Current owner/checkpoint: root completed the exact `9d1f21da` release gates and
-the first actual Li layout command. [All four original CI jobs, clean installed
-package, strict verifier and independent artifact audit pass](reports/phase2-li-complete-release-verification-v1/README.md).
-The audit checks all 6,139 source files, 345 runtime files and 110 unchanged wheel
-payloads. These are engineering checks, not physical validation.
+Current owner/checkpoint: root is publishing the source-readiness interface and
+four additional conditional proofs. [Predecessor `88d512c`](reports/phase2-finite-planning-release-verification-v1/README.md)
+now passes all four original CI jobs, clean 28-case/six-schema/17-check packaging,
+strict verification and 20,959 independent artifact checks. The current candidate
+has 351 runtime files, 147 audited statements in twelve modules, 142 focused
+Python methods and 86 full-browser checks passing. These local checks are not
+new-commit CI or an installed-package claim.
 
-[Actual A1](reports/phase2-li-complete-layout-verification-v1/README.md) completed
-with exit 2 and `XML_PROFILE_UNSUPPORTED`. Five member reads/decompressions and
-UTF-8 decodes completed; the fifth XML parse did not complete. Archive cleanup
-completed, all source bytes held, and stdout matched the persisted failure.
-No workbook manifest or scientific counts were produced. A2 and all downstream
-phases did not run. The failed slot is preserved; no retry or parser relaxation
-is authorized by this checkpoint.
+The fixed readiness snapshot makes the Li tensile and Dryad dielectric source
+blocks visible without opening numerical data. Li A1 remains
+`XML_PROFILE_UNSUPPORTED`, with partial XML character-data exposure and no A2/B/C.
+Dryad's single README request remains HTTP 403 with no PDF/parser/data.
+[The independent source survey](reports/phase2-independent-source-survey-v1/README.md)
+records AFLOW's restrictive terms and QM9's paired-property documentation;
+[the exact QM9 collection request](reports/phase2-qm9-file-manifest-v1/README.md)
+returned HTTP 403. No constituent file identity, complete frame or file rights
+were established, and no retry or alternative route followed the denial.
 
-Next: publish this mathematical and evidence increment and verify its own remote/CI;
-preserve the separately scoped [Dryad README access failure](reports/phase2-dielectric-readme-schema-v1/README.md)
-(HTTP 403, no PDF or parser execution). The independently reviewed finite-population
-formalization now passes the strict eleven-module build and fresh 143-statement
-audit. Source schema, units and pairing remain unresolved; metadata alone does
-not authorize a numerical evaluation or scientific protocol.
-Root owns integration; independent reviews remain separate.
-G20 is unresolved and G21 blocked. The historical preview decision and all
-scientific negative results remain unchanged.
+Next: publish the held candidate, verify its remote SHA and original CI, run
+clean installed packaging with all eighteen mandatory checks, and independently
+audit source/wheel bytes. Continue a separate primary-source metadata survey
+without selecting on observed performance. Root owns integration; independent
+reviews remain separate. G20 is unresolved and G21 blocked. Historical scientific
+negatives, physical-performance/general-superiority NO-GO and the disabled old
+automation remain unchanged.
 
 The historical Rhizo census remains descriptive: 144 pairs, 16 groups and 36
 reference groups. Physical comparability and historical reference choice remain

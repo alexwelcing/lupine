@@ -1,0 +1,40 @@
+{
+  "excluded": [
+    "first/LupineFinitePlanningMonotone.olean"
+  ],
+  "files": {
+    "README.md": {
+      "bytes": 3210,
+      "sha256": "30c832b0cd642141ffd1ec3a97da7f78f9f6d0fdaf870cc51e176921e56489cc"
+    },
+    "compile_review.py": {
+      "bytes": 4284,
+      "sha256": "1f03911dea8dd686ac25ae9b0a58d242b6f789245ca5b378de4ed7a12425343c"
+    },
+    "first/LupineFinitePlanningMonotone.lean": {
+      "bytes": 4346,
+      "sha256": "fa1dedddf324fbd66a96de9eef1d775babccbc3668a81fd48726287dffe2268d"
+    },
+    "first/execution.json": {
+      "bytes": 7411,
+      "sha256": "967b8442211c6b458a6aa4e999702be8dec996f2e4791cb57649ebfa21c4e95c"
+    },
+    "first/start.json": {
+      "bytes": 4472,
+      "sha256": "329f6096d90bf5251abd50eef821a996b9c577d2cd2765ce50b855a3816f2465"
+    },
+    "first/stderr.txt": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "first/stdout.txt": {
+      "bytes": 435,
+      "sha256": "eed1869d5b92605094ce9e3d77f16b2482541de1e23f8e966181f3b6422ba7b1"
+    },
+    "review.json": {
+      "bytes": 1001,
+      "sha256": "c9dbf7d89075ae2d20b3a69f692817dee8d2fedc88de254a6c55805a7699206f"
+    }
+  },
+  "schema": "lupine.publication.inventory.v1"
+}

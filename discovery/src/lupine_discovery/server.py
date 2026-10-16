@@ -17,6 +17,7 @@ from .evidence import fields
 from .serialization import encode, loads
 from .study_planning import plan_pool_threshold, plan_zero_failure_resolution
 from .finite_planning import plan_finite_zero_failure_resolution
+from .source_readiness import source_readiness_report
 
 MAX_BODY_BYTES = 2 * 1024 * 1024
 MAX_PLANNING_BODY_BYTES = 4096
@@ -34,6 +35,7 @@ ASSETS = {"/": ("index.html", "text/html; charset=utf-8"),
           "/styles.css": ("styles.css", "text/css; charset=utf-8"),
           "/mpea.js": ("mpea.js", "text/javascript; charset=utf-8"),
           "/planner.js": ("planner.js", "text/javascript; charset=utf-8"),
+          "/source-readiness.js": ("source-readiness.js", "text/javascript; charset=utf-8"),
           "/recorded-census.js": ("recorded-census.js", "text/javascript; charset=utf-8"),
           "/app.js": ("app.js", "text/javascript; charset=utf-8")}
 
@@ -88,6 +90,7 @@ def benchmark_report():
     census = files("lupine_discovery").joinpath("resources/recorded-census-v1.json")
     if census.is_file():
         result["recorded_census"] = json.loads(census.read_text(encoding="utf-8"))
+    result["source_readiness"] = source_readiness_report()
     return result
 
 

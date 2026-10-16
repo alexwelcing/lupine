@@ -1,0 +1,15 @@
+{
+  "observed_at": "2026-10-16T16:49:55.452051+00:00",
+  "tool": "write_stdin",
+  "session_id": 22055,
+  "chunk_id": "2290d0",
+  "exit_code": 0,
+  "commit": "88d512cbf40a7a7d11fb45aa24cd5462f8a7e81d",
+  "outer_result": {
+    "status": "COMPLETE_EXTERNAL_OBSERVATION",
+    "kind": "package",
+    "phase": null,
+    "completion_packet": ".cache/phase2-finite-planning-release-observer-v1/runs/package-88d512cbf40a7a7d11fb45aa24cd5462f8a7e81d/completion-packet.json"
+  },
+  "scientific_admission": false
+}

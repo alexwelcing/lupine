@@ -1,0 +1,41 @@
+{
+  "checked_local_links": 6,
+  "critical_unknowns": [
+    "Constituent archive/file versions, checksums and terms",
+    "Actual complete pairs and exclusion/missingness rules",
+    "Source identity reconciliation, molecular family grouping and prior overlap",
+    "Frozen task/labels/features/frame and inference target, if later authorized"
+  ],
+  "entrypoint": "README.md",
+  "exact_copyset": "Exactly36 allowed_files in inventory.json plus inventory.json and this handoff.json; no raw bodies, article XML, unlisted projections, source records or numerical data.",
+  "exposure": "Whole primary paper machine-read. Researcher saw selected documentary metadata, methods and property dictionaries; spelled-out convergence aggregates survived masking and are recorded. No target record file or performance table read.",
+  "held_at": "2026-10-16T17:06:48.451294+00:00",
+  "independent_review": "Root-assigned phase2_planner source-only review pending in separate directory; no pass claimed here.",
+  "inventory_sha256": "81c603b0311da30c93d05b52d662128edd021721d88a4f4ca7d5878abf8e3603",
+  "network_executions": {
+    "aflow": {
+      "HTTP200": 3,
+      "records_queried": 0,
+      "requests": 3,
+      "status": "STOPPED_NONCOMMERCIAL_RESTRICTION"
+    },
+    "qm9": {
+      "HTTP200": 4,
+      "HTTP404": 1,
+      "data_files_acquired": 0,
+      "first_failed_article_route_preserved": true,
+      "requests": 5
+    }
+  },
+  "no_runtime_tests_or_archive_record_operations_run": true,
+  "public_bytes_excluding_inventory_handoff": 44668,
+  "public_files": 36,
+  "public_report_target": "reports/phase2-independent-source-survey-v1/",
+  "recommendation": "QM9 official collection/file-manifest metadata next, without record downloads; not a benchmark selection or scientific admission.",
+  "rights_distinction": "AFLOW noncommercial use restriction; QM9 collection registry CC BY4; article CC BY-NC-SA; CC0 waiver only associated metadata; no file-level CC0 assertion.",
+  "schema": "lupine.discovery.independent_source_survey_handoff.v1",
+  "scientific_admission": false,
+  "source_records_acquired": false,
+  "tracked_edits": false,
+  "transforms": []
+}

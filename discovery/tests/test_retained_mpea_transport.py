@@ -32,6 +32,7 @@ EXPECTED_CHECKS = [
     'optional_mpea_resource_presence_and_http_agreement',
     'mpea_javascript_packaged_and_served',
     'fixed_stored_census_identity_scope_and_http_asset_agreement',
+    'source_readiness_snapshot_cli_http_asset_agreement',
 ]
 
 
@@ -70,7 +71,7 @@ class RetainedMpeaTransportTests(unittest.TestCase):
                 wheel.writestr(name, raw)
         self.case.rebind_artifacts()
 
-    def test_all_seventeen_flags_required_without_omission_extra_or_reorder(self):
+    def test_all_eighteen_flags_required_without_omission_extra_or_reorder(self):
         expected = list(self.report['checks'])
         self.assertEqual(expected, EXPECTED_CHECKS)
         variants = [expected[:index] + expected[index + 1:] for index in range(len(expected))]

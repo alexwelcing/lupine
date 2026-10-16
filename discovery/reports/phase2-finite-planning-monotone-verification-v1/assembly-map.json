@@ -1,0 +1,271 @@
+{
+  "schema": "lupine.finite-planning-monotone.publication.v1",
+  "files": [
+    {
+      "source": ".cache/phase2-finite-planning-monotone-candidate-v1/LupineFinitePlanningMonotone.lean",
+      "source_sha256": "fa1dedddf324fbd66a96de9eef1d775babccbc3668a81fd48726287dffe2268d",
+      "destination": "author/LupineFinitePlanningMonotone.lean",
+      "sha256": "fa1dedddf324fbd66a96de9eef1d775babccbc3668a81fd48726287dffe2268d",
+      "bytes": 4346,
+      "wrapped": false
+    },
+    {
+      "source": ".cache/phase2-finite-planning-monotone-candidate-v1/README.md",
+      "source_sha256": "d4bf62e58a04c9e268778b60febaca00f4551eae11cd918bc6424c5ec6d4f278",
+      "destination": "author/README.md",
+      "sha256": "d4bf62e58a04c9e268778b60febaca00f4551eae11cd918bc6424c5ec6d4f278",
+      "bytes": 3730,
+      "wrapped": false
+    },
+    {
+      "source": ".cache/phase2-finite-planning-monotone-candidate-v1/attempts/first/LupineFinitePlanningMonotone.lean",
+      "source_sha256": "fa1dedddf324fbd66a96de9eef1d775babccbc3668a81fd48726287dffe2268d",
+      "destination": "author/attempts/first/LupineFinitePlanningMonotone.lean",
+      "sha256": "fa1dedddf324fbd66a96de9eef1d775babccbc3668a81fd48726287dffe2268d",
+      "bytes": 4346,
+      "wrapped": false
+    },
+    {
+      "source": ".cache/phase2-finite-planning-monotone-candidate-v1/attempts/first/execution.json",
+      "source_sha256": "81398d2c10351997f0f76f662d41448e14abebe046ae40ecb557ff9b734f778e",
+      "destination": "author/attempts/first/execution.json",
+      "sha256": "81398d2c10351997f0f76f662d41448e14abebe046ae40ecb557ff9b734f778e",
+      "bytes": 2304,
+      "wrapped": false
+    },
+    {
+      "source": ".cache/phase2-finite-planning-monotone-candidate-v1/attempts/first/stderr.txt",
+      "source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "destination": "author/attempts/first/stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "wrapped": false
+    },
+    {
+      "source": ".cache/phase2-finite-planning-monotone-candidate-v1/attempts/first/stdout.txt",
+      "source_sha256": "eed1869d5b92605094ce9e3d77f16b2482541de1e23f8e966181f3b6422ba7b1",
+      "destination": "author/attempts/first/stdout.txt",
+      "sha256": "eed1869d5b92605094ce9e3d77f16b2482541de1e23f8e966181f3b6422ba7b1",
+      "bytes": 435,
+      "wrapped": false
+    },
+    {
+      "source": ".cache/phase2-finite-planning-monotone-candidate-v1/axiom-audit.json",
+      "source_sha256": "7881bb294603796242d9a796a4049948210a76e75229f750efbac39f8d4377bd",
+      "destination": "author/axiom-audit.json",
+      "sha256": "7881bb294603796242d9a796a4049948210a76e75229f750efbac39f8d4377bd",
+      "bytes": 1533,
+      "wrapped": false
+    },
+    {
+      "source": ".cache/phase2-finite-planning-monotone-candidate-v1/compile_recorded.py",
+      "source_sha256": "53c518bf45916f12eade016ce56f06dc53ad4a660a07ca4691b16e1920176f0a",
+      "destination": "author/compile_recorded.py",
+      "sha256": "53c518bf45916f12eade016ce56f06dc53ad4a660a07ca4691b16e1920176f0a",
+      "bytes": 3181,
+      "wrapped": false
+    },
+    {
+      "source": ".cache/phase2-finite-planning-monotone-candidate-v1/scope.json",
+      "source_sha256": "56910a188461a8da53e0d92134ae67a5b907986e9cba4f249de82e2118c0b903",
+      "destination": "author/scope.json",
+      "sha256": "56910a188461a8da53e0d92134ae67a5b907986e9cba4f249de82e2118c0b903",
+      "bytes": 1587,
+      "wrapped": false
+    },
+    {
+      "source": ".cache/phase2-finite-planning-monotone-candidate-v1/inventory.json",
+      "source_sha256": "1d929b61f4908a98b25fc400452e83775e8b15e022f1e94f1e662682a41a6dce",
+      "destination": "author/inventory.json",
+      "sha256": "1d929b61f4908a98b25fc400452e83775e8b15e022f1e94f1e662682a41a6dce",
+      "bytes": 1678,
+      "wrapped": false
+    },
+    {
+      "source": ".cache/phase2-finite-planning-monotone-candidate-v1/handoff.json",
+      "source_sha256": "ea265c359d61d3f6126d19143816e1fdc5dc71aece24c2b48afa346d856f4858",
+      "destination": "author/handoff.json",
+      "sha256": "ea265c359d61d3f6126d19143816e1fdc5dc71aece24c2b48afa346d856f4858",
+      "bytes": 920,
+      "wrapped": false
+    },
+    {
+      "source": ".cache/phase2-finite-planning-monotone-review-v1/README.md",
+      "source_sha256": "30c832b0cd642141ffd1ec3a97da7f78f9f6d0fdaf870cc51e176921e56489cc",
+      "destination": "independent/README.md",
+      "sha256": "30c832b0cd642141ffd1ec3a97da7f78f9f6d0fdaf870cc51e176921e56489cc",
+      "bytes": 3210,
+      "wrapped": false
+    },
+    {
+      "source": ".cache/phase2-finite-planning-monotone-review-v1/compile_review.py",
+      "source_sha256": "1f03911dea8dd686ac25ae9b0a58d242b6f789245ca5b378de4ed7a12425343c",
+      "destination": "independent/compile_review.py",
+      "sha256": "1f03911dea8dd686ac25ae9b0a58d242b6f789245ca5b378de4ed7a12425343c",
+      "bytes": 4284,
+      "wrapped": false
+    },
+    {
+      "source": ".cache/phase2-finite-planning-monotone-review-v1/first/LupineFinitePlanningMonotone.lean",
+      "source_sha256": "fa1dedddf324fbd66a96de9eef1d775babccbc3668a81fd48726287dffe2268d",
+      "destination": "independent/first/LupineFinitePlanningMonotone.lean",
+      "sha256": "fa1dedddf324fbd66a96de9eef1d775babccbc3668a81fd48726287dffe2268d",
+      "bytes": 4346,
+      "wrapped": false
+    },
+    {
+      "source": ".cache/phase2-finite-planning-monotone-review-v1/first/execution.json",
+      "source_sha256": "967b8442211c6b458a6aa4e999702be8dec996f2e4791cb57649ebfa21c4e95c",
+      "destination": "independent/first/execution.json",
+      "sha256": "967b8442211c6b458a6aa4e999702be8dec996f2e4791cb57649ebfa21c4e95c",
+      "bytes": 7411,
+      "wrapped": false
+    },
+    {
+      "source": ".cache/phase2-finite-planning-monotone-review-v1/first/start.json",
+      "source_sha256": "329f6096d90bf5251abd50eef821a996b9c577d2cd2765ce50b855a3816f2465",
+      "destination": "independent/first/start.json",
+      "sha256": "329f6096d90bf5251abd50eef821a996b9c577d2cd2765ce50b855a3816f2465",
+      "bytes": 4472,
+      "wrapped": false
+    },
+    {
+      "source": ".cache/phase2-finite-planning-monotone-review-v1/first/stderr.txt",
+      "source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "destination": "independent/first/stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "wrapped": false
+    },
+    {
+      "source": ".cache/phase2-finite-planning-monotone-review-v1/first/stdout.txt",
+      "source_sha256": "eed1869d5b92605094ce9e3d77f16b2482541de1e23f8e966181f3b6422ba7b1",
+      "destination": "independent/first/stdout.txt",
+      "sha256": "eed1869d5b92605094ce9e3d77f16b2482541de1e23f8e966181f3b6422ba7b1",
+      "bytes": 435,
+      "wrapped": false
+    },
+    {
+      "source": ".cache/phase2-finite-planning-monotone-review-v1/review.json",
+      "source_sha256": "c9dbf7d89075ae2d20b3a69f692817dee8d2fedc88de254a6c55805a7699206f",
+      "destination": "independent/review.json",
+      "sha256": "c9dbf7d89075ae2d20b3a69f692817dee8d2fedc88de254a6c55805a7699206f",
+      "bytes": 1001,
+      "wrapped": false
+    },
+    {
+      "source": ".cache/phase2-finite-planning-monotone-review-v1/inventory.json",
+      "source_sha256": "19f5053e54234dde799131727218b972061f2d5818a1868fe12a0fb719e1173d",
+      "destination": "independent/inventory.json",
+      "sha256": "19f5053e54234dde799131727218b972061f2d5818a1868fe12a0fb719e1173d",
+      "bytes": 1243,
+      "wrapped": false
+    },
+    {
+      "source": ".cache/phase2-finite-planning-monotone-review-v1/handoff.json",
+      "source_sha256": "c2c145964206c9bcf5d575134490e6791e8ee017d68f87e3bfa25a33ff756761",
+      "destination": "independent/handoff.json",
+      "sha256": "c2c145964206c9bcf5d575134490e6791e8ee017d68f87e3bfa25a33ff756761",
+      "bytes": 738,
+      "wrapped": false
+    },
+    {
+      "source": ".cache/phase2-finite-planning-monotone-integration-v1/run.py",
+      "source_sha256": "f15d1adb80f100ba3abdfeb29c4e44415982b6557c01240bfeca950be42e2929",
+      "destination": "integration/run.py",
+      "sha256": "f15d1adb80f100ba3abdfeb29c4e44415982b6557c01240bfeca950be42e2929",
+      "bytes": 4788,
+      "wrapped": false
+    },
+    {
+      "source": ".cache/phase2-finite-planning-monotone-integration-v1/start.json",
+      "source_sha256": "d5b0a565b0641e9e88324fac5194cadc7487b12e7842c7bb93ac71a21bc53ee3",
+      "destination": "integration/start.json",
+      "sha256": "d5b0a565b0641e9e88324fac5194cadc7487b12e7842c7bb93ac71a21bc53ee3",
+      "bytes": 42704,
+      "wrapped": false
+    },
+    {
+      "source": ".cache/phase2-finite-planning-monotone-integration-v1/build-execution.json",
+      "source_sha256": "bd4ce0e4cd99fb34e3aad2b27607c0f8be222e265ff49100d4572889493d91dc",
+      "destination": "integration/build-execution.json",
+      "sha256": "bd4ce0e4cd99fb34e3aad2b27607c0f8be222e265ff49100d4572889493d91dc",
+      "bytes": 530,
+      "wrapped": false
+    },
+    {
+      "source": ".cache/phase2-finite-planning-monotone-integration-v1/build-stdout.txt",
+      "source_sha256": "8dcc7ceba83d601894b2e8af32dcfa98cbc3e79ad727982a6702ab30838af064",
+      "destination": "integration/build-stdout.txt",
+      "sha256": "8dcc7ceba83d601894b2e8af32dcfa98cbc3e79ad727982a6702ab30838af064",
+      "bytes": 20491,
+      "wrapped": false
+    },
+    {
+      "source": ".cache/phase2-finite-planning-monotone-integration-v1/build-stderr.txt",
+      "source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "destination": "integration/build-stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "wrapped": false
+    },
+    {
+      "source": ".cache/phase2-finite-planning-monotone-integration-v1/audit-execution.json",
+      "source_sha256": "38af22ccd54a6cbe5eb2900f5aa51c52dc2b096458af23b3b2222566edd432a9",
+      "destination": "integration/audit-execution.json",
+      "sha256": "38af22ccd54a6cbe5eb2900f5aa51c52dc2b096458af23b3b2222566edd432a9",
+      "bytes": 568,
+      "wrapped": false
+    },
+    {
+      "source": ".cache/phase2-finite-planning-monotone-integration-v1/audit-stdout.txt",
+      "source_sha256": "36d28b096a7e558ef8c4c4cec955bdd7e609f00a341d64c6dc7f9e319da04deb",
+      "destination": "integration/audit-stdout.txt",
+      "sha256": "36d28b096a7e558ef8c4c4cec955bdd7e609f00a341d64c6dc7f9e319da04deb",
+      "bytes": 78,
+      "wrapped": false
+    },
+    {
+      "source": ".cache/phase2-finite-planning-monotone-integration-v1/audit-stderr.txt",
+      "source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "destination": "integration/audit-stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "wrapped": false
+    },
+    {
+      "source": ".cache/phase2-finite-planning-monotone-integration-v1/parser-tests-execution.json",
+      "source_sha256": "ba3b4b4d91e2fb59db559fb3990fc0f9f89fb08889b29c208ec92c6e147d8e90",
+      "destination": "integration/parser-tests-execution.json",
+      "sha256": "ba3b4b4d91e2fb59db559fb3990fc0f9f89fb08889b29c208ec92c6e147d8e90",
+      "bytes": 608,
+      "wrapped": false
+    },
+    {
+      "source": ".cache/phase2-finite-planning-monotone-integration-v1/parser-tests-stdout.txt",
+      "source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "destination": "integration/parser-tests-stdout.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "wrapped": false
+    },
+    {
+      "source": ".cache/phase2-finite-planning-monotone-integration-v1/parser-tests-stderr.txt",
+      "source_sha256": "5bcec50826101bf533e9fa8a7fa8f60e940fd57e8a8d332ea98354332a313e12",
+      "destination": "integration/parser-tests-stderr.txt",
+      "sha256": "5bcec50826101bf533e9fa8a7fa8f60e940fd57e8a8d332ea98354332a313e12",
+      "bytes": 1300,
+      "wrapped": false
+    },
+    {
+      "source": ".cache/phase2-finite-planning-monotone-integration-v1/result.json",
+      "source_sha256": "f3d6accba8d02272b7de49e35769e72797bf3ce03c971936cf8594d49555a6f8",
+      "destination": "integration/result.json",
+      "sha256": "f3d6accba8d02272b7de49e35769e72797bf3ce03c971936cf8594d49555a6f8",
+      "bytes": 2427,
+      "wrapped": false
+    }
+  ],
+  "binaries_published": false,
+  "wrappers_recover_exact_utf8": true
+}

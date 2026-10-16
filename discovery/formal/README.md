@@ -21,8 +21,9 @@ that equality from permutation invariance of a finite joint score-vector law
 and applies the marginal failure bound. `LupineNormalization.lean` proves
 conditional finite coefficient normalization and L1 algebra. `LupineFinitePlanning.lean`
 proves fixed-population zero-failure subset counting, exact rational null
-bounds, and census resolution. Each module has its own namespace. All eleven
-modules are default build targets.
+bounds, and census resolution. `LupineFinitePlanningMonotone.lean` proves
+evaluation-size monotonicity and the unique first qualifying positive count.
+Each module has its own namespace. All twelve modules are default build targets.
 
 The standalone package pins Lean `v4.29.0` and Mathlib
 `8a178386ffc0f5fef0b77738bb5449d50efeea95`, matching the Mathlib/toolchain
@@ -466,11 +467,38 @@ It requires no IID failure-label assumption. A zero bound means the no-failure
 event is impossible under the stated finite-frame null, not that observations
 have established zero physical or future-population risk.
 
-The results do not prove Python/Fraction refinement, the minimum-count search
-loop, resource/input validation, or monotonicity in evaluation size. Scientific
+The companion `LupineFinitePlanningMonotone` module below proves evaluation-size
+monotonicity and a mathematical minimum characterization. Neither module proves
+Python/Fraction refinement, the concrete minimum-count search loop, or
+resource/input validation. Scientific
 source adequacy, latent physical truth, future-population transfer, and useful
 pool reduction remain separate. Existing negative results and G20/G21 status
 are unchanged. See the [finite planner contract](../docs/finite-population-planning.md).
+
+## Evaluation-size monotonicity and minimum resolution
+
+`LupineFinitePlanningMonotone` imports the unchanged finite-count module. For
+`q(e) = choose(M-K,e) / choose(M,e)`, it proves four further statements:
+
+| Theorem | Mathematical guarantee |
+| --- | --- |
+| `evaluation_step` | If `e < M`, then `q(e+1) ≤ q(e)` |
+| `evaluation_antitone` | If `a ≤ b ≤ M`, then `q(b) ≤ q(a)` |
+| `capped_feasible_iff` | For `cap ≤ M` and rational `η`, some `1 ≤ e ≤ cap` meets `q(e) ≤ η` exactly when `1 ≤ cap` and `q(cap) ≤ η` |
+| `unique_first_count` | Under cap feasibility, there is exactly one `1 ≤ n ≤ cap` such that, for every `1 ≤ e ≤ M`, qualification `q(e) ≤ η` is equivalent to `n ≤ e` |
+
+Thus every earlier positive count fails strictly, and all later admissible
+counts qualify. Equality at the threshold qualifies; a cap of zero cannot
+supply a positive count. The theorem allows arbitrary rational `η`, while the
+runtime retains its stricter input contract. These are nonincrease statements,
+not universal strict-decrease statements.
+
+The algebra holds for every natural `K` under the totalized subtraction in
+the imported definition; the fixed-population interpretation requires `K ≤ M`.
+The minimum proof uses natural-number well-ordering and the proved monotonicity.
+It does not establish correctness of the Python search loop or any Python/Lean
+refinement. Sampling validity, fixed labels and policy, scientific usefulness,
+and future-population claims remain outside these statements.
 
 ## Reproduction and trust
 

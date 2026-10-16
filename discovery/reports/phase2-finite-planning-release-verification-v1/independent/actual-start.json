@@ -1,0 +1,15 @@
+{
+  "audit_source_sha256": "b00541daccbbe8626880f59bc59d9694dc9f34e922690f968dfb50ed348bb738",
+  "binding_sha256": "fc928411bd61a0fedb4fbc748c7db26bbc07ac1042eb01d58bd518c7c625e811",
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+    "/workspace/lupine-discovery-branch/discovery/.cache/phase2-finite-planning-artifact-review-v1/audit_retained.py",
+    "--published-commit",
+    "88d512cbf40a7a7d11fb45aa24cd5462f8a7e81d",
+    "--retained-directory",
+    ".cache/phase2-li-complete-readiness-operations-v1/package-88d512cbf40a7a7d11fb45aa24cd5462f8a7e81d/retained",
+    "--attempt",
+    "first-actual-artifact-audit"
+  ],
+  "started_at": "2026-10-16T16:51:45.849524+00:00"
+}

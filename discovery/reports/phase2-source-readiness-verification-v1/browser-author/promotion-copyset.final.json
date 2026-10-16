@@ -1,0 +1,66 @@
+{
+  "actual_source_operations": 0,
+  "author_browser_receipt": {
+    "check_groups": 11,
+    "path": ".cache/phase2-source-readiness-browser-v1/first-run/execution.json",
+    "process_seconds": 3.431148509000195,
+    "sha256": "8062d375e0d6a3d24df596bdb2ca4e1b49c6836abf01b76b45019f9f908ef7b4"
+  },
+  "author_first_browser_check_groups": 11,
+  "entries": [
+    {
+      "baseline_sha256": null,
+      "bytes": 8182,
+      "destination": "src/lupine_discovery/web/source-readiness.js",
+      "overlay": ".cache/phase2-source-readiness-browser-v1/overlay/src/lupine_discovery/web/source-readiness.js",
+      "sha256": "d533611c9a975040a55569bf474689846aa8f5ca2f4f73c4e52730917efe95d0"
+    },
+    {
+      "baseline_sha256": "8120a35af3c415e36b7c3a627a44fd45f9c5ab7628ce0e251103bcccb7b82243",
+      "bytes": 30293,
+      "destination": "src/lupine_discovery/web/index.html",
+      "overlay": ".cache/phase2-source-readiness-browser-v1/overlay/src/lupine_discovery/web/index.html",
+      "sha256": "20432ede14b5892a6e3ff45fc305e2d4bcb664d5924e2679cf1ca3b016ef72f2"
+    },
+    {
+      "baseline_sha256": "1537f759ef443a218b74eaf55d14ff0520b1195dc3bc8835034e57b3b4613a7c",
+      "bytes": 131782,
+      "destination": "src/lupine_discovery/web/app.js",
+      "overlay": ".cache/phase2-source-readiness-browser-v1/overlay/src/lupine_discovery/web/app.js",
+      "sha256": "9e81d71a7381173776d928cc558791402f1d2b2ce02d7e4ae7531514233c5b45"
+    },
+    {
+      "baseline_sha256": "d7042060aae32dba2c9c5ad6f6df86a5ee51f7f1ea0dfb7aea413bf81bd3eaf9",
+      "bytes": 44089,
+      "destination": "src/lupine_discovery/web/styles.css",
+      "overlay": ".cache/phase2-source-readiness-browser-v1/overlay/src/lupine_discovery/web/styles.css",
+      "sha256": "2bfdac8e02a00fd2e67b3b0e0788cf9b73f5dac4ab72fc8dd4f37f077a83d3e1"
+    },
+    {
+      "baseline_sha256": null,
+      "bytes": 11121,
+      "destination": "scripts/source_readiness_browser_checks.py",
+      "overlay": ".cache/phase2-source-readiness-browser-v1/overlay/scripts/source_readiness_browser_checks.py",
+      "sha256": "fe3de053e1c390c5119cfe05bf41c0084d53de99ec0da268d4014ae728080882"
+    },
+    {
+      "baseline_sha256": "04289d220d1ef64d7be619eec4850bcaa6e9793b48058f43378b59c390c68d3d",
+      "bytes": 79101,
+      "destination": "scripts/browser_smoke.py",
+      "overlay": ".cache/phase2-source-readiness-browser-v1/overlay/scripts/browser_smoke.py",
+      "sha256": "e1311385b7b3ec4c382b8e56b274107b819702d37015865267999d27e9b92339"
+    }
+  ],
+  "existing_80_browser_checks_preserved": true,
+  "existing_four_web_assets_held": true,
+  "independent_browser_assertions": 29,
+  "independent_handoff": {
+    "bytes": 1899,
+    "path": ".cache/phase2-source-readiness-independent-v1/handoff.json",
+    "sha256": "9db446df3f02e89292d5cdd6269b420f8c52980e9a10c1ffeaafa23e6b48b89d"
+  },
+  "independent_sensitivity": "Isolated request-token-removal mutant rejected by older-fetch-revival assertion; retained separately by independent reviewer.",
+  "new_durable_helper_execution": "NOT_RUN; root will execute full actual HTTP suite after integration.",
+  "new_durable_named_checks": 6,
+  "status": "EXACT_SIX_PATH_OVERLAY_REVIEWED_PENDING_ROOT_FULL_HTTP"
+}

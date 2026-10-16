@@ -124,6 +124,9 @@ def main(argv=None):
     workbench = sub.add_parser("serve", help="Run the local research workbench",
         description="Open the local workbench at http://127.0.0.1:8765. Coupled, projection and statistical pool HTTP modes require Linux process guards.")
     workbench.add_argument("--port", type=int, default=8765, help="Loopback port (default: 8765)")
+    readiness = sub.add_parser("source-readiness", help="Show the fixed published source-readiness snapshot",
+        description="Read-only documentary evidence; blocked or unavailable sources are not scientifically admitted. No source acquisition or retry occurs.")
+    readiness.add_argument("--output", type=Path, help="Write snapshot JSON (default: standard output)")
     pool_plan = sub.add_parser("plan-pool", help="Plan a calibration threshold before observing outcomes",
         description="Exact prospective arithmetic. An optional IID score probability is a supplied hypothesis, not measured evidence or a material recommendation.")
     pool_plan.add_argument("--calibration-count", type=int, required=True, help="Planned complete calibration panels (0 through 256)")
@@ -164,6 +167,15 @@ def main(argv=None):
         if args.command == "serve":
             from .server import serve
             return serve(args.port)
+        if args.command == "source-readiness":
+            from .source_readiness import SCHEMA, source_readiness_report
+            result = source_readiness_report()
+            output = json.dumps(result, sort_keys=True, ensure_ascii=True, allow_nan=False, indent=2) + "\n"
+            if args.output:
+                args.output.write_text(output, encoding="utf-8")
+            else:
+                sys.stdout.write(output)
+            return 0 if result["schema"] == SCHEMA else 2
         if args.command in {"plan-pool", "plan-zero-loss", "plan-finite-zero-loss"}:
             from .study_planning import plan_pool_threshold, plan_zero_failure_resolution
             if args.command == "plan-pool":

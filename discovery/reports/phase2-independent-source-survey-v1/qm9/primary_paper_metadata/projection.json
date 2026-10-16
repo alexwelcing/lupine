@@ -1,0 +1,69 @@
+{
+  "DOI": "10.1038/sdata.2014.22",
+  "URL": "https://doi.org/10.1038/sdata.2014.22",
+  "author_names": [
+    {
+      "family": "Ramakrishnan",
+      "given": "Raghunathan"
+    },
+    {
+      "family": "Dral",
+      "given": "Pavlo O."
+    },
+    {
+      "family": "Rupp",
+      "given": "Matthias"
+    },
+    {
+      "family": "von Lilienfeld",
+      "given": "O. Anatole"
+    }
+  ],
+  "license": [
+    {
+      "URL": "https://creativecommons.org/licenses/by-nc-sa/4.0",
+      "content-version": "tdm",
+      "delay-in-days": 0,
+      "start": {
+        "date-parts": [
+          [
+            2014,
+            8,
+            5
+          ]
+        ],
+        "date-time": "2014-08-05T00:00:00Z",
+        "timestamp": 1407196800000
+      }
+    },
+    {
+      "URL": "https://creativecommons.org/licenses/by-nc-sa/4.0",
+      "content-version": "vor",
+      "delay-in-days": 0,
+      "start": {
+        "date-parts": [
+          [
+            2014,
+            8,
+            5
+          ]
+        ],
+        "date-time": "2014-08-05T00:00:00Z",
+        "timestamp": 1407196800000
+      }
+    }
+  ],
+  "published": {
+    "date-parts": [
+      [
+        2014,
+        8,
+        5
+      ]
+    ]
+  },
+  "publisher": "Springer Science and Business Media LLC",
+  "title": [
+    "Quantum chemistry structures and properties of 134 kilo molecules"
+  ]
+}

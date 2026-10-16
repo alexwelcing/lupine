@@ -1,0 +1,8 @@
+{
+  "max_bytes": 1048576,
+  "max_same_host_redirects": 1,
+  "method": "GET",
+  "retries": 0,
+  "started_at": "2026-10-16T16:51:30.958257+00:00",
+  "url": "https://aflow.org/"
+}

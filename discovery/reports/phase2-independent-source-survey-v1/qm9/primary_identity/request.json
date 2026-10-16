@@ -1,0 +1,8 @@
+{
+  "max_bytes": 524288,
+  "method": "GET",
+  "redirects": false,
+  "retries": 0,
+  "started_at": "2026-10-16T16:57:09.807318+00:00",
+  "url": "https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=DOI%3A10.1038%2Fsdata.2014.22&format=json&resultType=core&pageSize=1"
+}

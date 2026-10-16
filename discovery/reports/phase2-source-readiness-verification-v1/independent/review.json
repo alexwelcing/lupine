@@ -1,0 +1,63 @@
+{
+  "backend_failures": 0,
+  "backend_receipt_sha256": "87a4521de2f2d3b612b7c3ae7049be4c829b960b1906aad77a52e662054b64e8",
+  "backend_test_methods": 10,
+  "browser_assertions": 29,
+  "browser_errors": [],
+  "browser_receipt_sha256": "6d706e0c178cd44484f2ecf30993878a3f36fa850028aa8b9c4bb3632fe657a0",
+  "full_application_or_installed_http_integration": false,
+  "mutation": {
+    "execution_receipt_sha256": "8bed6bd3fcbf93f48a59f1d9f8c18f2601e340cb864b889cfca8302088e6249d",
+    "exit_code": 1,
+    "expected_failure_observed": true,
+    "failure": "older fetch cannot revive newer missing result",
+    "kind": "SYNTHETIC_REQUEST_GENERATION_GUARD_REMOVAL"
+  },
+  "pre_execution_findings": [
+    "TENSILE_NOT_CREEP_LABEL_CORRECTED",
+    "APP_REQUEST_GENERATION_GATE_ADDED"
+  ],
+  "public_evidence_link_bindings": [
+    {
+      "local_path": "reports/phase2-li-complete-layout-verification-v1/README.md",
+      "sha256": "9783a8f71621cba62794dacdbb9f7f26a614368b66e74df60bd3788c1cb4a4e5",
+      "url": "https://github.com/alexwelcing/lupine/blob/88d512cbf40a7a7d11fb45aa24cd5462f8a7e81d/discovery/reports/phase2-li-complete-layout-verification-v1/README.md"
+    },
+    {
+      "local_path": "reports/phase2-li-complete-layout-verification-v1/actual-summary.json",
+      "sha256": "d84a6acd249c8bc30569f1df2b96bbc22c9da836d3a72b1e9feee9e5386c5d4d",
+      "url": "https://github.com/alexwelcing/lupine/blob/88d512cbf40a7a7d11fb45aa24cd5462f8a7e81d/discovery/reports/phase2-li-complete-layout-verification-v1/actual-summary.json"
+    },
+    {
+      "local_path": "docs/li-v3-custody-plan.md",
+      "sha256": "0be13b0ed7dd7bc41b9c430d4f7d30f8efa0ead54a85d162f31c728eb928a241",
+      "url": "https://github.com/alexwelcing/lupine/blob/88d512cbf40a7a7d11fb45aa24cd5462f8a7e81d/discovery/docs/li-v3-custody-plan.md"
+    },
+    {
+      "local_path": "reports/phase2-li-paper-methods-v1/README.md",
+      "sha256": "b168331d3198c97b6cdf45d67b505b4ddf88acf60ab6b556e4b35798b5a3eb10",
+      "url": "https://github.com/alexwelcing/lupine/blob/88d512cbf40a7a7d11fb45aa24cd5462f8a7e81d/discovery/reports/phase2-li-paper-methods-v1/README.md"
+    },
+    {
+      "local_path": "reports/phase2-dielectric-archive-identity-v1/README.md",
+      "sha256": "c5dba2ad2963e5c466bc867662bc4b8b576e767b4e6438a0540770ab0f168f0a",
+      "url": "https://github.com/alexwelcing/lupine/blob/88d512cbf40a7a7d11fb45aa24cd5462f8a7e81d/discovery/reports/phase2-dielectric-archive-identity-v1/README.md"
+    },
+    {
+      "local_path": "reports/phase2-dielectric-landing-manifest-v1/README.md",
+      "sha256": "45e8278edbcdd81d78f16d59e91d9e7f6a6b55bf6524c478700b026cfd3d754c",
+      "url": "https://github.com/alexwelcing/lupine/blob/88d512cbf40a7a7d11fb45aa24cd5462f8a7e81d/discovery/reports/phase2-dielectric-landing-manifest-v1/README.md"
+    },
+    {
+      "local_path": "reports/phase2-dielectric-readme-schema-v1/README.md",
+      "sha256": "81fca5e06d0055bc0f4f0dea57fb210f74f5438dcaaf1ad2b5bc14ca533b45fd",
+      "url": "https://github.com/alexwelcing/lupine/blob/88d512cbf40a7a7d11fb45aa24cd5462f8a7e81d/discovery/reports/phase2-dielectric-readme-schema-v1/README.md"
+    }
+  ],
+  "schema": "lupine.source-readiness.independent-review.v1",
+  "scientific_admission": "NOT_ADMITTED",
+  "scientific_validation_claim": false,
+  "source_held": true,
+  "source_operations": 0,
+  "verdict": "NO_BLOCKING_FINDING"
+}

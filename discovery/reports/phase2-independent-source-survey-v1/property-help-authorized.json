@@ -1,0 +1,8 @@
+{
+  "documentary_basis": "Official help says information summary on all searchable properties.",
+  "exact_documented_command": "help(properties)",
+  "no_record_query": true,
+  "recorded_at": "2026-10-16T16:50:25.874288+00:00",
+  "request_url": "https://aflow.org/API/aflux/?help(properties)",
+  "source_sha256": "3fcdfca75d9905e659b166c202f1364e10c855627314ab3507b2c3dbf4a37ae2"
+}

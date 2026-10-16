@@ -40,6 +40,7 @@ CHECKS = [
     'optional_mpea_resource_presence_and_http_agreement',
     'mpea_javascript_packaged_and_served',
     'fixed_stored_census_identity_scope_and_http_asset_agreement',
+    'source_readiness_snapshot_cli_http_asset_agreement',
 ]
 FORBIDDEN = {'.cache', '.git', '.venv', '__pycache__'}
 

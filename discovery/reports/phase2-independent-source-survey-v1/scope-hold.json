@@ -1,0 +1,37 @@
+{
+  "acquirer_sha256": "db8185ce109ea2d45d9e2725c03ac68466a620956c65708d2346d88251c8a343",
+  "exposure": "Existing public audit prose includes previously exposed documentary and metrology aggregate quantities. These are not new candidate-target reads; no unchanged blind-history claim.",
+  "frozen_at": "2026-10-16T16:49:38.537694+00:00",
+  "local_source_audit_inputs": [
+    {
+      "path": "reports/phase2-source-readiness-v1/README.md",
+      "sha256": "bd351e8814fb33776e375ed48d1bf2e3aae985404dd8a33920bf40e46a0ca1c5"
+    },
+    {
+      "path": "reports/phase2-high-temperature-leads-v1/README.md",
+      "sha256": "54191247eab5cb1455f506420ef5422081a609d4f685d1f1c4352750ce5f15a7"
+    },
+    {
+      "path": "reports/phase2-paired-archive-fallback-metadata-v1/README.md",
+      "sha256": "19606fa11eb7dc1dc879cba2caef7dd7f9e68b439107eb47004a68f82c68a1b2"
+    },
+    {
+      "path": "reports/phase2-dielectric-methods-rights-v1/README.md",
+      "sha256": "3872a184c8a210baf5b04ba22eab8e22cf88662dd1e0f17d716b0f768197aadb"
+    },
+    {
+      "path": "reports/phase2-dielectric-readme-schema-v1/README.md",
+      "sha256": "81fca5e06d0055bc0f4f0dea57fb210f74f5438dcaaf1ad2b5bc14ca533b45fd"
+    },
+    {
+      "path": "reports/next-independent-study-v1/source-leads.md",
+      "sha256": "bcd7ccbf233ab0cbce27043a579d7aa8c14aa7db70ea8b5009f350e367d600cd"
+    },
+    {
+      "path": "reports/phase2-next-source-priorities-v1/README.md",
+      "sha256": "96d4909c144cef965be752834c54fddedb16b84ef1efc9f75a4cd05bd9df0e63"
+    }
+  ],
+  "requests_completed": 0,
+  "scope_sha256": "923ca959191569d11eba0e3c91ca11adfb16916b17fbc56cd955babbba83d9bb"
+}

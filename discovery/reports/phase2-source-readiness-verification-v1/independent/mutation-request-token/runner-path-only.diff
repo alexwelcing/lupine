@@ -1,0 +1,21 @@
+--- held-reviewer
++++ mutant-path-reviewer
+@@ -5,15 +5,15 @@
+ from playwright.sync_api import sync_playwright
+ ROOT=Path('/workspace/lupine-discovery-branch/discovery')
+ HERE=Path(__file__).resolve().parent
+-WEB=ROOT/'.cache/phase2-source-readiness-browser-v1/overlay/src/lupine_discovery/web'
++WEB=HERE/'mutation-request-token/web'
+ VALUE=json.loads((HERE/'source-readiness-v1.json').read_bytes())
+ def sha(p):return hashlib.sha256(p.read_bytes()).hexdigest()
+ def save(p,o):p.write_text(json.dumps(o,sort_keys=True,indent=2)+'\n')
+-manifest=json.loads((HERE/'browser-hold.json').read_bytes())
++manifest=json.loads((HERE/'mutation-request-token/hold.json').read_bytes())
+ paths={ROOT/path:digest for path,digest in manifest['files'].items()}
+ paths.update({Path(__file__).resolve():sha(Path(__file__)),HERE/'source-readiness-v1.json':sha(HERE/'source-readiness-v1.json')})
+ before={str(p):sha(p) for p in paths};assert before=={str(p):v for p,v in paths.items()}
+-out=HERE/'browser-first';out.mkdir(exist_ok=False)
++out=HERE/'mutation-request-token/result';out.mkdir(exist_ok=False)
+ (out/'browser_review.py').write_bytes(Path(__file__).read_bytes())
+ started=datetime.now(timezone.utc).isoformat();clock=time.monotonic();checks=[];errors=[];requests=[]
+ save(out/'start.json',{'started':started,'bindings':before,'scope':'BROWSER_ROUTE_FULFILLED_DOCUMENT_AND_EXACT_APP_REFRESH_FUNCTION_NO_NETWORK_SOURCE'})

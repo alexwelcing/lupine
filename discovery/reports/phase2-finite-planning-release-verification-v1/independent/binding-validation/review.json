@@ -1,0 +1,291 @@
+{
+  "actual_artifact_audit_runs": 0,
+  "checks": [
+    {
+      "check": "exact_clean_head",
+      "passed": true
+    },
+    {
+      "check": "held_input_audit_retained.py",
+      "passed": true
+    },
+    {
+      "check": "held_input_prepared-scope.json",
+      "passed": true
+    },
+    {
+      "check": "held_input_prepared-promotion-inputs.json",
+      "passed": true
+    },
+    {
+      "check": "held_input_author-promotion-copyset.final.json",
+      "passed": true
+    },
+    {
+      "check": "held_input_root-runtime-copyset.final.json",
+      "passed": true
+    },
+    {
+      "check": "held_input_preparation.json",
+      "passed": true
+    },
+    {
+      "check": "held_input_prepared-report-contract.json",
+      "passed": true
+    },
+    {
+      "check": "345_runtime_members",
+      "passed": true
+    },
+    {
+      "check": "package_completed_success",
+      "passed": true
+    },
+    {
+      "check": "package_clean_held_source_and_tools",
+      "passed": true
+    },
+    {
+      "check": "package_exact_source_state",
+      "passed": true
+    },
+    {
+      "check": "package_no_recording_errors",
+      "passed": true
+    },
+    {
+      "check": "package_stdout_identity",
+      "passed": true
+    },
+    {
+      "check": "package_stderr_identity",
+      "passed": true
+    },
+    {
+      "check": "package_empty_stderr",
+      "passed": true
+    },
+    {
+      "check": "strict_completed_success",
+      "passed": true
+    },
+    {
+      "check": "strict_clean_held_source_and_tools",
+      "passed": true
+    },
+    {
+      "check": "strict_exact_source_state",
+      "passed": true
+    },
+    {
+      "check": "strict_no_recording_errors",
+      "passed": true
+    },
+    {
+      "check": "strict_stdout_identity",
+      "passed": true
+    },
+    {
+      "check": "strict_stderr_identity",
+      "passed": true
+    },
+    {
+      "check": "strict_empty_stderr",
+      "passed": true
+    },
+    {
+      "check": "package_summary_full_receipt_agreement",
+      "passed": true
+    },
+    {
+      "check": "strict_exact_release_success",
+      "passed": true
+    },
+    {
+      "check": "strict_scope_limits",
+      "passed": true
+    },
+    {
+      "check": "package_final_complete",
+      "passed": true
+    },
+    {
+      "check": "outer_packet_parent_execution",
+      "passed": true
+    },
+    {
+      "check": "outer_packet_identity_execution",
+      "passed": true
+    },
+    {
+      "check": "outer_packet_parent_final",
+      "passed": true
+    },
+    {
+      "check": "outer_packet_identity_final",
+      "passed": true
+    },
+    {
+      "check": "outer_packet_parent_stderr",
+      "passed": true
+    },
+    {
+      "check": "outer_packet_identity_stderr",
+      "passed": true
+    },
+    {
+      "check": "outer_packet_parent_stdout",
+      "passed": true
+    },
+    {
+      "check": "outer_packet_identity_stdout",
+      "passed": true
+    },
+    {
+      "check": "outer_completed_success",
+      "passed": true
+    },
+    {
+      "check": "outer_stdout_final_match",
+      "passed": true
+    },
+    {
+      "check": "outer_before_identity",
+      "passed": true
+    },
+    {
+      "check": "outer_after_identity",
+      "passed": true
+    },
+    {
+      "check": "outer_state_held",
+      "passed": true
+    },
+    {
+      "check": "root_observed_real_exit",
+      "passed": true
+    },
+    {
+      "check": "execution_chronology",
+      "passed": true
+    },
+    {
+      "check": "ready_clean_source",
+      "passed": true
+    }
+  ],
+  "finished_at": "2026-10-16T16:51:20.234153+00:00",
+  "inputs": [
+    {
+      "bytes": 157427,
+      "path": ".cache/phase2-li-complete-readiness-operations-v1/package-88d512cbf40a7a7d11fb45aa24cd5462f8a7e81d/package-execution.json",
+      "sha256": "c39271caa4e35027e78471a39c2f6ce4e062d89db93106b63edc72f73ce65d8e",
+      "snapshot": "inputs/package/package-execution.json"
+    },
+    {
+      "bytes": 1307,
+      "path": ".cache/phase2-li-complete-readiness-operations-v1/package-88d512cbf40a7a7d11fb45aa24cd5462f8a7e81d/package-stdout.txt",
+      "sha256": "f2c0d25b6ddff3c70e3bb273964e322b260f35aebcad70fbd8277f9d0a747b5c",
+      "snapshot": "inputs/package/package-stdout.txt"
+    },
+    {
+      "bytes": 0,
+      "path": ".cache/phase2-li-complete-readiness-operations-v1/package-88d512cbf40a7a7d11fb45aa24cd5462f8a7e81d/package-stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "snapshot": "inputs/package/package-stderr.txt"
+    },
+    {
+      "bytes": 157302,
+      "path": ".cache/phase2-li-complete-readiness-operations-v1/package-88d512cbf40a7a7d11fb45aa24cd5462f8a7e81d/strict-execution.json",
+      "sha256": "18fa62ccf79c006eb93459ccb10b219673b0ea260e59fbc20a6df76c8588d04e",
+      "snapshot": "inputs/package/strict-execution.json"
+    },
+    {
+      "bytes": 3746,
+      "path": ".cache/phase2-li-complete-readiness-operations-v1/package-88d512cbf40a7a7d11fb45aa24cd5462f8a7e81d/strict-stdout.txt",
+      "sha256": "57c7561e2c686f822f7534e3d2584ac3a42f6ab0689716569c3374b2a73cd225",
+      "snapshot": "inputs/package/strict-stdout.txt"
+    },
+    {
+      "bytes": 0,
+      "path": ".cache/phase2-li-complete-readiness-operations-v1/package-88d512cbf40a7a7d11fb45aa24cd5462f8a7e81d/strict-stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "snapshot": "inputs/package/strict-stderr.txt"
+    },
+    {
+      "bytes": 8126,
+      "path": ".cache/phase2-li-complete-readiness-operations-v1/package-88d512cbf40a7a7d11fb45aa24cd5462f8a7e81d/package-verification.json",
+      "sha256": "2680b8a1c4a4d9c9e120912aad6210c34abd0ccb5c4ff39332add8d824a4aad7",
+      "snapshot": "inputs/package/package-verification.json"
+    },
+    {
+      "bytes": 138,
+      "path": ".cache/phase2-li-complete-readiness-operations-v1/package-88d512cbf40a7a7d11fb45aa24cd5462f8a7e81d/final.json",
+      "sha256": "13dec0970d61f147dcafac7934d2a998e22aa7cb2fa0c1a2b4850e4925c83e7a",
+      "snapshot": "inputs/package/final.json"
+    },
+    {
+      "bytes": 8107,
+      "path": ".cache/phase2-li-complete-readiness-operations-v1/package-88d512cbf40a7a7d11fb45aa24cd5462f8a7e81d/retained/release-artifacts.json",
+      "sha256": "37fe56f103a9ade5220c25ef1ab3ba72b7aab3f7ca3b7008e63493d0f8e693f2",
+      "snapshot": "inputs/retained/release-artifacts.json"
+    },
+    {
+      "bytes": 909,
+      "path": ".cache/phase2-finite-planning-release-observer-v1/runs/package-88d512cbf40a7a7d11fb45aa24cd5462f8a7e81d/completion-packet.json",
+      "sha256": "3489f79af6ec44ef8db590fbcadd46c7b1931a6695aca40935d9909fd2b3b5c9",
+      "snapshot": "inputs/outer/completion-packet.json"
+    },
+    {
+      "bytes": 1026,
+      "path": ".cache/phase2-finite-planning-release-observer-v1/runs/package-88d512cbf40a7a7d11fb45aa24cd5462f8a7e81d/execution.json",
+      "sha256": "695c6471d34ef16fe46ae9b2b40655e373448dd71752033656b9bff2ec543b9f",
+      "snapshot": "inputs/outer/execution.json"
+    },
+    {
+      "bytes": 138,
+      "path": ".cache/phase2-finite-planning-release-observer-v1/runs/package-88d512cbf40a7a7d11fb45aa24cd5462f8a7e81d/persisted-final.json",
+      "sha256": "13dec0970d61f147dcafac7934d2a998e22aa7cb2fa0c1a2b4850e4925c83e7a",
+      "snapshot": "inputs/outer/persisted-final.json"
+    },
+    {
+      "bytes": 0,
+      "path": ".cache/phase2-finite-planning-release-observer-v1/runs/package-88d512cbf40a7a7d11fb45aa24cd5462f8a7e81d/stderr.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "snapshot": "inputs/outer/stderr.bin"
+    },
+    {
+      "bytes": 138,
+      "path": ".cache/phase2-finite-planning-release-observer-v1/runs/package-88d512cbf40a7a7d11fb45aa24cd5462f8a7e81d/stdout.bin",
+      "sha256": "13dec0970d61f147dcafac7934d2a998e22aa7cb2fa0c1a2b4850e4925c83e7a",
+      "snapshot": "inputs/outer/stdout.bin"
+    },
+    {
+      "bytes": 40238,
+      "path": ".cache/phase2-finite-planning-release-observer-v1/runs/package-88d512cbf40a7a7d11fb45aa24cd5462f8a7e81d/before-state.json",
+      "sha256": "399fdac60ce5532347aac9bcb5d923aa65cb4f92a1eac934ffb041b25c32a326",
+      "snapshot": "inputs/outer/before-state.json"
+    },
+    {
+      "bytes": 40238,
+      "path": ".cache/phase2-finite-planning-release-observer-v1/runs/package-88d512cbf40a7a7d11fb45aa24cd5462f8a7e81d/after-state.json",
+      "sha256": "399fdac60ce5532347aac9bcb5d923aa65cb4f92a1eac934ffb041b25c32a326",
+      "snapshot": "inputs/outer/after-state.json"
+    },
+    {
+      "bytes": 503,
+      "path": ".cache/phase2-finite-planning-release-observer-v1/root-observed-package.json",
+      "sha256": "b71dea2a002b040ef108594092ac584095a86a3eb0c4d7278648a31132068704",
+      "snapshot": "inputs/outer/root-observed-package.json"
+    },
+    {
+      "bytes": 863,
+      "path": ".cache/phase2-finite-planning-release-observer-v1/bindings-package.json",
+      "sha256": "cb1b30365b7fa4281355d819f8f29ec5b7ca0005dd7be59383a221a7013b4da8",
+      "snapshot": "inputs/outer/bindings-package.json"
+    }
+  ],
+  "schema": "lupine.finite-planning.actual-artifact-binding-validation.v1",
+  "started_at": "2026-10-16T16:51:20.028748+00:00",
+  "status": "PASS"
+}

@@ -46,3 +46,5 @@ planning integration. The copies were verified against committed bytes,
 all ten module source hashes, and the combined axiom-output hash. Their
 module paths remain relative to parent `formal/`. These historical bytes
 do not replace the fresh audit required after adding the eleventh module.
+
+`pre-finite-planning-monotone-theorem-inventory.json` and `pre-finite-planning-monotone-AXIOMS.txt` preserve the eleven-module, 143-statement receipt at checkpoint `88d512cbf40a7a7d11fb45aa24cd5462f8a7e81d`, before evaluation-size monotonicity integration. Exact committed bytes, all eleven source hashes, and the combined axiom-output hash were checked before preservation. Module paths remain relative to parent `formal/`; this history does not replace the fresh twelve-module audit.

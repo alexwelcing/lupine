@@ -314,10 +314,10 @@ class PackageRetentionTests(unittest.TestCase):
         self.assertFalse(isolated['source_visible'])
         self.assertEqual(isolated['marker'], 'preserved-synthetic-setting')
 
-    def test_reviewed_sixteen_check_probe_is_pinned(self):
-        # Reviewed six-mode and prospective-planning installed probe plus historical census (17 checks).
+    def test_reviewed_eighteen_check_probe_is_pinned(self):
+        # Reviewed six-mode and prospective-planning installed probe plus historical census and source readiness (18 checks).
         # Deliberate changes require an explicit reviewed fixed-hash update.
-        self.assertEqual(sha256(smoke.PROBE.encode()).hexdigest(), '52e04bd2af952ae239f9da2dc8b966352f438db204dcdfe8725f92e46bea7710')
+        self.assertEqual(sha256(smoke.PROBE.encode()).hexdigest(), '0500909f0aee8a3275b44d8c60ad8f3880247332966525c126141e8f8ced70c7')
 
 
 

@@ -1,6 +1,32 @@
 # Actual verification record
 
-## Finite-population zero-failure planning extension — 2026-10-16
+## Evaluation-size monotonicity and minimum resolution — 2026-10-16
+
+The current package passes a strict twelve-module build, a fresh axiom audit
+of **147 statements**, and all eleven audit-parser tests. Four new statements
+prove that the exact finite zero-failure ratio is nonincreasing in admissible
+sample size, characterize capped feasibility, and identify the unique first
+qualifying positive count. All eleven prior Lean sources and their 143 audited
+entries remain unchanged. The toolchain, Mathlib/dependency pins, audit parser
+and parser tests are unchanged.
+
+The author and independent reviewer separately strictly compiled identical
+source `fa1dedddf324fbd66a96de9eef1d775babccbc3668a81fd48726287dffe2268d`.
+Root then ran `LEAN_NUM_THREADS=1 lake --wfail build`, `python audit_axioms.py`,
+and `python -m unittest test_audit_axioms -v`. All exited zero. The [actual
+verification record](../reports/phase2-finite-planning-monotone-verification-v1/README.md)
+retains source identities, commands and outputs. The former 143-statement
+inventory and axiom output are preserved under
+`history/pre-finite-planning-monotone-*`.
+
+These are mathematical statements about an exact ratio and its least qualifying
+positive index. They do not refine the Python search implementation, attest
+uniform sampling or fixed scientific labels, establish prospective power,
+or authorize a new scientific evaluation. No new DFT or numerical archive
+operation followed. The Li schema block and Dryad README access failure remain
+unchanged.
+
+## Historical finite-population zero-failure planning extension — 2026-10-16
 
 The integrated source passes a strict eleven-module build (1,017 jobs), a fresh
 axiom audit of **143 statements**, and all eleven audit-parser tests. The new
@@ -19,7 +45,7 @@ record](../reports/phase2-finite-planning-formal-verification-v1/README.md)
 retains actual commands, timestamps, logs, input hashes and review boundaries.
 Only `propext`, `Classical.choice` and `Quot.sound` occur in the axiom output.
 
-The current inventory SHA is
+At that checkpoint the inventory SHA was
 `ae31d83d3fa136bf52c2d3cb8f2e94b349066eefa2d7f7e2eb672c68ce6b715b`;
 combined output SHA is
 `1386bccd866f772b801b50c692bc50bebbeae492ca08b41b833bbf3260f0a6e8`.
@@ -47,7 +73,7 @@ and the same Mathlib revision documented below.
   sources and passed complete axiom coverage for **130 statements**.
 - `python3 -m unittest test_audit_axioms -v`: all eleven parser tests passed.
 
-The current [inventory](theorem-inventory.json) and [axiom output](AXIOMS.txt)
+The preserved historical [inventory](history/pre-finite-planning-theorem-inventory.json) and [axiom output](history/pre-finite-planning-AXIOMS.txt)
 were checked against every module source and the combined-output hash. Only
 `propext`, `Classical.choice`, and `Quot.sound` occur. The new source was promoted
 unchanged from the strictly compiled and independently reviewed scratch file;

@@ -1,0 +1,95 @@
+{
+  "created_at": "2026-10-16T17:05:04.073755+00:00",
+  "identity_is_not_physical_truth": true,
+  "local_prior_source_bindings": "scope-hold.json",
+  "primary_documentary_locators": [
+    "PMC4322582: Generation of atomic coordinates (direct paragraphs only)",
+    "PMC4322582: Data Records, File format, Properties (direct paragraphs only)",
+    "PMC4322582: Table2 (t2), Table3 (t3) dictionaries",
+    "PMC4322582: front permissions, article license and metadata-only waiver"
+  ],
+  "schema": "lupine.discovery.independent_source_survey.bindings.v1",
+  "scientific_results_extraction": false,
+  "sources": [
+    {
+      "body_bytes": 8616,
+      "body_sha256": "3fcdfca75d9905e659b166c202f1364e10c855627314ab3507b2c3dbf4a37ae2",
+      "id": "aflux_help",
+      "raw_body_public": false,
+      "receipt_path": "aflux_help/receipt.json",
+      "receipt_sha256": "9e04de27ec146f04d6f70dd649417f0ce892850742672a30c2488d13127b96ac",
+      "status": 200,
+      "url": "https://aflow.org/API/aflux/?help"
+    },
+    {
+      "body_bytes": 39105,
+      "body_sha256": "d495aa82b1166dc85f573dae728500190b38a14ba0f627d0ae528816a8fc0c27",
+      "id": "aflux_property_help",
+      "raw_body_public": false,
+      "receipt_path": "aflux_property_help/receipt.json",
+      "receipt_sha256": "64e9a880eb40be2122eea3392311140e474bf496f717b954728df791a98a496a",
+      "status": 200,
+      "url": "https://aflow.org/API/aflux/?help(properties)"
+    },
+    {
+      "body_bytes": 2025,
+      "body_sha256": "fc4c10e6771f25c3581ce8959ac42796a91eecacbf884654106f8a4596525500",
+      "id": "aflow_home",
+      "raw_body_public": false,
+      "receipt_path": "aflow_home/receipt.json",
+      "receipt_sha256": "8c2fc3b49e2c2e5032d008544aba24a62bcf3813e0c1c82237f37811887b36bc",
+      "status": 200,
+      "url": "https://aflow.org/"
+    },
+    {
+      "body_bytes": 73,
+      "body_sha256": "f7e6bb0b4b710635b66a37138ed96a4908b4779256389a982a9462b0f6c4bde2",
+      "id": "qm9/figshare_metadata",
+      "raw_body_public": false,
+      "receipt_path": "qm9/figshare_metadata/receipt.json",
+      "receipt_sha256": "33f34c1839a2dbbf69f9fde7c3e8ca171f5a9d3a4da32a802b80a417dc7c3ad3",
+      "status": 404,
+      "url": "https://api.figshare.com/v2/articles/978904"
+    },
+    {
+      "body_bytes": 8834,
+      "body_sha256": "0b6b0cfc17334d2c9fed993c76cb6c2f4b89b7431993e0d87717e010827e5ac8",
+      "id": "qm9/datacite_identity",
+      "raw_body_public": false,
+      "receipt_path": "qm9/datacite_identity/receipt.json",
+      "receipt_sha256": "588a45ed64e781e8c6dd74bdb9c4402cb1ae8bd2c6724b2ec204497b123dd93f",
+      "status": 200,
+      "url": "https://api.datacite.org/dois/10.6084/m9.figshare.978904"
+    },
+    {
+      "body_bytes": 14112,
+      "body_sha256": "2a61e12f548e2c456e127dd0066efc519a3bc213b57bc6d1ef4f0dc7eee5bc78",
+      "id": "qm9/primary_paper_metadata",
+      "raw_body_public": false,
+      "receipt_path": "qm9/primary_paper_metadata/receipt.json",
+      "receipt_sha256": "2754c96ba28ea22fce20d3081c34f961d4a1a7a5cf580c36d217e476becbade5",
+      "status": 200,
+      "url": "https://api.crossref.org/works/10.1038/sdata.2014.22"
+    },
+    {
+      "body_bytes": 6216,
+      "body_sha256": "32f7ded427c821e4aa49a1490393701303045a5214466a5fbd70da9ca02a7ba6",
+      "id": "qm9/primary_identity",
+      "raw_body_public": false,
+      "receipt_path": "qm9/primary_identity/receipt.json",
+      "receipt_sha256": "588642111589d95495996395fd46572ed08c86894909ac952c9ffc548998a026",
+      "status": 200,
+      "url": "https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=DOI%3A10.1038%2Fsdata.2014.22&format=json&resultType=core&pageSize=1"
+    },
+    {
+      "body_bytes": 62653,
+      "body_sha256": "d58de2a225114f57bc6bc28e808dd3c035580b756a3c09472ac1946539418b6b",
+      "id": "qm9/primary_schema",
+      "raw_body_public": false,
+      "receipt_path": "qm9/primary_schema/receipt.json",
+      "receipt_sha256": "e384407199dbd1aee41981e6bdd0dd393e83a34917f169b3e4d175a770c9488d",
+      "status": 200,
+      "url": "https://www.ebi.ac.uk/europepmc/webservices/rest/PMC4322582/fullTextXML"
+    }
+  ]
+}

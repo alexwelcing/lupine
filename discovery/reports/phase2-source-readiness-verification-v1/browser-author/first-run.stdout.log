@@ -1,0 +1,49 @@
+{
+  "started_at": "2026-10-16T17:00:47.572092+00:00",
+  "scope": "Direct fixture Chromium with in-memory routes; exact app loadBenchmarks function exercised with isolated peer-renderer stubs. No actual HTTP server or source operation.",
+  "source_before": {
+    "overlay/src/lupine_discovery/web/source-readiness.js": "d533611c9a975040a55569bf474689846aa8f5ca2f4f73c4e52730917efe95d0",
+    "overlay/src/lupine_discovery/web/app.js": "9e81d71a7381173776d928cc558791402f1d2b2ce02d7e4ae7531514233c5b45",
+    "overlay/src/lupine_discovery/web/index.html": "20432ede14b5892a6e3ff45fc305e2d4bcb664d5924e2679cf1ca3b016ef72f2",
+    "overlay/src/lupine_discovery/web/styles.css": "2bfdac8e02a00fd2e67b3b0e0788cf9b73f5dac4ab72fc8dd4f37f077a83d3e1",
+    "fixture.json": "9abad97d5675f416cc38a325bcd1e108825af001b2fdfccaa1f5c7dfb66f3f0b",
+    "browser_checks.py": "72ffc843e8a374e64ea84894d1af3fec82f42d15e79fa078c5baef9f1d5db4b8"
+  },
+  "status": "PASS",
+  "finished_at": "2026-10-16T17:00:51.003257+00:00",
+  "process_seconds": 3.431148509000195,
+  "checks": [
+    "held_javascript_syntax",
+    "complete_two_source_plain_primary_view_no_operation_controls",
+    "all_recorded_actions_blockers_exposure_licenses_and_evidence_links_retained",
+    "keyboard_details_and_complete_exact_json_export",
+    "mobile_375px_containment",
+    "caller_mutation_cannot_change_validated_export",
+    "missing_resource_clears_cards_and_invalidates_detached_old_export",
+    "19_missing_invalid_forged_and_injection_cases_clear_prior_view",
+    "late_digest_cannot_restore_cleared_view",
+    "three_out_of_order_actual_fetch_response_cases_keep_latest_source_view",
+    "no_javascript_errors_or_external_requests"
+  ],
+  "javascript_errors": [],
+  "requests": [
+    "http://127.0.0.1:8123/",
+    "http://127.0.0.1:8123/api/benchmarks",
+    "http://127.0.0.1:8123/api/benchmarks",
+    "http://127.0.0.1:8123/api/benchmarks",
+    "http://127.0.0.1:8123/api/benchmarks",
+    "http://127.0.0.1:8123/api/benchmarks",
+    "http://127.0.0.1:8123/api/benchmarks"
+  ],
+  "source_after": {
+    "overlay/src/lupine_discovery/web/source-readiness.js": "d533611c9a975040a55569bf474689846aa8f5ca2f4f73c4e52730917efe95d0",
+    "overlay/src/lupine_discovery/web/app.js": "9e81d71a7381173776d928cc558791402f1d2b2ce02d7e4ae7531514233c5b45",
+    "overlay/src/lupine_discovery/web/index.html": "20432ede14b5892a6e3ff45fc305e2d4bcb664d5924e2679cf1ca3b016ef72f2",
+    "overlay/src/lupine_discovery/web/styles.css": "2bfdac8e02a00fd2e67b3b0e0788cf9b73f5dac4ab72fc8dd4f37f077a83d3e1",
+    "fixture.json": "9abad97d5675f416cc38a325bcd1e108825af001b2fdfccaa1f5c7dfb66f3f0b",
+    "browser_checks.py": "72ffc843e8a374e64ea84894d1af3fec82f42d15e79fa078c5baef9f1d5db4b8"
+  },
+  "source_held": true,
+  "tracked_baseline_held": true,
+  "actual_source_operations": 0
+}

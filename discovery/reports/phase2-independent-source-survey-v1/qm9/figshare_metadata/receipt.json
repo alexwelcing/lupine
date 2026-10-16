@@ -1,0 +1,16 @@
+{
+  "bytes": 73,
+  "finished_at": "2026-10-16T16:54:31.876558+00:00",
+  "headers": {
+    "Content-Length": "73",
+    "Content-Type": "application/json"
+  },
+  "over_cap": false,
+  "requests": 1,
+  "retries": 0,
+  "sha256": "f7e6bb0b4b710635b66a37138ed96a4908b4779256389a982a9462b0f6c4bde2",
+  "started_at": "2026-10-16T16:54:30.771100+00:00",
+  "status": 404,
+  "transport_error": null,
+  "url": "https://api.figshare.com/v2/articles/978904"
+}

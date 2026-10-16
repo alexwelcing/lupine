@@ -2496,3 +2496,13 @@ textarea {
 /* Approximate census displays retain their complete exact fraction on expansion. */
 .recorded-census-exact summary { cursor:pointer; white-space:nowrap; font-family:var(--mono) }
 .recorded-census-exact code { display:block; max-width:240px; overflow-wrap:anywhere; white-space:normal; padding-top:8px }
+
+/* Public source-readiness notes never trigger acquisition or parsing. */
+.source-readiness-card { min-width:0; font-size:12px; line-height:1.65; overflow-wrap:anywhere }
+.source-readiness-card h4 { font-size:12px; margin:18px 0 5px }
+.source-readiness-card ul { padding-left:20px; margin:5px 0 }
+.source-readiness-card li+li { margin-top:5px }
+.source-readiness-card .protocol-details { margin-top:18px; font-size:12px }
+.source-readiness-card a { color:var(--violet); text-underline-offset:3px }
+.source-readiness-card a:focus-visible,.source-readiness-card summary:focus-visible { outline:3px solid #9f86b5; outline-offset:3px }
+#download-source-readiness { margin-top:18px }

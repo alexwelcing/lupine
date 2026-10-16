@@ -1950,3 +1950,39 @@ rights, pairing, processed semantics, equivalence and freshness remain unresolve
 - Owner/checkpoint: root publishes the combined mathematical/evidence increment,
   verifies exact remote and its own CI, and cleanly reproduces the release. No
   new source operation, retry, numerical data acquisition, fit or admission.
+
+
+## 2026-10-16 17:23 UTC — source-readiness workbench and 147-statement candidate
+
+- Root integrated the independently reviewed fixed documentary readiness resource,
+  CLI/HTTP transport, browser cards and exact JSON export. Missing, invalid and
+  stale responses remain explicit unavailable states. The earlier incorrect
+  “creep” label was corrected to “tensile” from primary methods before the final
+  source hold; original wrong-label fixtures and transport-only passes remain
+  preserved. [Engineering evidence](phase2-source-readiness-verification-v1/README.md).
+- Actual integrated execution passes 142 focused Python methods and 86 full-browser
+  checks, including the six new real-HTTP readiness checks. Independent browser
+  review also detects an isolated removed-request-token mutant; production passes.
+  Runtime manifest: 351 files, eleven changes and six additions from `88d512c`.
+  The package gate strictly adds an eighteenth flag; twenty negative flag variants
+  are preserved. No new-commit CI or clean installed-package success is inferred.
+- Four independently compiled finite-planning statements pass root's strict
+  twelve-module build, fresh 147-statement axiom audit and eleven parser tests.
+  [Formal evidence](phase2-finite-planning-monotone-verification-v1/README.md) preserves
+  all 143 earlier inventory entries and all eleven old modules. These are conditional
+  count/monotonicity/minimum results, not Python refinement or physical guarantees.
+- [Exact predecessor `88d512c`](phase2-finite-planning-release-verification-v1/README.md)
+  now has all four original CI jobs successful, clean 28-case/six-schema/17-check
+  packaging, strict verification and 20,959 independent artifact checks. The previous
+  continuation checkpoint timestamp preceded its later formal execution; the object
+  is retained as historical with an explicit timing correction, not retimed silently.
+- [Source research](phase2-independent-source-survey-v1/README.md) preserves AFLOW's
+  restrictive rights and QM9's paired scalar documentation, method and leakage cautions.
+  The exact QM9 collection request returned HTTP 403; no file manifest or numerical
+  data was obtained. Li and Dryad blocks remain. G20 unresolved/G21 blocked; no new
+  fit, split, threshold, scientific admission or physical/general-superiority claim.
+- Owner/checkpoint: root publishes the held source, observes exact remote and CI,
+  executes the clean eighteen-check package/strict gate, and obtains an independent
+  artifact audit. Separate primary-source metadata work continues. The expired
+  automation remains disabled. First publication-assembly missing-file failure and
+  its documentary-only correction are preserved; behavior was not rerun for formatting.

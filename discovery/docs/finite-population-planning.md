@@ -23,12 +23,17 @@ assert plan.power_status == 'not_computed'
 [LupineFinitePlanning](../formal/LupineFinitePlanning.lean) now proves 13
 finite-count statements underlying the bound: exact favorable subsets and
 ratio, failure-count antitonicity, the attained `ceil(rho*M)` null maximum,
-the zero boundary and census resolution. The [actual verification](../formal/VERIFICATION.md)
-records independent compilation and the integrated 143-statement audit.
-The proofs quantify over arbitrary finite frames; the implementation cap is
-separate. They do not prove the Python minimum-count loop or a Python/Lean
-refinement, evaluation-size monotonicity, or that a scientific experiment
-satisfies the sampling and fixed-label premises below.
+the zero boundary and census resolution. The companion
+[LupineFinitePlanningMonotone](../formal/LupineFinitePlanningMonotone.lean)
+proves four further statements: evaluation-size nonincrease, exact cap
+feasibility, and the unique first qualifying positive count. See the
+[actual verification](../formal/VERIFICATION.md) for executed module builds and
+audits; this theorem map alone does not attest an integrated build.
+The proofs quantify over arbitrary finite counts; the implementation cap is
+separate. The mathematical minimum characterization does not prove the Python
+minimum-count loop or a Python/Lean refinement, and neither module establishes
+that a scientific experiment satisfies the sampling and fixed-label premises
+below.
 
 ## Frozen finite-frame assumptions
 
@@ -78,6 +83,14 @@ subsets, so the supremum over the null is attained at `K_min`:
 \[
 G_e = \frac{\binom{M-K_{\min}}{e}}{\binom{M}{e}}.
 \]
+
+For fixed `M` and `K_min`, `G_e` is nonincreasing over `0 <= e <= M`.
+For a cap within this range, a qualifying positive count exists exactly
+when the cap is positive and `G_cap <= eta`. If feasible, there is a unique
+first positive qualifying count: all earlier positive counts have
+`G_e > eta`, and every later count through `M` has `G_e <= eta`. This is
+a mathematical characterization; correctness of the executable search
+remains a separate implementation obligation.
 
 The planner reports the exact rational `G_e` at the caller's cap and the smallest
 positive `e` within that cap satisfying `G_e <= eta`. Equality qualifies. At cap

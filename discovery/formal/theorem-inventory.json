@@ -1,6 +1,6 @@
 {
-  "axiom_output_sha256": "1386bccd866f772b801b50c692bc50bebbeae492ca08b41b833bbf3260f0a6e8",
-  "module_count": 11,
+  "axiom_output_sha256": "379665dd95c6f32c06efd278add13e350c76be882e21d10e1736b4fd41ad3645",
+  "module_count": 12,
   "modules": [
     {
       "source": "LupineCoupled.lean",
@@ -409,6 +409,33 @@
       }
     },
     {
+      "source": "LupineFinitePlanningMonotone.lean",
+      "source_sha256": "fa1dedddf324fbd66a96de9eef1d775babccbc3668a81fd48726287dffe2268d",
+      "theorem_count": 4,
+      "theorems": {
+        "LupineFinitePlanningMonotone.capped_feasible_iff": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "LupineFinitePlanningMonotone.evaluation_antitone": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "LupineFinitePlanningMonotone.evaluation_step": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "LupineFinitePlanningMonotone.unique_first_count": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ]
+      }
+    },
+    {
       "source": "LupineIntervals.lean",
       "source_sha256": "9dec04611f670efdd8deaa6e05f802199f418c9089a5c29148bf8ca4534d8fc4",
       "theorem_count": 9,
@@ -792,5 +819,5 @@
     }
   ],
   "schema": "lupine-formal-theorem-inventory-v1",
-  "theorem_count": 143
+  "theorem_count": 147
 }

@@ -1,0 +1,7 @@
+{
+  "at": "2026-10-16T16:57:01.376152+00:00",
+  "status": "UNEXECUTED_DRAFT_SUPERSEDED",
+  "source_sha256": "3648e853ba805128c64d42ce6be5e7ac5e5d071a51b4927775aa7afb9c7d11a6",
+  "reason": "Root and independent reviewer corrected the source label to tensile measurements using retained paper methods. Awaiting final backend resource/id/digest. No browser test had run.",
+  "tests_executed": 0
+}

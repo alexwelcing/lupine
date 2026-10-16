@@ -1,0 +1,19 @@
+{
+  "author_permission_projection_additive": true,
+  "disposition": "NO_BLOCKING_INCONSISTENCY_WITHIN_REVIEWED_DOCUMENTARY_SCOPE",
+  "first_article_route_404_preserved": true,
+  "fixed_finite_inference": "Physical independence of all molecules is not required for uniform subset counting, but complete fixed frame/labels/policy/sample design are not yet established.",
+  "freshness": "UNESTABLISHED",
+  "gas_phase_qualifier": "NOT_INDEPENDENTLY_ESTABLISHED_BY_NARROW_ALLOWED_PROJECTIONS",
+  "gate_matrix": "README.md",
+  "known_leakage": "The documented gap is defined from LUMO minus HOMO; no assertion about exact equality after serialized rounding.",
+  "next_minimal_step": "Literal official collection/file-manifest metadata only; identify constituent DOI/version/files/checksums/terms/exceptions documentation without numerical record download.",
+  "raw_full_article_read": false,
+  "rights": "Collection CC BY4 declaration differs from article CC BY-NC-SA4 and metadata-only CC0 waiver; constituent file terms remain unverified.",
+  "schema": "lupine.qm9.documentary-independent-review.v1",
+  "scientific_admission": "NOT_ADMITTED",
+  "scope_limit": "Archived molecular quantum-chemical labels; no experimental or power-plant performance, power, physical truth or Python/formal proof claim.",
+  "source_bindings_sha256": "3b7b0936b03a42f28edfe55ebae57572f19c075f8fb0689726ce51bb74d3f82f",
+  "source_or_network_operations": 0,
+  "test_or_proof_executions": 0
+}

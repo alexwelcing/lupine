@@ -1,0 +1,16 @@
+{
+  "copy_files": [
+    "README.md",
+    "permissions-selected.json",
+    "review.json",
+    "source-bindings.json",
+    "inventory.json",
+    "handoff.json"
+  ],
+  "disposition": "DOCUMENTARY_LEAD_ONLY_NOT_ADMITTED",
+  "inventory_sha256": "c795aacd0806c773111cea11362aac9a194caac32c54068b97dae96001ab44e4",
+  "network_or_record_operations": 0,
+  "review_sha256": "1b5336c10621df358dc8d8f2ed1caa458925bb1583afd8a20f0a3eb85a46aefb",
+  "schema": "lupine.qm9.documentary-independent-handoff.v1",
+  "tests_or_formal_proofs": 0
+}

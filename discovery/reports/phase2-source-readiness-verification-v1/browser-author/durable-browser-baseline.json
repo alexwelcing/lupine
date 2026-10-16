@@ -1,0 +1,8 @@
+{
+  "path": "scripts/browser_smoke.py",
+  "bytes": 78743,
+  "sha256": "04289d220d1ef64d7be619eec4850bcaa6e9793b48058f43378b59c390c68d3d",
+  "status": "ROOT_REQUESTED_NEW_DURABLE_TEST_ONLY_SCOPE",
+  "existing_web_assets": "Held unchanged at first source hold; independent browser29 assertion PASS separately recorded.",
+  "first_full_actual_http_execution": "Root pending; no pass claim."
+}

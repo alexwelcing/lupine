@@ -3,6 +3,7 @@
 (() => {
   'use strict';
   const $ = (id) => document.getElementById(id);
+  let sourceReadinessRequest = 0;
   const state = { catalog: [], caseId: null, metadata: null, raw: '', problem: null, certificate: null, selectedRaw: null, replay: null, replayRequest: 0, revision: 0, busy: false, filter: 'all', benchmarksLoaded: false };
   const node = (tag, className, text) => {
     const el = document.createElement(tag);
@@ -1376,12 +1377,15 @@
     status.hidden = true; content.hidden = false;
   }
   async function loadBenchmarks() {
+    const readinessRequest = ++sourceReadinessRequest;
+    window.LupineSourceReadiness.render(null);
     $('benchmark-status').hidden = false;
     $('benchmark-status').className = 'notice';
     $('benchmark-status').textContent = 'Running the known-answer suite and loading recorded archive evaluations…';
     try {
       const report = await api('/api/benchmarks');
       renderKnown(report.known_answers); renderArchives(report.archived, report.additional_archived); renderConstrained(report.constrained_archived); renderTrainingTail(report.training_tail); window.LupineMpea.render(report.mpea_archived); window.LupineRecordedCensus.render(report.recorded_census);
+      if (readinessRequest === sourceReadinessRequest) window.LupineSourceReadiness.render(report.source_readiness);
       if (!$('refresh-benchmarks')) {
         const refresh = node('button', 'button button-outline button-small', '↻ Run known-answer suite again');
         refresh.id = 'refresh-benchmarks'; refresh.addEventListener('click', loadBenchmarks);

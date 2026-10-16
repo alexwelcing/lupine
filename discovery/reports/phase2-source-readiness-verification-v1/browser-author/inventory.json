@@ -1,0 +1,185 @@
+{
+  "exclusions": [
+    "Python caches",
+    "No target/private/source acquisition files exist in this bundle."
+  ],
+  "files": [
+    {
+      "bytes": 3162,
+      "path": "README.md",
+      "sha256": "538d67c292ccd97d57e3b5cc1495ede0d556a4f9aa3367c7bd2e21a40c800a6b"
+    },
+    {
+      "bytes": 2530,
+      "path": "VERIFICATION.md",
+      "sha256": "a32268ce268b052db9881a23862c79ff51fa8ebdd3ec99a8485944bf61293bbb"
+    },
+    {
+      "bytes": 394,
+      "path": "before-tensile-label/note.json",
+      "sha256": "ef5e5ab8f72dc35eb3c26dce0b3c02b12046ef8f957bb9bda0e618deae481309"
+    },
+    {
+      "bytes": 8180,
+      "path": "before-tensile-label/source-readiness.js",
+      "sha256": "3648e853ba805128c64d42ce6be5e7ac5e5d071a51b4927775aa7afb9c7d11a6"
+    },
+    {
+      "bytes": 14155,
+      "path": "browser_checks.py",
+      "sha256": "72ffc843e8a374e64ea84894d1af3fec82f42d15e79fa078c5baef9f1d5db4b8"
+    },
+    {
+      "bytes": 390,
+      "path": "durable-browser-baseline.json",
+      "sha256": "8c5df12c3b24e01fe617ed9ef43ffae5eab9c98d85b3762557ae11f8b03f5632"
+    },
+    {
+      "bytes": 981,
+      "path": "durable-browser-hold.json",
+      "sha256": "925be7dcd4ea73cb35a53f57e370bb17fae5e3ca7a61f2e1705a910a9a375684"
+    },
+    {
+      "bytes": 2390,
+      "path": "durable-browser-wiring.diff",
+      "sha256": "b0e1b1f34b408928070a896c2f928b39421f42e956b31fab1f0258bd960c61ff"
+    },
+    {
+      "bytes": 89537,
+      "path": "first-run/desktop.png",
+      "sha256": "43497a8087221a584c16830a8f6827ca809219c698257b1482ff006d33752be1"
+    },
+    {
+      "bytes": 6053,
+      "path": "first-run/detached-export.json",
+      "sha256": "9abad97d5675f416cc38a325bcd1e108825af001b2fdfccaa1f5c7dfb66f3f0b"
+    },
+    {
+      "bytes": 6053,
+      "path": "first-run/exact-export.json",
+      "sha256": "9abad97d5675f416cc38a325bcd1e108825af001b2fdfccaa1f5c7dfb66f3f0b"
+    },
+    {
+      "bytes": 2811,
+      "path": "first-run/execution.json",
+      "sha256": "8062d375e0d6a3d24df596bdb2ca4e1b49c6836abf01b76b45019f9f908ef7b4"
+    },
+    {
+      "bytes": 14155,
+      "path": "first-run/held/browser_checks.py",
+      "sha256": "72ffc843e8a374e64ea84894d1af3fec82f42d15e79fa078c5baef9f1d5db4b8"
+    },
+    {
+      "bytes": 6053,
+      "path": "first-run/held/fixture.json",
+      "sha256": "9abad97d5675f416cc38a325bcd1e108825af001b2fdfccaa1f5c7dfb66f3f0b"
+    },
+    {
+      "bytes": 131782,
+      "path": "first-run/held/overlay/src/lupine_discovery/web/app.js",
+      "sha256": "9e81d71a7381173776d928cc558791402f1d2b2ce02d7e4ae7531514233c5b45"
+    },
+    {
+      "bytes": 30293,
+      "path": "first-run/held/overlay/src/lupine_discovery/web/index.html",
+      "sha256": "20432ede14b5892a6e3ff45fc305e2d4bcb664d5924e2679cf1ca3b016ef72f2"
+    },
+    {
+      "bytes": 8182,
+      "path": "first-run/held/overlay/src/lupine_discovery/web/source-readiness.js",
+      "sha256": "d533611c9a975040a55569bf474689846aa8f5ca2f4f73c4e52730917efe95d0"
+    },
+    {
+      "bytes": 44089,
+      "path": "first-run/held/overlay/src/lupine_discovery/web/styles.css",
+      "sha256": "2bfdac8e02a00fd2e67b3b0e0788cf9b73f5dac4ab72fc8dd4f37f077a83d3e1"
+    },
+    {
+      "bytes": 92349,
+      "path": "first-run/mobile.png",
+      "sha256": "82d44241e8516d45d3f9f0f2253f2b7786a312ac64783d7cc070dd9a3f1e66cd"
+    },
+    {
+      "bytes": 0,
+      "path": "first-run.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 2811,
+      "path": "first-run.stdout.log",
+      "sha256": "eb6158886815481ea9b547e5c2cd493f7ccc1369edd646ad87d9cefecd8f8994"
+    },
+    {
+      "bytes": 6053,
+      "path": "fixture.json",
+      "sha256": "9abad97d5675f416cc38a325bcd1e108825af001b2fdfccaa1f5c7dfb66f3f0b"
+    },
+    {
+      "bytes": 79101,
+      "path": "overlay/scripts/browser_smoke.py",
+      "sha256": "e1311385b7b3ec4c382b8e56b274107b819702d37015865267999d27e9b92339"
+    },
+    {
+      "bytes": 11121,
+      "path": "overlay/scripts/source_readiness_browser_checks.py",
+      "sha256": "fe3de053e1c390c5119cfe05bf41c0084d53de99ec0da268d4014ae728080882"
+    },
+    {
+      "bytes": 131782,
+      "path": "overlay/src/lupine_discovery/web/app.js",
+      "sha256": "9e81d71a7381173776d928cc558791402f1d2b2ce02d7e4ae7531514233c5b45"
+    },
+    {
+      "bytes": 30293,
+      "path": "overlay/src/lupine_discovery/web/index.html",
+      "sha256": "20432ede14b5892a6e3ff45fc305e2d4bcb664d5924e2679cf1ca3b016ef72f2"
+    },
+    {
+      "bytes": 8182,
+      "path": "overlay/src/lupine_discovery/web/source-readiness.js",
+      "sha256": "d533611c9a975040a55569bf474689846aa8f5ca2f4f73c4e52730917efe95d0"
+    },
+    {
+      "bytes": 44089,
+      "path": "overlay/src/lupine_discovery/web/styles.css",
+      "sha256": "2bfdac8e02a00fd2e67b3b0e0788cf9b73f5dac4ab72fc8dd4f37f077a83d3e1"
+    },
+    {
+      "bytes": 4542,
+      "path": "overlay.diff",
+      "sha256": "084de04243aeb6b9011d5279824f2cb1a91eab3dbf510c6b014681591054d0fe"
+    },
+    {
+      "bytes": 1138,
+      "path": "preparation.json",
+      "sha256": "3f2cc4d1e7afc75ac1a0a71223cbad41a8dbe5690ac92335324f5b4a41e945af"
+    },
+    {
+      "bytes": 3204,
+      "path": "promotion-copyset.final.json",
+      "sha256": "12600c414ae00448174d92e36124681b6aa41c909ce9f06317ad3729dbc611c8"
+    },
+    {
+      "bytes": 2179,
+      "path": "promotion-copyset.json",
+      "sha256": "3d250920d6e6afc688345ca42b91aad5f549ed367e28ebcf50ce07e2baf4f2f6"
+    },
+    {
+      "bytes": 1479,
+      "path": "source-hold.json",
+      "sha256": "03ed03b95158b0cff57bf51006050a278e26da1bb588878c75b0b061206c97c5"
+    },
+    {
+      "bytes": 1262,
+      "path": "verification.json",
+      "sha256": "a356ad21e09c044383bc2ce9bdd6aec94b4d82dd08f249027284a09252fbd7f9"
+    },
+    {
+      "bytes": 4703,
+      "path": "wiring-before-schema.json",
+      "sha256": "20705fb5a86f7b87d2cea4c2577c159cc7b5a7f8c89d4b38b8c0882a9518d0d3"
+    }
+  ],
+  "publication_note": "Preserve exact bytes. Diff files or logs containing trailing whitespace may be represented by reversible UTF-8 JSON wrappers in tracked reports. First run/logs and unexecuted label draft are retained.",
+  "status": "FINAL_UI_AND_DURABLE_TEST_HANDOFF_ROOT_HTTP_PENDING"
+}

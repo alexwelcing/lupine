@@ -1,0 +1,7 @@
+{
+  "schema": "lupine.preserved-utf8.v1",
+  "original_source": ".cache/phase2-source-readiness-package-review-v1/source-diffs/tests/test_retained_mpea_transport.py.diff",
+  "original_bytes": 823,
+  "original_sha256": "0de1caa68ade23ec8e90c5bc60b43535a593ab2b7078351566c17ae0f69997f7",
+  "text": "--- baseline/tests/test_retained_mpea_transport.py\n+++ candidate/tests/test_retained_mpea_transport.py\n@@ -32,6 +32,7 @@\n     'optional_mpea_resource_presence_and_http_agreement',\n     'mpea_javascript_packaged_and_served',\n     'fixed_stored_census_identity_scope_and_http_asset_agreement',\n+    'source_readiness_snapshot_cli_http_asset_agreement',\n ]\n \n \n@@ -70,7 +71,7 @@\n                 wheel.writestr(name, raw)\n         self.case.rebind_artifacts()\n \n-    def test_all_seventeen_flags_required_without_omission_extra_or_reorder(self):\n+    def test_all_eighteen_flags_required_without_omission_extra_or_reorder(self):\n         expected = list(self.report['checks'])\n         self.assertEqual(expected, EXPECTED_CHECKS)\n         variants = [expected[:index] + expected[index + 1:] for index in range(len(expected))]\n"
+}

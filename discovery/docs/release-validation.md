@@ -1,6 +1,7 @@
 # Release validation matrix
 
-Snapshot: 2026-10-10. This matrix separates a usable research preview from a
+Current engineering update: 2026-10-16. Scientific results retain their dated
+original scopes below. This matrix separates a usable research preview from a
 scientifically supported recommendation release. A browser interface and known
 answer examples are necessary product work; neither establishes physical
 predictive reliability. A release must declare which property families,
@@ -13,10 +14,12 @@ gate. No aggregate score averages away blocking failures.
 
 | Gate | State | Evidence and release consequence |
 |---|---|---|
+| Current source-readiness candidate | LOCAL PASS; publication/clean package/CI pending | [142 focused Python methods and 86 full-browser checks](../reports/phase2-source-readiness-verification-v1/README.md). Python held its 350-file source; subsequent browser-helper/wiring integration produced the final 351-file source held by the full-browser run. Fixed Li/Dryad documentary snapshot; explicit unavailable states and exact exports. No acquisition or scientific admission. Eighteen-check installed gate requires a new actual run. |
+| Exact predecessor `88d512c` | PASS | [All four original CI jobs, clean28/six-schema/17-check package, strict verification and independent20,959-check artifact audit](../reports/phase2-finite-planning-release-verification-v1/README.md). These do not establish successor verification. |
 | Exact conditional selection kernel | PASS | Exact rational runtime, exhaustive small-world and adversarial tests. Conditional guarantees require sound intervals and a fixed finite candidate universe. |
-| Conditional mathematical statements | PASS | 143 compiled Lean statements in eleven modules, including 13 finite-population counting statements added on 2026-10-16; [actual verification](../formal/VERIFICATION.md). This does not prove Python refinement, real sampling validity or physical premises. |
+| Conditional mathematical statements | PASS | 147 compiled Lean statements in twelve modules, including 17 finite-population counting and minimum-resolution statements added on 2026-10-16; [actual verification](../formal/VERIFICATION.md). This does not prove Python refinement, real sampling validity or physical premises. |
 | Published constrained checkpoint verification | PASS | [Discovery Verify run 38067639369](https://github.com/alexwelcing/lupine/actions/runs/38067639369) passed at `a8775ad` on 2026-10-10: Python 3.11/3.12, source manifest, isolated packages, 17 browser checks and 69 Lean theorem audits. Subsequent increments require their own checks. |
-| Interface through actual selector | PASS | 46 Chromium checks cover six schemas, scientific reports, desktop/mobile states, paired exact input/certificate exports and replay verified by the real CLI. Statistical lost optima, missing labels, finite empty pools and marginal limitations remain visible; see `reports/decision-pool-workbench-verification.md`. |
+| Historical interface through actual selector | PASS at its recorded source | 46 Chromium checks cover six schemas, scientific reports, desktop/mobile states, paired exact input/certificate exports and replay verified by the real CLI. Statistical lost optima, missing labels, finite empty pools and marginal limitations remain visible; see `reports/decision-pool-workbench-verification.md`. |
 | Calibration and unsupported-scope abstention | PASS | Exact versioned inputs, original-seal replay, all-retained abstention and browser diagnostics. This software behavior does not establish exchangeability or physical coverage. |
 | Pareto and nonlinear conditional extensions | PASS | Exact runtime, 24 new compiled theorems, one million compatible Pareto truth worlds, nonlinear domain tests, and partial-truth replay. No scalarized Pareto winner or regret is asserted. |
 | Diverse sealed known-answer suite | PASS | 13 deterministic fixtures use an independent finite-truth oracle: 11 sound cases and 2 unsound controls. Ties, infeasibility, multiple constraints, unknown feasibility, refinement, and exact ordering are exercised. All declared expectations pass; control passes mean failures were detected. Fixture success establishes software behavior, not chemical accuracy. |

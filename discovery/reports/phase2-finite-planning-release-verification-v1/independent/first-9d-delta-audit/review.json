@@ -1,0 +1,49 @@
+{
+  "checks": [
+    {
+      "check": "both_exact_manifest_identities",
+      "passed": true
+    },
+    {
+      "check": "all_345_runtime_hashes_identical",
+      "passed": true
+    },
+    {
+      "check": "all_345_exact_git_entries_present",
+      "passed": true
+    },
+    {
+      "check": "all_345_git_blob_identities_and_modes_unchanged",
+      "passed": true
+    },
+    {
+      "check": "first_artifact_audit_passed_for_exact_new_commit",
+      "passed": true
+    },
+    {
+      "check": "current_archive_runtime_independently_bound_to_identical_manifest",
+      "passed": true
+    },
+    {
+      "check": "head_and_source_still_clean",
+      "passed": true
+    }
+  ],
+  "completed_at": "2026-10-16T16:52:42.794986+00:00",
+  "observed": {
+    "added_runtime_files": [],
+    "artifact_review_sha256": "1010d7f7d2b8593807d484fa1e9db61ed71ad2bac88b6319d783ceced45125aa",
+    "changed_runtime_files": [],
+    "manifest_sha256": "6bfd99aa4b3fdf254038570fc9e40cbb574a1fbbe587c943cdf909359c456a5f",
+    "new_commit": "88d512cbf40a7a7d11fb45aa24cd5462f8a7e81d",
+    "old_commit": "9d1f21dae141a28db378ee2e16aa83340df57877",
+    "removed_runtime_files": [],
+    "source_clean": true,
+    "source_head_exact": true,
+    "unchanged_runtime_files": 345
+  },
+  "schema": "lupine.finite-planning.independent-9d-runtime-delta.v1",
+  "scope": "Read-only exact-commit Git manifests/tree identities, linked to the first completed archive byte audit. No artifact execution or rerun, scientific input, network or tracked edit.",
+  "source_sha256": "1adaaa2fa55468cbf747deb221844d8b107f3ae374a693ec75aa449a36869589",
+  "status": "PASS_345_RUNTIME_FILES_UNCHANGED"
+}

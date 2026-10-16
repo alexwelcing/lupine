@@ -1,0 +1,70 @@
+{
+  "actual_li": {
+    "commands": 1,
+    "next_or_dependent_executed": false,
+    "reason": "XML_PROFILE_UNSUPPORTED",
+    "scientific_counts": null,
+    "status": "BLOCKED_SCHEMA"
+  },
+  "current_counts": {
+    "historical": 130,
+    "modules": 11,
+    "new": 13,
+    "old_module_entries_exact": 10,
+    "statements": 143
+  },
+  "dryad": {
+    "PDF_obtained": false,
+    "README_HTTP_status": 403,
+    "logical_GETs": 1,
+    "parser_execution_claimed": false
+  },
+  "findings": [
+    {
+      "finding": "The130-checkpoint paragraph still says current inventory/axiom output and links current143 artifacts. Historical heading prevents a direct current-count error, but the two destinations are ambiguous.",
+      "id": "HISTORICAL_FORMAL_LINKS",
+      "path": "formal/VERIFICATION.md",
+      "recommended_correction": "Label these preserved historical artifacts and link history/pre-finite-planning-theorem-inventory.json and history/pre-finite-planning-AXIOMS.txt; retain earlier source receipts.",
+      "section": "Historical finite coefficient normalization extension",
+      "severity": "MINOR_DOCUMENTARY_CORRECTION"
+    },
+    {
+      "finding": "current_checkpoint.at=2026-10-16T16:30:54.997862+00:00 predates the formal commands now summarized in that object. They actually ran16:32:22 through16:34:55.",
+      "id": "CHECKPOINT_TIMESTAMP",
+      "path": "reports/continuation.json",
+      "recommended_correction": "Update checkpoint timestamp in the next verification record or add formal.completed_at, preserving actual command receipts. This does not invalidate completed build/audit evidence.",
+      "severity": "MINOR_DOCUMENTARY_CORRECTION"
+    }
+  ],
+  "formal_scope": "Exact fixed finite-frame cardinal ratios, rational ceiling composite null, boundary/census results. Uniform subset sampling/complete frozen endpoints remain premises; no Python refinement, minimum-loop proof or physical inference.",
+  "git_remote_or_ci_queried_by_this_review": false,
+  "new_commit_CI": "Pending in inspected checkpoint; not claimed passed",
+  "new_source_downloads": 0,
+  "private_files_read": false,
+  "publication_reported_by_root": "88d512cbf40a7a7d11fb45aa24cd5462f8a7e81d",
+  "recommendation": {
+    "first_required_action": "Finish88d512cb exact remote/CI and clean package/artifact reproduction; the9d runtime gate does not substitute for the descendant formal/publication CI.",
+    "goal_basis": "Definition-of-done usability/explicit failure and unknown states, supporting G20 review while G21 remains blocked.",
+    "next_bounded_implementation": "Add a read-only source-readiness summary to the existing workbench and exact JSON export using only already-published LiA1 and Dryad receipts.",
+    "not_authorized_by_recommendation": [
+      "No raw readers or renewed Li execution",
+      "No Dryad retry, mirror or alternate download",
+      "No source admission, predictor or threshold tuning",
+      "No deferred confidence-inversion implementation or G21 experiment"
+    ],
+    "observed_gap": "Current server resources/views cover historical archives, MPEA and Rhizo census; no current Li/Dryad source-readiness resource/view was found in the inspected routes/assets.",
+    "scientific_limit": "This implements truthful interface visibility only; it does not resolve G20 source readiness or create fresh scientific evidence.",
+    "small_scope": [
+      "One closed packaged JSON resource bound to the published public receipts, read-only guarded HTTP route and existing workbench panel/export.",
+      "Keep operational failure separate from scientific verdict; expose actual partial machine-read counters, noA2/B/C, declared archive rights versus unverified file identity/schema/pairing and source links.",
+      "Malformed, unavailable or stale evidence clears any ready claim/export; no editable admission or automatic retry.",
+      "Synthetic contract/unknown-state checks and HTTP/export/resource identity; reuse existing security and browser patterns."
+    ]
+  },
+  "reviewed_at": "2026-10-16T16:49:21.585956+00:00",
+  "schema": "lupine.discovery.final_claims.independent_review.v1",
+  "scientific_admission": false,
+  "status": "NO_BLOCKING_CLAIM_CONTRADICTION_TWO_MINOR_DOCUMENTARY_FINDINGS",
+  "tests_or_builds_run": 0,
+  "tracked_edits": false
+}

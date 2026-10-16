@@ -1,0 +1,65 @@
+--- baseline/src/lupine_discovery/web/index.html
++++ overlay/src/lupine_discovery/web/index.html
+@@ -11,6 +11,7 @@
+   <script src="/mpea.js" defer></script>
+   <script src="/planner.js" defer></script>
+   <script src="/recorded-census.js" defer></script>
++  <script src="/source-readiness.js" defer></script>
+   <script src="/app.js" defer></script>
+ </head>
+ <body>
+@@ -128,6 +129,12 @@
+   <p id="recorded-census-status" class="notice" role="status">No stored-label census is bundled. No numerical result is inferred.</p>
+   <div id="recorded-census-content" hidden></div>
+ </section>
++<section id="source-readiness-section" class="benchmark-section" aria-labelledby="source-readiness-heading">
++  <div class="section-heading"><div><p class="eyebrow">07 / SOURCE READINESS</p><h2 id="source-readiness-heading">What still blocks these sources?</h2></div><span class="tag">NOT ADMITTED</span></div>
++  <p class="section-description">Published source checks show what completed, what did not run, and what remains unresolved before scientific use.</p>
++  <p id="source-readiness-status" class="notice" role="status" aria-live="polite">Source-readiness evidence is unavailable. No source is inferred ready.</p>
++  <div id="source-readiness-content" hidden></div>
++</section>
+ <section class="release-note"><span aria-hidden="true">↗</span><div><h3>Research preview, with the open questions intact.</h3><p id="release-note-text">Release requires broader independent benchmarks, an evidence policy for real scenarios, and a prospective test. Passing a constructed case does not settle those questions.</p></div></section></div>
+       </section>
+       <section id="view-planning" class="view" aria-labelledby="planning-title" hidden>
+--- baseline/src/lupine_discovery/web/app.js
++++ overlay/src/lupine_discovery/web/app.js
+@@ -3,6 +3,7 @@
+ (() => {
+   'use strict';
+   const $ = (id) => document.getElementById(id);
++  let sourceReadinessRequest = 0;
+   const state = { catalog: [], caseId: null, metadata: null, raw: '', problem: null, certificate: null, selectedRaw: null, replay: null, replayRequest: 0, revision: 0, busy: false, filter: 'all', benchmarksLoaded: false };
+   const node = (tag, className, text) => {
+     const el = document.createElement(tag);
+@@ -1376,12 +1377,15 @@
+     status.hidden = true; content.hidden = false;
+   }
+   async function loadBenchmarks() {
++    const readinessRequest = ++sourceReadinessRequest;
++    window.LupineSourceReadiness.render(null);
+     $('benchmark-status').hidden = false;
+     $('benchmark-status').className = 'notice';
+     $('benchmark-status').textContent = 'Running the known-answer suite and loading recorded archive evaluations…';
+     try {
+       const report = await api('/api/benchmarks');
+       renderKnown(report.known_answers); renderArchives(report.archived, report.additional_archived); renderConstrained(report.constrained_archived); renderTrainingTail(report.training_tail); window.LupineMpea.render(report.mpea_archived); window.LupineRecordedCensus.render(report.recorded_census);
++      if (readinessRequest === sourceReadinessRequest) window.LupineSourceReadiness.render(report.source_readiness);
+       if (!$('refresh-benchmarks')) {
+         const refresh = node('button', 'button button-outline button-small', '↻ Run known-answer suite again');
+         refresh.id = 'refresh-benchmarks'; refresh.addEventListener('click', loadBenchmarks);
+--- baseline/src/lupine_discovery/web/styles.css
++++ overlay/src/lupine_discovery/web/styles.css
+@@ -2496,3 +2496,13 @@
+ /* Approximate census displays retain their complete exact fraction on expansion. */
+ .recorded-census-exact summary { cursor:pointer; white-space:nowrap; font-family:var(--mono) }
+ .recorded-census-exact code { display:block; max-width:240px; overflow-wrap:anywhere; white-space:normal; padding-top:8px }
++
++/* Public source-readiness notes never trigger acquisition or parsing. */
++.source-readiness-card { min-width:0; font-size:12px; line-height:1.65; overflow-wrap:anywhere }
++.source-readiness-card h4 { font-size:12px; margin:18px 0 5px }
++.source-readiness-card ul { padding-left:20px; margin:5px 0 }
++.source-readiness-card li+li { margin-top:5px }
++.source-readiness-card .protocol-details { margin-top:18px; font-size:12px }
++.source-readiness-card a { color:var(--violet); text-underline-offset:3px }
++.source-readiness-card a:focus-visible,.source-readiness-card summary:focus-visible { outline:3px solid #9f86b5; outline-offset:3px }
++#download-source-readiness { margin-top:18px }

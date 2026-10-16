@@ -1,0 +1,81 @@
+{
+  "allowed_files": [
+    {
+      "bytes": 2056,
+      "copy_mode": "EXACT",
+      "path": "README.md",
+      "sha256": "7e7ae18174110cae6a646572e1cc2650c29acaff359b24246ed5583be9ecccfd"
+    },
+    {
+      "bytes": 2679,
+      "copy_mode": "EXACT",
+      "path": "scope.json",
+      "sha256": "3e8cacb03a13214ab0136661cef03e78e0d5b9b45d23d7f6cb4f850a024a2e87"
+    },
+    {
+      "bytes": 351,
+      "copy_mode": "EXACT",
+      "path": "scope-hold.json",
+      "sha256": "38b8a2455b606d6cf848b439e87f6b1d0fec2b82ea66d31d19ee62282289a15a"
+    },
+    {
+      "bytes": 1699,
+      "copy_mode": "EXACT",
+      "path": "get_landing.py",
+      "sha256": "6eb62ea284532945fdfc8dbf8155b55174e87368390f8ed24209599339e9abbb"
+    },
+    {
+      "bytes": 475,
+      "copy_mode": "EXACT",
+      "path": "landing/request.json",
+      "sha256": "db708a86ebbc48d9bc1ac7856119e224b04fbed9c06726c75864c8ffa2abdfe4"
+    },
+    {
+      "bytes": 545,
+      "copy_mode": "EXACT",
+      "path": "landing/receipt.json",
+      "sha256": "f50569f9611718d141350009ca083fffebbcb1d245545971d80dd78388c4904f"
+    },
+    {
+      "bytes": 825,
+      "copy_mode": "EXACT",
+      "path": "disposition.json",
+      "sha256": "04fdcd22c726d1be8f5684e7b9b10734b9fe9bda0e85d329e487ca558f6a7efb"
+    },
+    {
+      "bytes": 734,
+      "copy_mode": "EXACT",
+      "path": "source-bindings.json",
+      "sha256": "28972873385dfd7056297582f5b236fb12eb674fcde5b00a9a9325c814d3f20c"
+    }
+  ],
+  "copy_rule": "Only listed files plus inventory.json and handoff.json. No data files, unlisted bodies or source operations.",
+  "excluded_files": [
+    {
+      "path": "landing/response.body",
+      "reason": "Raw denial HTML; hash/size/status retained in public receipt."
+    }
+  ],
+  "file_count": 8,
+  "local_link_checks": [
+    {
+      "from": "README.md",
+      "in_copyset": true,
+      "target": "scope.json"
+    },
+    {
+      "from": "README.md",
+      "in_copyset": true,
+      "target": "landing/request.json"
+    },
+    {
+      "from": "README.md",
+      "in_copyset": true,
+      "target": "landing/receipt.json"
+    }
+  ],
+  "public_report_target": "reports/phase2-qm9-file-manifest-v1/",
+  "schema": "lupine.discovery.qm9_manifest_public_inventory.v1",
+  "total_bytes": 9364,
+  "whitespace_check": "No trailing spaces or tabs; no byte transforms needed."
+}

@@ -1,0 +1,9 @@
+from pathlib import Path
+import datetime,hashlib,json,os,subprocess,time
+R=Path(__file__).absolute().parents[2];H=Path(__file__).absolute().parent;sha=lambda b:hashlib.sha256(b).hexdigest()
+paths=[R/'pyproject.toml']+[p for folder in ['src/lupine_discovery','scripts','tests'] for p in (R/folder).rglob('*') if p.is_file() and p.suffix in {'.py','.json','.toml','.js','.html','.css','.svg'} and '__pycache__' not in p.parts];held={str(p.relative_to(R)):sha(p.read_bytes()) for p in paths}
+cmd=['python','-m','unittest','test_source_readiness','test_server','test_server_study_planning','test_server_recorded_census','test_package_retention','test_package_retention_review','test_package_mpea_interface','test_retained_artifacts','test_retained_mpea_transport','test_package_source_readiness','-v']
+start=datetime.datetime.now(datetime.timezone.utc).isoformat();t=time.monotonic();r=subprocess.run(cmd,cwd=R,env=dict(os.environ,PYTHONPATH='src:tests',PYTHONDONTWRITEBYTECODE='1'),capture_output=True);seconds=time.monotonic()-t
+(H/'python-first-stdout.txt').write_bytes(r.stdout);(H/'python-first-stderr.txt').write_bytes(r.stderr);stable=all(sha((R/n).read_bytes())==d for n,d in held.items());v={'command':cmd,'environment':{'PYTHONPATH':'src:tests','PYTHONDONTWRITEBYTECODE':'1'},'started_at':start,'finished_at':datetime.datetime.now(datetime.timezone.utc).isoformat(),'exit_code':r.returncode,'seconds':seconds,'source_held':stable,'held_files':held,'stdout_sha256':sha(r.stdout),'stderr_sha256':sha(r.stderr),'scope':'Integrated changed backend/transport and legacy server regression checks; no scientific source operation.'}
+with (H/'python-first-execution.json').open('x') as f:f.write(json.dumps(v,indent=2)+'\n')
+print(json.dumps({k:x for k,x in v.items() if k!='held_files'}));print(r.stderr.decode()[-3000:]);assert r.returncode==0 and stable

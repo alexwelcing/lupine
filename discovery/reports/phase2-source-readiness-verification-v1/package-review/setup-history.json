@@ -1,0 +1,8 @@
+{
+  "attempted_path": ".cache/phase2-source-readiness-package-v1/overlay/src/lupine_discovery/resources/source-readiness-v1.json",
+  "error": "FileNotFoundError",
+  "kind": "Read-only inspection setup error, not a package/test failure",
+  "product_or_scientific_execution": false,
+  "resolution": "Read root prepare.py to identify the separate backend overlay; inspect its public6053-byte snapshot and verify9abad97d SHA without copying it.",
+  "source_changed": false
+}
