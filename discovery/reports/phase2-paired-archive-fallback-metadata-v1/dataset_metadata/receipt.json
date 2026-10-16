@@ -1,0 +1,17 @@
+{
+  "bytes_retained": 141785,
+  "complete_response_read": true,
+  "finished_at": "2026-10-16T15:15:42.716861+00:00",
+  "headers": {
+    "Content-Length": "141785",
+    "Content-Type": "text/plain; charset=utf-8",
+    "ETag": "\"c4147a58d42cfd5f1d78c85c5a51a59dd3f8f227dc325f4f16e0db2ba285706b\""
+  },
+  "over_cap": false,
+  "request_count": 1,
+  "sha256": "a637a1fe146b70f5f663fd480a2475362dc446741893c3048ec992219ba2a0b0",
+  "started_at": "2026-10-16T15:15:42.326104+00:00",
+  "status": 200,
+  "transport_error_category": null,
+  "url": "https://raw.githubusercontent.com/hackingmaterials/matminer/cc3573b8a6b19ef32c9a06595f187615f25012de/matminer/datasets/dataset_metadata.json"
+}

@@ -1,0 +1,11 @@
+{
+  "status":"WRITTEN_BEFORE_SAME_SOURCE_METADATA_PROJECTION_OR_NEW_REQUEST",
+  "reason":"The acquired primary paper says Dryad, while the original conditional repository URLs allowed only Figshare. No Figshare request was made. Also, the first ancestor-based Data Records projection included qualitative result discussion; that exact original and exposure remain preserved.",
+  "same_source":"primary_methods/response.body, SHA256 1711b5f59a82ed48acca1a97312a863180bf09a07597c44b0a3cfa109402cb19",
+  "same_source_projection":"Inspect only table identifiers/caption titles (digit-redacted), back-reference DOI tokens beginning10.5061/ and their ref-list title/id, and front article license links. Do not display table cells, numerical outcomes, figures/captions, whole references, contacts or additional article prose. This is a further projection of already machine-exposed bytes, not a new acquisition.",
+  "conditional_request":{"id":"dataset_rights_metadata","url_template":"https://api.datacite.org/dois/{exact_article_data_citation_doi}","requires":"Exactly one DOI beginning10.5061/dryad. is identified in the primary article data citations. Otherwise stop; do not search or guess.","maximum_bytes":1048576,"purpose":"Authoritative DOI registry metadata for cited original dataset identity and rights, not the separately processed matminer archive. No download URL is followed."},
+  "request_limit":"At most this one additional request; combined maximum3 for this task, below the original4 budget. No remaining fourth call is used.",
+  "transport":"Ordinary GET,30s timeout,no credentials,no redirects,no retry; failure retained once and this route stops.",
+  "researcher_projection":"DataCite selected DOI/title/publisher/version/publication-year/rights/landing-page fields only. Whole metadata container machine exposure declared; no dataset file or full target table acquired.",
+  "preserved_limits":"Original UTF8/XML/projection evidence is never overwritten. First qualitative-result exposure is not undone by narrower later extraction. Original-data rights cannot automatically license the matminer derivative or establish byte/row equivalence. No benchmark/feature/threshold/fit choice."
+}

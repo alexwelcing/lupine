@@ -1,0 +1,17 @@
+{
+  "actual_operation_or_gate_accepted": false,
+  "files": [
+    {
+      "bytes": 10597,
+      "path": "README.md",
+      "sha256": "dcb9af53df282495865c6212804f2d719ceb9a41323a7245b6eabfb13438f16e"
+    },
+    {
+      "bytes": 6100,
+      "path": "validator-design.json",
+      "sha256": "ccbe427834e49677e273fd120ab49b75348ddc9a09d46d24ac42d9142f61b7fd"
+    }
+  ],
+  "final_source_rebind_required": true,
+  "status": "PROSPECTIVE_UNEXECUTED"
+}

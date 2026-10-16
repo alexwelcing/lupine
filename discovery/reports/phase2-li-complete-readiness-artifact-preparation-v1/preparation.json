@@ -1,0 +1,28 @@
+{
+  "audit_source_sha256": "b00541daccbbe8626880f59bc59d9694dc9f34e922690f968dfb50ed348bb738",
+  "author_preparation_provenance": {
+    "copyset_path": ".cache/phase2-li-complete-readiness-production-v1/promotion-copyset.final.json",
+    "copyset_sha256": "b3b065ade262319238108efd0b6b296cc7ff947cb3c4c4eec8154d072db7559a",
+    "overlay_identity_review": "author-overlay-identity.json",
+    "source_operation_executions_here": 0
+  },
+  "base_commit": "ddd4a6a8df0f908a162b7e5387b0faac325180d6",
+  "bindings": [
+    {
+      "sha256": "0ba8593c7abe3f65d5fd1a0686c96dd52e45b92144dbc51e65ab5f4dd3ce80e4",
+      "snapshot": "prepared-scope.json"
+    },
+    {
+      "sha256": "11bc69deddfacd761522e3db0deaa4e8773d455999208e074d827248370fa7b3",
+      "snapshot": "prepared-promotion-inputs.json"
+    },
+    {
+      "sha256": "b3b065ade262319238108efd0b6b296cc7ff947cb3c4c4eec8154d072db7559a",
+      "snapshot": "author-promotion-copyset.final.json"
+    }
+  ],
+  "execution_policy": "Only compile syntax before root actual gate. First actual result preserved exclusively; no private inputs or artifact code execution.",
+  "predecessor_auditor_sha256": "1813a9a94d7d4b9b17ec788703d433072a827480a1fc8a6d1f0c348890539a84",
+  "prepared_at": "2026-10-16T15:31:49.732669+00:00",
+  "schema": "lupine.li.complete-readiness.artifact-preparation.v1"
+}

@@ -1,7 +1,7 @@
 {
   "schema": "lupine.discovery.runtime-manifest.v1",
   "python": "3.12.14",
-  "checkpoint": "2026-10-16 reviewed seventeen-check retention expectation; original CI/full-suite failure preserved",
+  "checkpoint": "2026-10-16 complete bounded Li readiness integration; generated checks only, actual operations unbound",
   "files": {
     "pyproject.toml": "a73eec989447b99fec48de193218a0750079eeb5973406c53d7a0dc840d9d90f",
     "scripts/additional_archived_benchmark.py": "8f50f0fc8aaade6f895500856db91b6593e5da8f676c7bf325cdc0a938d73b9a",
@@ -341,6 +341,12 @@
     "tests/test_study_planning_review.py": "f20f88ad23610d5876714789bc58f6f825b728892df505c31120531d9795ac6f",
     "tests/test_training_dashboard.py": "07be2dfac876c7556e1b6a3a6e51c4c76c7ddd5be5048a992473ef798221e109",
     "tests/test_training_tail.py": "f3c66437ece01b7580f55dc5d67b3b331aff8d16c266f03a561a232656f94e0f",
-    "tests/test_training_tail_review.py": "1c08e5cbd1077b3f0e656dcf8cfee166079657aba443aa2569e272f3512470d1"
+    "tests/test_training_tail_review.py": "1c08e5cbd1077b3f0e656dcf8cfee166079657aba443aa2569e272f3512470d1",
+    "scripts/li_v3_readiness.py": "5fd1b06c683bb44ed582964bc59f5281cbdbe7e880c749ec9c55276145fa5219",
+    "scripts/li_v3_readiness_production.py": "77dece96850b09be2f13acd275cc28789ea0e3bc408cfcec86bcd02f488fed85",
+    "tests/test_li_v3_readiness.py": "f961582942c7e1964ef2b1b462d81520278a85c17a459be24c099c95ef9654a3",
+    "tests/test_li_v3_readiness_review.py": "dda4d354ff55f09d4542105df7c7180097ad187477b4c03743bafd95a527a34b",
+    "tests/test_li_v3_readiness_production.py": "809c0126ef9f130fad264ef2617f67b9b99db103a3a14c476a6e60bfb4905470",
+    "tests/test_li_v3_readiness_production_review.py": "2f2295d0f04fbc0f3399f904eed757e8a6c0f713a13cf9bb13850c52ea1e91e0"
   }
 }

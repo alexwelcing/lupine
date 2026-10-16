@@ -1,0 +1,23 @@
+{
+  "actual_data_access": false,
+  "created": "2026-10-16T15:02:51.129084+00:00",
+  "final_baseline_rebind": "NOT_YET_EXECUTED",
+  "inventory": {
+    "path": "counter-inventory.json",
+    "sha256": "e219cac4bbb7faa4e93b55bf92cb0581ff6457a7260b61230c5e93156149b3fa"
+  },
+  "portable_test": {
+    "destination": "tests/test_li_v3_readiness_production_review.py",
+    "distinct_methods": 51,
+    "original50_methods_byte_preserved_as_file_prefix": true,
+    "path": "test_li_v3_readiness_production_review_final.py",
+    "sha256": "2f2295d0f04fbc0f3399f904eed757e8a6c0f713a13cf9bb13850c52ea1e91e0"
+  },
+  "publication_allowlist": "Only counter-inventory.files plus counter-inventory.json and counter-handoff.json. Additive to original immutable inventory/handoff.",
+  "review": {
+    "path": "counter-review.json",
+    "sha256": "fc95f15c5269fc636d96e3966733b7183fa8ce23c294520a124d51cba83d6ee7"
+  },
+  "schema": "li.readiness.counter-correction.handoff.v1",
+  "status": "PENDING_EXACT_PUBLISHED_BASELINE_REBIND_AND_ROOT_RELEASE_GATES"
+}

@@ -1,0 +1,48 @@
+--- held-repair-auditor
++++ prepared-li-auditor
+@@ -1,4 +1,4 @@
+-"""Independent exact-commit retained artifact audit; never executes artifact code."""
++"""Independent additive Li exact-commit artifact audit; never executes artifact code."""
+ import argparse
+ import base64
+ import configparser
+@@ -21,7 +21,7 @@
+ BASE = Path(__file__).resolve().parent
+ ROOT = BASE.parents[1]
+ REPO = ROOT.parent
+-BASELINE = '2975d6d0b9111cc84adb82ccc673bc82339ab154'
++BASELINE = 'ddd4a6a8df0f908a162b7e5387b0faac325180d6'
+ RESOURCE_SHA = 'a9ab9d72c6c39be9338e951b657e0587ae8f4dbe534b276b8f8f8951a7b1a63a'
+ RUNTIME_EXTENSIONS = {'.toml', '.py', '.json', '.html', '.css', '.js', '.svg'}
+ OLD_CHECKS = [
+@@ -258,11 +258,13 @@
+     added = sorted(set(current_runtime)-set(baseline_runtime))
+     changed = sorted(k for k in baseline_runtime if k in current_runtime and baseline_runtime[k] != current_runtime[k])
+     unchanged = sorted(k for k in baseline_runtime if baseline_runtime[k] == current_runtime.get(k))
+-    require('exact_runtime_counts', len(baseline_runtime) == 339 and len(current_runtime) == 339 and state['runtime_manifest']['file_count'] == 339 and len(unchanged) == 338)
+-    require('exact_one_changed_zero_added_none_removed', changed == sorted(scope['existing_runtime_changes']) == sorted(promotion['changed_existing']) and added == sorted(scope['runtime_additions']) and removed == [])
+-    require('promotion_copyset_equals_runtime_delta', set(promotion['files']) == set(changed+added))
++    require('exact_runtime_counts', len(baseline_runtime) == 339 and len(current_runtime) == 345 and state['runtime_manifest']['file_count'] == 345 and len(unchanged) == 339)
++    require('exact_zero_changed_six_added_none_removed', changed == sorted(scope['existing_runtime_changes']) == sorted(promotion['changed_existing']) == [] and added == sorted(scope['runtime_additions']) == sorted(promotion['added_runtime']) and len(added) == 6 and removed == [])
++    require('promotion_copyset_equals_runtime_delta_and_guarded_docs', set(promotion['files']) == set(added + scope['guarded_document_additions']) and sorted(scope['guarded_document_additions']) == sorted(promotion['added_guarded_docs']) and len(promotion['files']) == 8)
++    for path in scope['guarded_document_additions']:
++        require('guarded_document_is_new_'+path, 'discovery/'+path not in baseline_tree)
+     for path, binding in promotion['files'].items():
+-        require('promoted_runtime_identity_'+path, current_runtime[path] == binding['sha256'])
++        require('promoted_source_identity_'+path, source_hashes['discovery/'+path] == binding['sha256'])
+     config = tomllib.loads(selected_bytes['discovery/pyproject.toml'].decode('utf-8'))
+     require('fixed_package_mapping_contract', config['tool']['setuptools']['packages']['find']['where'] == ['src'] and set(config['tool']['setuptools']['package-data']['lupine_discovery']) == {'web/*.html','web/*.css','web/*.js','web/*.svg','resources/*.json','resources/**/*.json'})
+     require('pyproject_unchanged_and_no_runtime_dependencies', current_runtime['pyproject.toml'] == baseline_runtime['pyproject.toml'] and config['project']['dependencies'] == [])
+@@ -309,10 +311,10 @@
+     for kind, path in artifacts.items():
+         require(kind+'_held_after_audit', sha_file(path) == receipt['artifacts'][kind]['sha256'])
+     require('receipt_held_after_audit', (receipt_directory/'release-artifacts.json').read_bytes() == receipt_raw)
+-    observed = {'published_commit':args.published_commit,'baseline_commit':BASELINE,'source_file_count':len(source_hashes),'runtime_files':len(current_runtime),'baseline_runtime_files':len(baseline_runtime),'unchanged_baseline_runtime_files':len(unchanged),'changed_existing_runtime_files':changed,'added_runtime_files':added,'wheel_members':len(wheel_files),'wheel_RECORD_content_digests':len(rows)-1,'package_payloads':len(current_payloads),'baseline_package_payloads':len(baseline_payloads),'unchanged_baseline_package_payloads':110,'changed_package_payloads':wheel_payload_changed,'added_package_payloads':wheel_payload_added,'public_resource_sha256':RESOURCE_SHA,'mandatory_package_receipt_checks':17,'retained_demonstrations':28,'retained_problem_schemas':6,'source_manifest_sha256':digest(current_manifest_raw),'baseline_manifest_sha256':digest(baseline_manifest_raw)}
++    observed = {'published_commit':args.published_commit,'baseline_commit':BASELINE,'source_file_count':len(source_hashes),'runtime_files':len(current_runtime),'baseline_runtime_files':len(baseline_runtime),'unchanged_baseline_runtime_files':len(unchanged),'changed_existing_runtime_files':changed,'added_runtime_files':added,'wheel_members':len(wheel_files),'wheel_RECORD_content_digests':len(rows)-1,'package_payloads':len(current_payloads),'baseline_package_payloads':len(baseline_payloads),'unchanged_baseline_package_payloads':110,'changed_package_payloads':wheel_payload_changed,'added_package_payloads':wheel_payload_added,'public_resource_sha256':RESOURCE_SHA,'mandatory_package_receipt_checks':17,'retained_demonstrations':28,'retained_problem_schemas':6,'source_manifest_sha256':digest(current_manifest_raw),'baseline_manifest_sha256':digest(baseline_manifest_raw),'promoted_source_pins':{path:binding['sha256'] for path,binding in promotion['files'].items()},'retained_receipt_sha256':digest(receipt_raw),'source_archive_sha256':receipt['artifacts']['source_archive']['sha256'],'wheel_sha256':receipt['artifacts']['wheel']['sha256'],'artifact_identities_held':True,'removed_runtime_files':removed}
+ except Exception as exc:
+     checks.append({'check':'audit_stopped_with_exception','passed':False,'exception_type':type(exc).__name__,'message':str(exc)})
+-report = {'schema':'lupine.rhizo.census.repair-independent-artifact-review.v1','status':'PASS_EXACT_RETAINED_ARTIFACT_AND_DECLARED_DELTA' if all(c['passed'] for c in checks) else 'FAIL_RETAINED_ARTIFACT_AUDIT','started_at':started_at,'finished_at':stamp(),'seconds':time.monotonic()-t0,'published_commit_requested':args.published_commit,'baseline_commit':BASELINE,'inputs':inputs,'observed':observed,'checks':checks,'audit_source_sha256':digest(Path(__file__).read_bytes()),'scope':['Independent byte/metadata audit of retained public artifacts and exact committed snapshots.','No extraction, package-code execution, census execution, generic verifier, scientific source acquisition, private-input read, test rerun, Git mutation or network.','Package verification result is cross-checked as a retained receipt, not independently re-executed here.','Equal hashes establish identity, not physical truth, statistical validity, training independence, general superiority, complete scientific reproduction or deterministic rebuilding.','Baseline payload comparison is to the exact2975 Git snapshot, not a claim of byte-identical wheel-container rebuild.']}
++report = {'schema':'lupine.li.complete-readiness.independent-artifact-review.v1','status':'PASS_EXACT_RETAINED_ARTIFACT_AND_DECLARED_DELTA' if all(c['passed'] for c in checks) else 'FAIL_RETAINED_ARTIFACT_AUDIT','started_at':started_at,'finished_at':stamp(),'seconds':time.monotonic()-t0,'published_commit_requested':args.published_commit,'baseline_commit':BASELINE,'inputs':inputs,'observed':observed,'checks':checks,'audit_source_sha256':digest(Path(__file__).read_bytes()),'scope':['Independent byte/metadata audit of retained public artifacts and exact committed snapshots.','No extraction, package-code execution, census execution, generic verifier, scientific source acquisition, private-input read, test rerun, Git mutation or network.','Package verification result is cross-checked as a retained receipt, not independently re-executed here.','Equal hashes establish identity, not physical truth, statistical validity, training independence, general superiority, complete scientific reproduction or deterministic rebuilding.','Baseline payload comparison is to the exact ddd4 Git snapshot, not a claim of byte-identical wheel-container rebuild; this artifact audit does not authorize an actual scientific source operation.']}
+ (slot/'review.json').write_text(json.dumps(report,indent=2,sort_keys=True)+'\n')
+ print(json.dumps({'status':report['status'],'checks':len(checks),'failures':[c for c in checks if not c['passed']],'observed':observed},indent=2))
+ raise SystemExit(0 if all(c['passed'] for c in checks) else 1)

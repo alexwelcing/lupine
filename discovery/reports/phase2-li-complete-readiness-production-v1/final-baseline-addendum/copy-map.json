@@ -1,0 +1,432 @@
+{
+  "exclusions": [
+    "Generated-production repositories and temporary objects",
+    "Python caches and bytecode",
+    "Raw or private Li data/captures",
+    "Runtime promotion overlay duplicates; exact eight-path copyset included as documentation only"
+  ],
+  "originals": [
+    {
+      "destination": "final-baseline-addendum/author/baseline-rebind-v1/README.md.utf8.json",
+      "destination_sha256": "c7bd2a2f57584026d008479eeabd3ce71b73369fd0bac8620117e14ae76f72f3",
+      "reason": [
+        "Historical Markdown kept exact in a wrapper; original relative links are not rewritten or linted as current navigation."
+      ],
+      "representation": "LOSSLESS_UTF8_JSON",
+      "source": ".cache/phase2-li-complete-readiness-production-v1/baseline-rebind-v1/README.md",
+      "source_bytes": 2497,
+      "source_sha256": "55afc092bd0c32438558f6549d5a2b54c8b470836ce5acbf3d37851cc8b6f0c8"
+    },
+    {
+      "destination": "final-baseline-addendum/author/baseline-rebind-v1/README.md.diff.utf8.json",
+      "destination_sha256": "47c947b046263af7ae4a3cf937f9e3c30dc769d678db27fd8b043aadfa007c14",
+      "reason": [
+        "Trailing whitespace is preserved losslessly."
+      ],
+      "representation": "LOSSLESS_UTF8_JSON",
+      "source": ".cache/phase2-li-complete-readiness-production-v1/baseline-rebind-v1/README.md.diff",
+      "source_bytes": 2278,
+      "source_sha256": "9a63328eae12508d28942bd96a09ecf21efb543848ecb31e1ccc4746805ef208"
+    },
+    {
+      "destination": "final-baseline-addendum/author/baseline-rebind-v1/baseline-source-verification.json",
+      "destination_sha256": "bde795d85045d059bb16519961da25bd49bfc223740f59082f208e1bf8888c03",
+      "reason": [],
+      "representation": "EXACT",
+      "source": ".cache/phase2-li-complete-readiness-production-v1/baseline-rebind-v1/baseline-source-verification.json",
+      "source_bytes": 1468,
+      "source_sha256": "bde795d85045d059bb16519961da25bd49bfc223740f59082f208e1bf8888c03"
+    },
+    {
+      "destination": "final-baseline-addendum/author/baseline-rebind-v1/before/README.md.utf8.json",
+      "destination_sha256": "2199733aa832d0f5559b3055b4665b51acc4561239e519135fb581f1b924631a",
+      "reason": [
+        "Historical Markdown kept exact in a wrapper; original relative links are not rewritten or linted as current navigation."
+      ],
+      "representation": "LOSSLESS_UTF8_JSON",
+      "source": ".cache/phase2-li-complete-readiness-production-v1/baseline-rebind-v1/before/README.md",
+      "source_bytes": 17903,
+      "source_sha256": "87d3bc80f6442658fc1d027e30206bbb04c44635c5f9b258f0ec0f6c207ff6cb"
+    },
+    {
+      "destination": "final-baseline-addendum/author/baseline-rebind-v1/before/interface.complete-route-v2.json",
+      "destination_sha256": "4c16d7156f43388982ce778a0c90ba503e3a3765e6cc444e038d7a15f61e91c1",
+      "reason": [],
+      "representation": "EXACT",
+      "source": ".cache/phase2-li-complete-readiness-production-v1/baseline-rebind-v1/before/interface.complete-route-v2.json",
+      "source_bytes": 10467,
+      "source_sha256": "4c16d7156f43388982ce778a0c90ba503e3a3765e6cc444e038d7a15f61e91c1"
+    },
+    {
+      "destination": "final-baseline-addendum/author/baseline-rebind-v1/before/li_v3_readiness.py",
+      "destination_sha256": "5fd1b06c683bb44ed582964bc59f5281cbdbe7e880c749ec9c55276145fa5219",
+      "reason": [],
+      "representation": "EXACT",
+      "source": ".cache/phase2-li-complete-readiness-production-v1/baseline-rebind-v1/before/li_v3_readiness.py",
+      "source_bytes": 81591,
+      "source_sha256": "5fd1b06c683bb44ed582964bc59f5281cbdbe7e880c749ec9c55276145fa5219"
+    },
+    {
+      "destination": "final-baseline-addendum/author/baseline-rebind-v1/before/li_v3_readiness_production.py",
+      "destination_sha256": "a3370ac84762ef7f859061bde93f118a1c1981b02460e9ddd0b1cd38e55b840b",
+      "reason": [],
+      "representation": "EXACT",
+      "source": ".cache/phase2-li-complete-readiness-production-v1/baseline-rebind-v1/before/li_v3_readiness_production.py",
+      "source_bytes": 61640,
+      "source_sha256": "a3370ac84762ef7f859061bde93f118a1c1981b02460e9ddd0b1cd38e55b840b"
+    },
+    {
+      "destination": "final-baseline-addendum/author/baseline-rebind-v1/before/test_li_v3_readiness_production.py",
+      "destination_sha256": "809c0126ef9f130fad264ef2617f67b9b99db103a3a14c476a6e60bfb4905470",
+      "reason": [],
+      "representation": "EXACT",
+      "source": ".cache/phase2-li-complete-readiness-production-v1/baseline-rebind-v1/before/test_li_v3_readiness_production.py",
+      "source_bytes": 46051,
+      "source_sha256": "809c0126ef9f130fad264ef2617f67b9b99db103a3a14c476a6e60bfb4905470"
+    },
+    {
+      "destination": "final-baseline-addendum/author/baseline-rebind-v1/held/README.md.utf8.json",
+      "destination_sha256": "3a445dacc100397057b51bf310d4a3838f4f1dc37be2d46af3816cf2f370d7e3",
+      "reason": [
+        "Historical Markdown kept exact in a wrapper; original relative links are not rewritten or linted as current navigation."
+      ],
+      "representation": "LOSSLESS_UTF8_JSON",
+      "source": ".cache/phase2-li-complete-readiness-production-v1/baseline-rebind-v1/held/README.md",
+      "source_bytes": 18081,
+      "source_sha256": "1fd11e47c4a332034b213348e4a85165e18ba0693791483cd703c326eb8d87ca"
+    },
+    {
+      "destination": "final-baseline-addendum/author/baseline-rebind-v1/held/interface.complete-route-v2.json",
+      "destination_sha256": "4c16d7156f43388982ce778a0c90ba503e3a3765e6cc444e038d7a15f61e91c1",
+      "reason": [],
+      "representation": "EXACT",
+      "source": ".cache/phase2-li-complete-readiness-production-v1/baseline-rebind-v1/held/interface.complete-route-v2.json",
+      "source_bytes": 10467,
+      "source_sha256": "4c16d7156f43388982ce778a0c90ba503e3a3765e6cc444e038d7a15f61e91c1"
+    },
+    {
+      "destination": "final-baseline-addendum/author/baseline-rebind-v1/held/li_v3_readiness.py",
+      "destination_sha256": "5fd1b06c683bb44ed582964bc59f5281cbdbe7e880c749ec9c55276145fa5219",
+      "reason": [],
+      "representation": "EXACT",
+      "source": ".cache/phase2-li-complete-readiness-production-v1/baseline-rebind-v1/held/li_v3_readiness.py",
+      "source_bytes": 81591,
+      "source_sha256": "5fd1b06c683bb44ed582964bc59f5281cbdbe7e880c749ec9c55276145fa5219"
+    },
+    {
+      "destination": "final-baseline-addendum/author/baseline-rebind-v1/held/li_v3_readiness_production.py",
+      "destination_sha256": "77dece96850b09be2f13acd275cc28789ea0e3bc408cfcec86bcd02f488fed85",
+      "reason": [],
+      "representation": "EXACT",
+      "source": ".cache/phase2-li-complete-readiness-production-v1/baseline-rebind-v1/held/li_v3_readiness_production.py",
+      "source_bytes": 61640,
+      "source_sha256": "77dece96850b09be2f13acd275cc28789ea0e3bc408cfcec86bcd02f488fed85"
+    },
+    {
+      "destination": "final-baseline-addendum/author/baseline-rebind-v1/held/test_li_v3_readiness_production.py",
+      "destination_sha256": "809c0126ef9f130fad264ef2617f67b9b99db103a3a14c476a6e60bfb4905470",
+      "reason": [],
+      "representation": "EXACT",
+      "source": ".cache/phase2-li-complete-readiness-production-v1/baseline-rebind-v1/held/test_li_v3_readiness_production.py",
+      "source_bytes": 46051,
+      "source_sha256": "809c0126ef9f130fad264ef2617f67b9b99db103a3a14c476a6e60bfb4905470"
+    },
+    {
+      "destination": "final-baseline-addendum/author/baseline-rebind-v1/hold.json",
+      "destination_sha256": "ddc585d492da41d6363d3926b9774c7b382bf6f71b92fd980ea54624be7c3841",
+      "reason": [],
+      "representation": "EXACT",
+      "source": ".cache/phase2-li-complete-readiness-production-v1/baseline-rebind-v1/hold.json",
+      "source_bytes": 1354,
+      "source_sha256": "ddc585d492da41d6363d3926b9774c7b382bf6f71b92fd980ea54624be7c3841"
+    },
+    {
+      "destination": "final-baseline-addendum/author/baseline-rebind-v1/li_v3_readiness_production.py.diff",
+      "destination_sha256": "277415d22d1b0649f6092ccab7cabb1903e264eb099968636013eaa7a91bcc78",
+      "reason": [],
+      "representation": "EXACT",
+      "source": ".cache/phase2-li-complete-readiness-production-v1/baseline-rebind-v1/li_v3_readiness_production.py.diff",
+      "source_bytes": 740,
+      "source_sha256": "277415d22d1b0649f6092ccab7cabb1903e264eb099968636013eaa7a91bcc78"
+    },
+    {
+      "destination": "final-baseline-addendum/author/baseline-rebind-v1/verification.json",
+      "destination_sha256": "bcb8e86545428220df9bcf93428f21b16c66876e79a534b90cd013ad5edb0861",
+      "reason": [],
+      "representation": "EXACT",
+      "source": ".cache/phase2-li-complete-readiness-production-v1/baseline-rebind-v1/verification.json",
+      "source_bytes": 1823,
+      "source_sha256": "bcb8e86545428220df9bcf93428f21b16c66876e79a534b90cd013ad5edb0861"
+    },
+    {
+      "destination": "final-baseline-addendum/author/promotion-copyset.final.json",
+      "destination_sha256": "b3b065ade262319238108efd0b6b296cc7ff947cb3c4c4eec8154d072db7559a",
+      "reason": [],
+      "representation": "EXACT",
+      "source": ".cache/phase2-li-complete-readiness-production-v1/promotion-copyset.final.json",
+      "source_bytes": 5136,
+      "source_sha256": "b3b065ade262319238108efd0b6b296cc7ff947cb3c4c4eec8154d072db7559a"
+    },
+    {
+      "destination": "final-baseline-addendum/author/receipts/final-baseline-rebind-first/bootstrap.py",
+      "destination_sha256": "1d397950d5db09797ef443e3737ee7ac41cbcd664fbc2dafd8597f2bd76ba1de",
+      "reason": [],
+      "representation": "EXACT",
+      "source": ".cache/phase2-li-complete-readiness-production-v1/receipts/final-baseline-rebind-first/bootstrap.py",
+      "source_bytes": 1923,
+      "source_sha256": "1d397950d5db09797ef443e3737ee7ac41cbcd664fbc2dafd8597f2bd76ba1de"
+    },
+    {
+      "destination": "final-baseline-addendum/author/receipts/final-baseline-rebind-first/execution.json",
+      "destination_sha256": "b78962fa26b7c99714e8d412fec13e91c4da91830a08f4d9ad966bdfb01a151f",
+      "reason": [],
+      "representation": "EXACT",
+      "source": ".cache/phase2-li-complete-readiness-production-v1/receipts/final-baseline-rebind-first/execution.json",
+      "source_bytes": 1953,
+      "source_sha256": "b78962fa26b7c99714e8d412fec13e91c4da91830a08f4d9ad966bdfb01a151f"
+    },
+    {
+      "destination": "final-baseline-addendum/author/receipts/final-baseline-rebind-first/li_v3_readiness.py",
+      "destination_sha256": "5fd1b06c683bb44ed582964bc59f5281cbdbe7e880c749ec9c55276145fa5219",
+      "reason": [],
+      "representation": "EXACT",
+      "source": ".cache/phase2-li-complete-readiness-production-v1/receipts/final-baseline-rebind-first/li_v3_readiness.py",
+      "source_bytes": 81591,
+      "source_sha256": "5fd1b06c683bb44ed582964bc59f5281cbdbe7e880c749ec9c55276145fa5219"
+    },
+    {
+      "destination": "final-baseline-addendum/author/receipts/final-baseline-rebind-first/li_v3_readiness_production.py",
+      "destination_sha256": "77dece96850b09be2f13acd275cc28789ea0e3bc408cfcec86bcd02f488fed85",
+      "reason": [],
+      "representation": "EXACT",
+      "source": ".cache/phase2-li-complete-readiness-production-v1/receipts/final-baseline-rebind-first/li_v3_readiness_production.py",
+      "source_bytes": 61640,
+      "source_sha256": "77dece96850b09be2f13acd275cc28789ea0e3bc408cfcec86bcd02f488fed85"
+    },
+    {
+      "destination": "final-baseline-addendum/author/receipts/final-baseline-rebind-first/scope.json",
+      "destination_sha256": "8d58e756800538624f80add1f80cce229b7af9d84dcc03a7382b292a4a176b6b",
+      "reason": [],
+      "representation": "EXACT",
+      "source": ".cache/phase2-li-complete-readiness-production-v1/receipts/final-baseline-rebind-first/scope.json",
+      "source_bytes": 711,
+      "source_sha256": "8d58e756800538624f80add1f80cce229b7af9d84dcc03a7382b292a4a176b6b"
+    },
+    {
+      "destination": "final-baseline-addendum/author/receipts/final-baseline-rebind-first/start.json",
+      "destination_sha256": "17aaa3417e898275cb93f23f991de6010c8500af9094c47aed8a59a9c846d044",
+      "reason": [],
+      "representation": "EXACT",
+      "source": ".cache/phase2-li-complete-readiness-production-v1/receipts/final-baseline-rebind-first/start.json",
+      "source_bytes": 1150,
+      "source_sha256": "17aaa3417e898275cb93f23f991de6010c8500af9094c47aed8a59a9c846d044"
+    },
+    {
+      "destination": "final-baseline-addendum/author/receipts/final-baseline-rebind-first/stderr.txt",
+      "destination_sha256": "1ebf36237cd3e1ae66394b6a9188dc0f92192c08411d6cd8259dfb7c279e89dc",
+      "reason": [],
+      "representation": "EXACT",
+      "source": ".cache/phase2-li-complete-readiness-production-v1/receipts/final-baseline-rebind-first/stderr.txt",
+      "source_bytes": 878,
+      "source_sha256": "1ebf36237cd3e1ae66394b6a9188dc0f92192c08411d6cd8259dfb7c279e89dc"
+    },
+    {
+      "destination": "final-baseline-addendum/author/receipts/final-baseline-rebind-first/stdout.txt",
+      "destination_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "reason": [],
+      "representation": "EXACT",
+      "source": ".cache/phase2-li-complete-readiness-production-v1/receipts/final-baseline-rebind-first/stdout.txt",
+      "source_bytes": 0,
+      "source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "destination": "final-baseline-addendum/author/receipts/final-baseline-rebind-first/test_li_v3_readiness_production.py",
+      "destination_sha256": "809c0126ef9f130fad264ef2617f67b9b99db103a3a14c476a6e60bfb4905470",
+      "reason": [],
+      "representation": "EXACT",
+      "source": ".cache/phase2-li-complete-readiness-production-v1/receipts/final-baseline-rebind-first/test_li_v3_readiness_production.py",
+      "source_bytes": 46051,
+      "source_sha256": "809c0126ef9f130fad264ef2617f67b9b99db103a3a14c476a6e60bfb4905470"
+    },
+    {
+      "destination": "final-baseline-addendum/author/record_baseline_rebind.py",
+      "destination_sha256": "79875718ea049bc97e3a860f86fad1d83e25d74b7f9ca3a03ff48936e1f326f7",
+      "reason": [],
+      "representation": "EXACT",
+      "source": ".cache/phase2-li-complete-readiness-production-v1/record_baseline_rebind.py",
+      "source_bytes": 4353,
+      "source_sha256": "79875718ea049bc97e3a860f86fad1d83e25d74b7f9ca3a03ff48936e1f326f7"
+    },
+    {
+      "destination": "final-baseline-addendum/independent/FINAL-REBIND.md.utf8.json",
+      "destination_sha256": "b7696c56333d338c99df9ea432c686419beaeb98ade5fb2d31e1fcf542c19cf6",
+      "reason": [
+        "Historical Markdown kept exact in a wrapper; original relative links are not rewritten or linted as current navigation."
+      ],
+      "representation": "LOSSLESS_UTF8_JSON",
+      "source": ".cache/phase2-li-complete-readiness-production-review-v1/FINAL-REBIND.md",
+      "source_bytes": 2270,
+      "source_sha256": "546c15cd0baaae938f2a284c6f891ea0b58a0130fc18fc59c1d77cf7504a7b12"
+    },
+    {
+      "destination": "final-baseline-addendum/independent/final-baseline-request.json",
+      "destination_sha256": "106fed2de0a7ec2346a058ac5dad13421db84be438a5f0ce9445f557c6f537f3",
+      "reason": [],
+      "representation": "EXACT",
+      "source": ".cache/phase2-li-complete-readiness-production-review-v1/final-baseline-request.json",
+      "source_bytes": 894,
+      "source_sha256": "106fed2de0a7ec2346a058ac5dad13421db84be438a5f0ce9445f557c6f537f3"
+    },
+    {
+      "destination": "final-baseline-addendum/independent/final-review.json",
+      "destination_sha256": "8001a483d3149ac827fc02a5bb694ab9fd164a87d39c49ac77b3e9dd86e6f836",
+      "reason": [],
+      "representation": "EXACT",
+      "source": ".cache/phase2-li-complete-readiness-production-review-v1/final-review.json",
+      "source_bytes": 3715,
+      "source_sha256": "8001a483d3149ac827fc02a5bb694ab9fd164a87d39c49ac77b3e9dd86e6f836"
+    },
+    {
+      "destination": "final-baseline-addendum/independent/rebind-first/execution.json",
+      "destination_sha256": "502dbeea41006aa8e16d1aa7f19c8ff0211eb962d5a1538d7daf2e4d9ee515cc",
+      "reason": [],
+      "representation": "EXACT",
+      "source": ".cache/phase2-li-complete-readiness-production-review-v1/rebind-first/execution.json",
+      "source_bytes": 83928,
+      "source_sha256": "502dbeea41006aa8e16d1aa7f19c8ff0211eb962d5a1538d7daf2e4d9ee515cc"
+    },
+    {
+      "destination": "final-baseline-addendum/independent/rebind-first/generated_package.py",
+      "destination_sha256": "f06f4b4922458d89239ed6d544fca69549527634a3b12b09bf3e4874897434ab",
+      "reason": [],
+      "representation": "EXACT",
+      "source": ".cache/phase2-li-complete-readiness-production-review-v1/rebind-first/generated_package.py",
+      "source_bytes": 9850,
+      "source_sha256": "f06f4b4922458d89239ed6d544fca69549527634a3b12b09bf3e4874897434ab"
+    },
+    {
+      "destination": "final-baseline-addendum/independent/rebind-first/generated_replay.py",
+      "destination_sha256": "9b4e760bedaaca96338c0d585492bca3a75596950ac2fb01b86665f0cd25b111",
+      "reason": [],
+      "representation": "EXACT",
+      "source": ".cache/phase2-li-complete-readiness-production-review-v1/rebind-first/generated_replay.py",
+      "source_bytes": 5872,
+      "source_sha256": "9b4e760bedaaca96338c0d585492bca3a75596950ac2fb01b86665f0cd25b111"
+    },
+    {
+      "destination": "final-baseline-addendum/independent/rebind-first/guarded_rebind_child.py",
+      "destination_sha256": "4d47f9788d3deb18ef92b14255c1c045566e815fc548820cb29da8596c55f3b0",
+      "reason": [],
+      "representation": "EXACT",
+      "source": ".cache/phase2-li-complete-readiness-production-review-v1/rebind-first/guarded_rebind_child.py",
+      "source_bytes": 5128,
+      "source_sha256": "4d47f9788d3deb18ef92b14255c1c045566e815fc548820cb29da8596c55f3b0"
+    },
+    {
+      "destination": "final-baseline-addendum/independent/rebind-first/li_v3_readiness.py",
+      "destination_sha256": "5fd1b06c683bb44ed582964bc59f5281cbdbe7e880c749ec9c55276145fa5219",
+      "reason": [],
+      "representation": "EXACT",
+      "source": ".cache/phase2-li-complete-readiness-production-review-v1/rebind-first/li_v3_readiness.py",
+      "source_bytes": 81591,
+      "source_sha256": "5fd1b06c683bb44ed582964bc59f5281cbdbe7e880c749ec9c55276145fa5219"
+    },
+    {
+      "destination": "final-baseline-addendum/independent/rebind-first/li_v3_readiness_production.py",
+      "destination_sha256": "77dece96850b09be2f13acd275cc28789ea0e3bc408cfcec86bcd02f488fed85",
+      "reason": [],
+      "representation": "EXACT",
+      "source": ".cache/phase2-li-complete-readiness-production-review-v1/rebind-first/li_v3_readiness_production.py",
+      "source_bytes": 61640,
+      "source_sha256": "77dece96850b09be2f13acd275cc28789ea0e3bc408cfcec86bcd02f488fed85"
+    },
+    {
+      "destination": "final-baseline-addendum/independent/rebind-first/run_rebind_review.py",
+      "destination_sha256": "49abe52c3c18ab6996e5ceaf7370ee1aa7a57254fffc6002d9054c6227b9c309",
+      "reason": [],
+      "representation": "EXACT",
+      "source": ".cache/phase2-li-complete-readiness-production-review-v1/rebind-first/run_rebind_review.py",
+      "source_bytes": 3976,
+      "source_sha256": "49abe52c3c18ab6996e5ceaf7370ee1aa7a57254fffc6002d9054c6227b9c309"
+    },
+    {
+      "destination": "final-baseline-addendum/independent/rebind-first/start.json",
+      "destination_sha256": "191201cffa91d307d26909d60a3870345cf978c136da48ef49ac1f5e49b25e3d",
+      "reason": [],
+      "representation": "EXACT",
+      "source": ".cache/phase2-li-complete-readiness-production-review-v1/rebind-first/start.json",
+      "source_bytes": 41294,
+      "source_sha256": "191201cffa91d307d26909d60a3870345cf978c136da48ef49ac1f5e49b25e3d"
+    },
+    {
+      "destination": "final-baseline-addendum/independent/rebind-first/stderr.log.utf8.json",
+      "destination_sha256": "a34fcc2e81226e5c0edf8e864199e29a6cefdf0844d5d1bd1f92077b44d81b19",
+      "reason": [
+        "Historical log preserved in explicit JSON representation to avoid ignore rules."
+      ],
+      "representation": "LOSSLESS_UTF8_JSON",
+      "source": ".cache/phase2-li-complete-readiness-production-review-v1/rebind-first/stderr.log",
+      "source_bytes": 790,
+      "source_sha256": "6ae0142d58ab15f2282e55993f8a3d9c14a4abeadca83f14649a4087008be33a"
+    },
+    {
+      "destination": "final-baseline-addendum/independent/rebind-first/stdout.log.utf8.json",
+      "destination_sha256": "2b1a9bade75199660147be7471f72f14756c3442d1a9838c0aadae94c26f6866",
+      "reason": [
+        "Historical log preserved in explicit JSON representation to avoid ignore rules."
+      ],
+      "representation": "LOSSLESS_UTF8_JSON",
+      "source": ".cache/phase2-li-complete-readiness-production-review-v1/rebind-first/stdout.log",
+      "source_bytes": 82,
+      "source_sha256": "d1fba0cb484b360dc50fc68b4753025d6b3392fa53d55fde88074ce90204ba24"
+    },
+    {
+      "destination": "final-baseline-addendum/independent/rebind-first/test_li_v3_readiness_production_review.py",
+      "destination_sha256": "23f263d40f819a5ed9724006835369d6b721a24c2a5cd8c71158b547d01b04b8",
+      "reason": [],
+      "representation": "EXACT",
+      "source": ".cache/phase2-li-complete-readiness-production-review-v1/rebind-first/test_li_v3_readiness_production_review.py",
+      "source_bytes": 85024,
+      "source_sha256": "23f263d40f819a5ed9724006835369d6b721a24c2a5cd8c71158b547d01b04b8"
+    },
+    {
+      "destination": "final-baseline-addendum/independent/static-rebind-first.json",
+      "destination_sha256": "b14ff9269bd04a28af3e32fa04e9cb0ba6f39422a8ed395cc95619b285d71661",
+      "reason": [],
+      "representation": "EXACT",
+      "source": ".cache/phase2-li-complete-readiness-production-review-v1/static-rebind-first.json",
+      "source_bytes": 1891,
+      "source_sha256": "b14ff9269bd04a28af3e32fa04e9cb0ba6f39422a8ed395cc95619b285d71661"
+    },
+    {
+      "destination": "final-baseline-addendum/author/publication-author-allowlist.rebind.json",
+      "destination_sha256": "770c5e1267dd06d2e105531d3903bd2b002c09bc56a0673e5e9f71a0939d15a9",
+      "reason": [],
+      "representation": "EXACT",
+      "source": ".cache/phase2-li-complete-readiness-production-v1/publication-author-allowlist.rebind.json",
+      "source_bytes": 5342,
+      "source_sha256": "770c5e1267dd06d2e105531d3903bd2b002c09bc56a0673e5e9f71a0939d15a9"
+    },
+    {
+      "destination": "final-baseline-addendum/independent/final-inventory.json",
+      "destination_sha256": "62f3465e3eb8868fb0d2acfad8898d8c913b78ef08f6f190b976bb51a790623a",
+      "reason": [],
+      "representation": "EXACT",
+      "source": ".cache/phase2-li-complete-readiness-production-review-v1/final-inventory.json",
+      "source_bytes": 2754,
+      "source_sha256": "62f3465e3eb8868fb0d2acfad8898d8c913b78ef08f6f190b976bb51a790623a"
+    },
+    {
+      "destination": "final-baseline-addendum/independent/final-handoff.json",
+      "destination_sha256": "d28890d6a13fa6a9ea09720dd9f0ae3bf2075c13b2e94e8b7edd99c7c82f704c",
+      "reason": [],
+      "representation": "EXACT",
+      "source": ".cache/phase2-li-complete-readiness-production-review-v1/final-handoff.json",
+      "source_bytes": 1184,
+      "source_sha256": "d28890d6a13fa6a9ea09720dd9f0ae3bf2075c13b2e94e8b7edd99c7c82f704c"
+    }
+  ],
+  "prior_263_files_unchanged": true,
+  "runtime_promotion_owned_by_root": true,
+  "schema": "lupine.discovery.lossless-final-baseline-copy-map.v1"
+}

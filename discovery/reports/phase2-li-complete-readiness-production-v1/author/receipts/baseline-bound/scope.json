@@ -1,0 +1,11 @@
+{
+  "actual_source_operations": 0,
+  "at": "2026-10-16T13:52:31.311070+00:00",
+  "authorization": "Root instruction after immutable pure handoff; final actual calls separately gated.",
+  "baseline_commit": null,
+  "baseline_manifest_sha256": null,
+  "predecessor_producer": "a064a2c0e4a7cce1fbcb0541f49aae132944e785",
+  "predecessor_receipt_sha256": "68c9042325e93cebd08f9dd056ccbf8833b16f4f045f25bbe2e8be69623326be",
+  "pure_source_sha256": "5fd1b06c683bb44ed582964bc59f5281cbdbe7e880c749ec9c55276145fa5219",
+  "scope": "Distinct production adapter composing exact reviewed pure core; generated guard/lifecycle tests only; all3 phase orchestration with later phases unbound by default; no actual operation."
+}

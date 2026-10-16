@@ -1,0 +1,14 @@
+{
+  "actual_source_operations": 0,
+  "adapter_sha256": "540088bce4341b1f4137e44ef75244ada5786d000c50af597083dadbfc02c9d8",
+  "candidate_imports": 0,
+  "core_sha256": "5fd1b06c683bb44ed582964bc59f5281cbdbe7e880c749ec9c55276145fa5219",
+  "frame_helper_adaptation_diffs": [
+    "complete_frame_binding-adaptation.diff",
+    "complete_frame-adaptation.diff"
+  ],
+  "integration_delta": "inventory-to-complete-route.diff",
+  "interpretation": "AST/source equivalence only. It does not prove semantics, exposure completeness, physical truth or actual-source admission.",
+  "pure_core_byte_identical": true,
+  "strict_DATA_branch_AST_identical_after_core_namespace_qualification": true
+}

@@ -1,0 +1,17 @@
+{
+  "copy_instruction": "Copy exactly the 20 files listed in public-inventory.json plus public-inventory.json and this handoff if publishing. No raw response bodies or initial projections. All bytes held.",
+  "entrypoint": "README.md",
+  "entrypoint_sha256": "19606fa11eb7dc1dc879cba2caef7dd7f9e68b439107eb47004a68f82c68a1b2",
+  "independent_claim_review_sha256": "25e45f0d1f1683f5c53dbd2989fb908b1d21322f33cf5228fb13c6f7dcd8a311",
+  "no_new_benchmark_or_admission": true,
+  "no_runtime_tests_or_tracked_edits": true,
+  "public_inventory": "public-inventory.json",
+  "public_inventory_sha256": "367d0dbc28cf3019764fa264f35f5b72aea759b9d5c41266d65a6504a15a273e",
+  "public_listed_bytes": 42352,
+  "public_listed_file_count": 20,
+  "raw_data_or_fulltext_acquired": false,
+  "requests_completed": 4,
+  "requests_status": "all200; no retries/redirects/failures",
+  "schema": "lupine.discovery.paired_archive_fallback.handoff.v1",
+  "status": "HELD_DOCUMENTARY_LEADS_ONLY"
+}

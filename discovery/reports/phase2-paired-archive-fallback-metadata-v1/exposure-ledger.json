@@ -1,0 +1,10 @@
+{
+  "freshness": "Only no evidence of prior named use was found in a bounded publication scope. No global freshness, distinct population, model-training independence or usable-unit-count claim.",
+  "machine_access": "Four complete bounded metadata response containers, including unrelated catalog entries and full commit/Crossref metadata; exact bodies retained ignored.",
+  "public_output": "Own paraphrases, necessary literal field labels, bibliographic identity, advertised counts, source URLs/hash metadata and receipts. Raw responses and abstract-bearing initial projections excluded from public allowlist.",
+  "researcher_access": "Selected metadata for exactly two named entries, selected bibliographic metadata including their abstracts, local public readiness documentation, request receipts and acquisition source. No raw candidate labels, data archive, full paper, notebook, model or private input.",
+  "reviewer_incidental_historical_exposure": "Existing archived-benchmark aggregate table and README legacy aggregate summaries were displayed during prior-use search; the review is not wholly results-blind.",
+  "schema": "lupine.discovery.documentary_exposure.v1",
+  "scientific_admission": false,
+  "source_selection_or_protocol_changed": false
+}

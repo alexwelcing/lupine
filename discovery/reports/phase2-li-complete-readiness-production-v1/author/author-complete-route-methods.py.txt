@@ -1,0 +1,106 @@
+    def structural_binding(self,binding):
+        binding['semantic_projection']='SEMANTIC_PROJECTION_NOT_REQUESTED'
+        binding['documentary_binding']=None;binding['required_documentary_fields']=[]
+        binding['row_unit']='UNKNOWN';binding['reference_field']=None;binding['reference_keys']=[];binding['overlap_manifest']=None
+        for role in binding['record_roles']:
+            role.update(mode='STRUCTURAL_ONLY_UNASSIGNED',row_classes=[],metadata_columns=[],endpoint_columns=[])
+        return binding
+
+    def test_complete_workbook_manifest_includes_hidden_names_no_new_opens(self):
+        items=parts()
+        old=dict(items)['xl/workbook.xml']
+        items=replace(items,'xl/workbook.xml',old.replace(b'name="Records"',b'name="Outcome example 15" state="hidden"'))
+        self.source_fixture(items);result=self.layout()['result']
+        self.assertEqual([x['sheet_name'] for x in result['workbook_sheets']],['References','Column Descriptions','Outcome example 15'])
+        self.assertEqual([x['role'] for x in result['workbook_sheets']],['References','Column Descriptions','UNASSIGNED'])
+        self.assertEqual(result['exposure']['member_opens_started'],7)
+        self.assertEqual(result['sheet_name_exposure']['names_projected'],3)
+        self.assertEqual(result['sheet_name_exposure']['fresh_status'],'UNESTABLISHED')
+
+    def test_forged_full_name_manifest_rejected_by_same_buffer_replay(self):
+        layout=self.paired_layout();layout['result']['workbook_sheets'][-1]['sheet_name']='Different'
+        M.PHASE_BINDINGS['inventory']={'layout':self.prior_pins('layout',layout)}
+        self.assert_cleared(M.inspect('inventory','1'),'PRIOR_RECEIPT_INVALID')
+
+    def test_full_sheet_coverage_required_before_record_opens(self):
+        _,_,binding=self.prepared_frame();binding['record_roles']=[];self.bind_frame(binding)
+        opened=[];old=M.core._read_member
+        def read(archive,name,*args):
+            if name=='xl/worksheets/sheet3.xml':opened.append(name)
+            return old(archive,name,*args)
+        with patch.object(M.core,'_read_member',read):result=M.inspect('frame','1')
+        self.assert_cleared(result,'FRAME_COVERAGE_MISMATCH');self.assertEqual(opened,[])
+
+    def test_default_unresolved_rows_preserve_empty_rows_and_no_metadata(self):
+        _,_,binding=self.prepared_frame();binding['record_roles'][0]['row_classes']=[{'row':1,'class':'HEADER'}];self.bind_frame(binding)
+        result=M.inspect('frame','1');frame=result['result']['frame']
+        self.assertEqual(result['engineering_status'],'COMPLETE');self.assertEqual(result['reason'],'NO_GO_UNRESOLVED_PREMISE')
+        self.assertEqual([r['row'] for r in frame['rows']],[1,2,3,4])
+        for row in frame['rows'][1:]:
+            self.assertEqual(row['class'],'UNRESOLVED');self.assertEqual(row['class_authority'],'FIXED_UNRESOLVED_POLICY')
+            self.assertEqual(row['metadata'],{});self.assertEqual(row['endpoint_structure'],{})
+        self.assertNotIn(CANARY,json.dumps(result))
+
+    def test_absent_predeclared_row_rejected(self):
+        _,_,binding=self.prepared_frame();binding['record_roles'][0]['row_classes'].append({'row':9,'class':'HEADER'});self.bind_frame(binding)
+        self.assert_cleared(M.inspect('frame','1'),'FRAME_COVERAGE_MISMATCH')
+
+    def test_all_structural_without_semantic_premise_is_complete_negative(self):
+        _,_,binding=self.prepared_frame();self.bind_frame(self.structural_binding(binding))
+        with patch.object(M.core,'_doc_binding',side_effect=AssertionError('NO_STRICT_DOC_BINDING')),patch.object(M.core,'_documentary',side_effect=AssertionError('NO_STRICT_DOC_PROJECTION')):
+            result=M.inspect('frame','1')
+        self.assertEqual(result['engineering_status'],'COMPLETE');self.assertEqual(result['reason'],'NO_GO_UNRESOLVED_PREMISE')
+        inner=result['result'];self.assertIsNone(inner['documentary']);self.assertIsNone(inner['strict_documentary_sha256'])
+        self.assertEqual(inner['semantic_projection_state'],'SEMANTIC_PROJECTION_NOT_REQUESTED')
+        self.assertEqual(inner['frame']['physical_explicit_rows'],4)
+        for row in inner['frame']['rows']:
+            self.assertEqual(row['metadata'],{});self.assertEqual(row['endpoint_structure'],{})
+            self.assertEqual(row['reference_join'],'NOT_APPLICABLE');self.assertEqual(row['pairing'],'NOT_APPLICABLE')
+            self.assertEqual(row['unresolved'],['SHEET_ROLE_UNASSIGNED','ROW_ROLE_UNKNOWN'])
+        self.assertNotIn(CANARY,json.dumps(result))
+
+    def test_structural_mode_rejects_semantic_columns(self):
+        _,_,binding=self.prepared_frame();binding['record_roles'][0]['mode']='STRUCTURAL_ONLY_UNASSIGNED';self.bind_frame(binding)
+        self.assert_cleared(M.inspect('frame','1'),'BINDING_INVALID')
+
+    def test_semantic_mode_cannot_skip_strict_reconstruction(self):
+        _,_,binding=self.prepared_frame();binding['semantic_projection']='SEMANTIC_PROJECTION_NOT_REQUESTED'
+        binding['documentary_binding']=None;self.bind_frame(binding)
+        self.assert_cleared(M.inspect('frame','1'),'BINDING_INVALID')
+
+    def test_semantic_mode_rejects_empty_strict_binding(self):
+        _,_,binding=self.prepared_frame();binding['documentary_binding']['fields']=[];self.bind_frame(binding)
+        self.assert_cleared(M.inspect('frame','1'),'NO_GO_UNBOUND_DOCUMENTARY_SCOPE')
+
+    def test_all_headers_are_nonvacuously_negative(self):
+        _,_,binding=self.prepared_frame()
+        for row in binding['record_roles'][0]['row_classes']:row['class']='HEADER'
+        self.bind_frame(binding);result=M.inspect('frame','1')
+        self.assertEqual(result['engineering_status'],'COMPLETE');self.assertEqual(result['reason'],'NO_GO_UNRESOLVED_PREMISE')
+        self.assertIn('NO_DECLARED_DATA_ROWS',result['result']['frame']['unresolved_premises'])
+
+    def test_zero_record_rows_are_complete_negative(self):
+        self.source_fixture(replace(parts(),'xl/worksheets/sheet3.xml',sheet('')))
+        _,_,binding=self.prepared_frame();binding['record_roles'][0]['row_classes']=[];self.bind_frame(binding)
+        result=M.inspect('frame','1');self.assertEqual(result['reason'],'NO_GO_UNRESOLVED_PREMISE')
+        self.assertEqual(result['engineering_status'],'COMPLETE');self.assertEqual(result['result']['frame']['physical_explicit_rows'],0)
+
+    def test_missing_required_meaning_keeps_complete_negative_rows(self):
+        _,_,binding=self.prepared_frame();binding['required_documentary_fields'].append('not_reviewed');self.bind_frame(binding)
+        result=M.inspect('frame','1');self.assertEqual(result['engineering_status'],'COMPLETE')
+        self.assertEqual(result['reason'],'NO_GO_UNRESOLVED_PREMISE')
+        self.assertEqual(result['result']['frame']['physical_explicit_rows'],4)
+        self.assertIn('REQUIRED_DOCUMENTARY_MEANING_UNRESOLVED',result['result']['frame']['unresolved_premises'])
+
+    def test_exact_c_pair_uses_same_binding(self):
+        self.prepared_frame();first=M.inspect('frame','1');second=M.inspect('frame','2')
+        self.assertEqual(first,second);self.assertEqual(self.target_reads,6)
+
+    def test_prior_shared_string_exposure_cannot_contradict_inventory(self):
+        items=replace(parts(),'xl/worksheets/sheet1.xml',sheet('<row r="1">'+cell('A1','0','s')+'</row>'))
+        self.source_fixture(items);layout,inventory,binding=self.prepared_frame()
+        for key in ('whole_shared_strings_started','whole_shared_strings_completed','shared_strings_may_include_record_values'):
+            inventory['result']['inventory_exposure'][key]=False
+        M.PHASE_BINDINGS['frame']['inventory']=self.prior_pins('inventory',inventory)
+        binding['prior_inventory_sha256']=hashlib.sha256(M.core.canonical(inventory['result'])).hexdigest();self.bind_frame(binding)
+        count=self.target_reads;self.assert_cleared(M.inspect('frame','1'),'PHASE_PRIOR_INVALID');self.assertEqual(self.target_reads,count)

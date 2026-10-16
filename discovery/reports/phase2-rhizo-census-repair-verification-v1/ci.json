@@ -1,0 +1,48 @@
+{
+  "observed_at": "2026-10-16T15:41:44.055492+00:00",
+  "commit": "ddd4a6a8df0f908a162b7e5387b0faac325180d6",
+  "run": {
+    "id": 38923477651,
+    "head_sha": "ddd4a6a8df0f908a162b7e5387b0faac325180d6",
+    "event": "push",
+    "status": "completed",
+    "conclusion": "success",
+    "html_url": "https://github.com/alexwelcing/lupine/actions/runs/38923477651",
+    "run_attempt": 1
+  },
+  "jobs": [
+    {
+      "id": 117049001943,
+      "name": "lean",
+      "status": "completed",
+      "conclusion": "success",
+      "started_at": "2026-10-16T15:23:05Z",
+      "completed_at": "2026-10-16T15:25:49Z"
+    },
+    {
+      "id": 117049002258,
+      "name": "browser",
+      "status": "completed",
+      "conclusion": "success",
+      "started_at": "2026-10-16T15:23:05Z",
+      "completed_at": "2026-10-16T15:25:06Z"
+    },
+    {
+      "id": 117049002297,
+      "name": "python (3.11)",
+      "status": "completed",
+      "conclusion": "success",
+      "started_at": "2026-10-16T15:23:05Z",
+      "completed_at": "2026-10-16T15:41:19Z"
+    },
+    {
+      "id": 117049002584,
+      "name": "python (3.12)",
+      "status": "completed",
+      "conclusion": "success",
+      "started_at": "2026-10-16T15:23:05Z",
+      "completed_at": "2026-10-16T15:39:28Z"
+    }
+  ],
+  "all_four_jobs_successful": true
+}

@@ -1,0 +1,47 @@
+{
+  "actual_source_operations": 0,
+  "blockers": [],
+  "findings": [
+    {
+      "finding": "The 12 independently displayed, digest-matched Methods/File-format paragraphs support static single-crystal electronic/ionic response, approximate eigenvalue-average polycrystal estimate, derived optical refractive-index estimate with non-magnetic/away-from-resonance assumptions, VASP GGA/PBE+U and PAW, Materials Project starting structures, a DFT band-gap criterion expressed in eV, and original per-compound JSON/meta descriptions. These are documentary descriptions of archived calculations; they do not verify derivative row contents or operating-condition validity.",
+      "id": "METHODS"
+    },
+    {
+      "finding": "The catalog column descriptions independently support tensor-eigenvalue averages. The report correctly treats tensors, their averages and derived optical quantities as potentially deterministically related, not independent measurements or automatically eligible predictors. No feature set, objective, threshold or fit is admitted.",
+      "id": "LEAKAGE"
+    },
+    {
+      "finding": "The retained article front-matter license-link projection and earlier Crossref version-of-record metadata support the article CC BY 4.0 attribution. They do not establish the original Dryad or processed Figshare data-file license, version or exceptions. The report preserves that distinction.",
+      "id": "RIGHTS"
+    },
+    {
+      "finding": "The ledger explicitly preserves the first ancestor-selected Data Records qualitative-results exposure and corrects the original overbroad false flag. Redaction and later publication do not restore an untouched/results-blind status. This reviewer did not display the qualitative-result paragraph details.",
+      "id": "EXPOSURE"
+    },
+    {
+      "finding": "Derivative endpoint units, exact schema/calculation-level pairing, completeness, identifier uniqueness, missingness, row equivalence, group multiplicity and source/training overlap remain unresolved. Neither provenance nor a hash establishes these premises.",
+      "id": "UNKNOWNS"
+    },
+    {
+      "finding": "The two retained receipts each record one successful HTTP request; their source IDs, byte counts and digests agree with source-bindings. The stated two-request stop and unexecuted/cancelled conditional DataCite branch are internally consistent. The larger prospective request budget is not presented as completed requests.",
+      "id": "REQUESTS"
+    }
+  ],
+  "limits": [
+    "No raw XML, source table cells, dataset or private object was read or re-fetched.",
+    "The README attribution of GGA+U underestimation to nested graphical discussion was not independently re-read, to avoid additional qualitative-results disclosure; the reviewed Methods independently establish GGA/PBE+U but not that specific graphical-discussion sentence.",
+    "Receipt agreement is a source-consistency observation, not an independent network log or proof that no unrecorded request occurred.",
+    "Caption wording in the historical exposure ledger is read in context: the later explicitly listed table captions were disclosed; no figure or figure-caption bodies are claimed disclosed."
+  ],
+  "publication_status_clarification": {
+    "current_interpretation": "Describes the earlier projection cutoff, not current publication status. The later authorized lossless public wrapper contains these excerpts. FIRST-PROJECTION-PUBLICATION.md supplies attribution, article license link, modification notice and publication scope. No claim that the excerpts remain private is supported.",
+    "field": "excerpt-index.json entries[].exact_excerpt_retained_locally_only",
+    "historical_value": true
+  },
+  "reviewed_at": "2026-10-16T15:43:51.668621+00:00",
+  "schema": "lupine.discovery.dielectric_methods.independent_source_review.v1",
+  "scientific_admission": false,
+  "scope": "Documentary source and disclosure consistency only; no software test result, archive admission, source independence or physical validation.",
+  "tests_executed": 0,
+  "verdict": "SOURCE_CONSISTENT_WITH_EXPLICIT_PUBLICATION_STATUS_CLARIFICATION"
+}

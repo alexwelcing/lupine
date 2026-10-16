@@ -1,0 +1,9 @@
+{
+  "counter_fixture_variants": 33,
+  "new_portable_51_method_test_sha256": "2f2295d0f04fbc0f3399f904eed757e8a6c0f713a13cf9bb13850c52ea1e91e0",
+  "original_50_method_test_sha256": "23f263d40f819a5ed9724006835369d6b721a24c2a5cd8c71158b547d01b04b8",
+  "purpose": "Reject internally contradictory complete historical counter ledgers before XML/record access; no full historical execution-equivalence claim.",
+  "same_source_pair_relation": "M_B = M_A + int(whole_shared_strings_completed)",
+  "source_policy": "No candidate execution until the narrow counter correction is explicitly held. Existing fifty method bodies and embedded fixture definitions are byte-preserved as the complete file prefix.",
+  "status": "PREPARED_NOT_EXECUTED"
+}

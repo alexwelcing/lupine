@@ -1,0 +1,17 @@
+{
+  "all_other_AST_unchanged": true,
+  "before_sha256": "540088bce4341b1f4137e44ef75244ada5786d000c50af597083dadbfc02c9d8",
+  "corrected_sha256": "a3370ac84762ef7f859061bde93f118a1c1981b02460e9ddd0b1cd38e55b840b",
+  "exactly_two_new_helpers_and_four_insertions": true,
+  "pass": true,
+  "removed_nodes": [
+    "_completed_prior_counters",
+    "_matching_prior_counts",
+    "_prior_production",
+    "_prior_inventory",
+    "_run_production",
+    "_phase_material"
+  ],
+  "schema": "li.readiness.independent-counter-delta-audit.v1",
+  "scope": "Source-only exact delta check plus separately recorded human/source review of the two necessary consistency helper bodies. No import, execution, private input or mathematical-refinement claim."
+}

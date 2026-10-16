@@ -1,0 +1,15 @@
+--- unbound-adapter
++++ bound-adapter
+@@ -19,9 +19,9 @@
+ RESULT_SCHEMA = 'lupine.discovery.li_v3.readiness.result.v1'
+ PRODUCTION_BINDING = 'FIXED_LI_V3_SOURCE_G34_PREREQUISITE'
+ CORE_SHA256 = '5fd1b06c683bb44ed582964bc59f5281cbdbe7e880c749ec9c55276145fa5219'
+-BASELINE_COMMIT = None
+-BASELINE_MANIFEST_SHA256 = None
+-BASELINE_RUNTIME_COUNT = None
++BASELINE_COMMIT = '2975d6d0b9111cc84adb82ccc673bc82339ab154'
++BASELINE_MANIFEST_SHA256 = 'b2c35e48c8dc837d78aba0047d112dabbd30b8ff11e66bba0f45e9da92a0eb2f'
++BASELINE_RUNTIME_COUNT = 339
+ FROZEN_PATHS = (
+     'scripts/li_v3_readiness.py', 'scripts/li_v3_readiness_production.py',
+     'tests/test_li_v3_readiness.py', 'tests/test_li_v3_readiness_review.py',

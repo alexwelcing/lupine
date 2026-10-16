@@ -1,0 +1,19 @@
+{
+  "base": "2975d6d0b9111cc84adb82ccc673bc82339ab154",
+  "baseline_runtime_total": 339,
+  "existing_runtime_changes": [
+    "tests/test_retained_mpea_transport.py"
+  ],
+  "expected_archive_copyset": [
+    "discovery",
+    ".github/workflows/discovery-verify.yml"
+  ],
+  "purpose": "Audit the narrow stale17-check-test repair and its completed public reports.",
+  "root_authorization": "Prepare now; no actual artifact execution until exact published commit and retained path supplied.",
+  "runtime_additions": [],
+  "runtime_total": 339,
+  "source_archive_reports_docs": "Exact final scoped commit determines every public file; root supplies final commit/copyset checkpoint before invocation.",
+  "unchanged_baseline_runtime_total": 338,
+  "wheel_payload_additions": [],
+  "wheel_payload_changes": []
+}

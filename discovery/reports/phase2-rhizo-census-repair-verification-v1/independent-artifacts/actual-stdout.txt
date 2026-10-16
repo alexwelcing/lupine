@@ -1,0 +1,30 @@
+{
+  "status": "PASS_EXACT_RETAINED_ARTIFACT_AND_DECLARED_DELTA",
+  "checks": 18246,
+  "failures": [],
+  "observed": {
+    "published_commit": "ddd4a6a8df0f908a162b7e5387b0faac325180d6",
+    "baseline_commit": "2975d6d0b9111cc84adb82ccc673bc82339ab154",
+    "source_file_count": 5664,
+    "runtime_files": 339,
+    "baseline_runtime_files": 339,
+    "unchanged_baseline_runtime_files": 338,
+    "changed_existing_runtime_files": [
+      "tests/test_retained_mpea_transport.py"
+    ],
+    "added_runtime_files": [],
+    "wheel_members": 117,
+    "wheel_RECORD_content_digests": 116,
+    "package_payloads": 110,
+    "baseline_package_payloads": 110,
+    "unchanged_baseline_package_payloads": 110,
+    "changed_package_payloads": [],
+    "added_package_payloads": [],
+    "public_resource_sha256": "a9ab9d72c6c39be9338e951b657e0587ae8f4dbe534b276b8f8f8951a7b1a63a",
+    "mandatory_package_receipt_checks": 17,
+    "retained_demonstrations": 28,
+    "retained_problem_schemas": 6,
+    "source_manifest_sha256": "67d686934ba718b50f8d14e1efa9e2c8dfbc96bc88e43d1a341b4719440509aa",
+    "baseline_manifest_sha256": "b2c35e48c8dc837d78aba0047d112dabbd30b8ff11e66bba0f45e9da92a0eb2f"
+  }
+}

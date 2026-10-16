@@ -1,0 +1,30 @@
+{
+  "adapter_sha256": "540088bce4341b1f4137e44ef75244ada5786d000c50af597083dadbfc02c9d8",
+  "baseline_rebinding_pending": true,
+  "candidate_tests_or_guards_executed": false,
+  "contract_sha256": "e0f1794f938afde364138cc324451822d00c9b470e087cfc96b1f9038856cc5b",
+  "exposure_scope": "Inventory ledger is substage-only; later C SST/record processing is overall exposure, not absence of target processing.",
+  "files": {
+    "FINAL-SOURCE-REVIEW.md": "6bce2bed5fadbcb28747e22a1206b28fd342c3877b01cfa05d19af4d88b02b8f",
+    "MOVING-DRAFT-REVIEW.md": "cdbbef842878c1363ecd0322d26e80f9f53cd2f0fd16180211f5b0f956a185b9",
+    "README.md": "6d6ab635a8b0d57127980a3019b19906453d42b07e34934515cd7c7f1beb1671",
+    "behavior-hold/README.md": "e0f1794f938afde364138cc324451822d00c9b470e087cfc96b1f9038856cc5b",
+    "behavior-hold/complete-route-hold.json": "e7b628b3abb9489603ebf63fe4582bcb4db15229e505ec92556362dc59f91e50",
+    "behavior-hold/complete-route-source-audit.json": "1158c64a6853734b777abb488bdcd3f624a83bb537e198d5eff766496d9e3dd0",
+    "behavior-hold/interface.complete-route-v2.json": "e8b0e6a2cbedbe1c4207a6eb45d27fa0d48f5ad64d93328b065e588f63625a84",
+    "behavior-hold/prehold-inventory-route-findings.json": "e21f8aa8a27e88f0f287c1a9b7eac355d3615c000887c67c7a9fb8c420a197c4",
+    "behavior-hold/source-binding.json": "79743bb9cf22fb4d5ad69e170113611ef7aa144e65b5a775c893693a025fe7d7",
+    "draft-review.json": "fda2ef8694a8127415b88e47c0d5326206e9935d6f560808216a05c5eaf55b41",
+    "moving-draft-review-v2.json": "de0d6713cd1fb1ba93615efc7f4ef33ae34fd30152c4108a354a4cf0aca09b50",
+    "source-draft-2/capture.json": "5dd221cf38eb7075a3ede648f138b5c8cae7906e0b7aec5c1d95f01c6787c670",
+    "source-draft-2/sst-exposure-repair.diff.txt": "e1aaccafbb9402d437d89466cac9989ac0635205756cc94e505c76a35dea65d4"
+  },
+  "historical_finding_retained": "SST flags must match shared-string fields; source fix inspected.",
+  "hold_sha256": "e7b628b3abb9489603ebf63fe4582bcb4db15229e505ec92556362dc59f91e50",
+  "private_data_or_archive_read": false,
+  "required_external_acceptance": "Accepted exit, returned/stdout/persisted byte agreement, complete cleanup before freezing dependent pins.",
+  "schema": "lupine.discovery.li.complete-route-held-source-review.v1",
+  "scope": "Behavior-source review at current baseline; not execution, scientific validation or actual-operation authorization.",
+  "status": "NO_REMAINING_CONCRETE_SOURCE_BLOCKER_IN_REVIEWED_SCOPE",
+  "tracked_edits": false
+}

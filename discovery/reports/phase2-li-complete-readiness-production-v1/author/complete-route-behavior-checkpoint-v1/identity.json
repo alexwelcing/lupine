@@ -1,0 +1,12 @@
+{
+  "actual_operations": 0,
+  "files": {
+    "README.md": "e0f1794f938afde364138cc324451822d00c9b470e087cfc96b1f9038856cc5b",
+    "complete-route-hold.json": "e7b628b3abb9489603ebf63fe4582bcb4db15229e505ec92556362dc59f91e50",
+    "complete-route-source-audit.json": "1158c64a6853734b777abb488bdcd3f624a83bb537e198d5eff766496d9e3dd0",
+    "interface.complete-route-v2.json": "e8b0e6a2cbedbe1c4207a6eb45d27fa0d48f5ad64d93328b065e588f63625a84",
+    "li_v3_readiness_production.py": "540088bce4341b1f4137e44ef75244ada5786d000c50af597083dadbfc02c9d8",
+    "test_li_v3_readiness_production.py": "5829e9a328c4f90b306a0a5614a01bb609fd6c3de05ec95d80883c1d9abd13e3"
+  },
+  "scope": "Exact behavior hold before final baseline and docs-only correction"
+}

@@ -1,0 +1,33 @@
+    def test_completed_layout_counters_cannot_claim_zero_operations(self):
+        layout=self.paired_layout()
+        for prefix in ('member_opens','decompressions','utf8_decodes','xml_parses'):
+            for state in ('started','completed'):layout['result']['exposure'][prefix+'_'+state]=0
+        M.PHASE_BINDINGS['inventory']={'layout':self.prior_pins('layout',layout)}
+        self.assert_cleared(M.inspect('inventory','1'),'PHASE_PRIOR_INVALID');self.assertEqual(self.target_reads,2)
+
+    def test_completed_inventory_counters_cannot_omit_cached_xml_reparses(self):
+        _,inventory,binding=self.prepared_frame()
+        members=inventory['result']['exposure']['member_opens_completed']
+        for prefix in ('utf8_decodes','xml_parses'):
+            for state in ('started','completed'):inventory['result']['exposure'][prefix+'_'+state]=members
+        M.PHASE_BINDINGS['frame']['inventory']=self.prior_pins('inventory',inventory)
+        binding['prior_inventory_sha256']=hashlib.sha256(M.core.canonical(inventory['result'])).hexdigest();self.bind_frame(binding)
+        count=self.target_reads;self.assert_cleared(M.inspect('frame','1'),'PHASE_PRIOR_INVALID');self.assertEqual(self.target_reads,count)
+
+    def test_locally_consistent_inventory_counts_must_match_historical_layout(self):
+        _,inventory,binding=self.prepared_frame()
+        for prefix in ('member_opens','decompressions','utf8_decodes','xml_parses'):
+            for state in ('started','completed'):inventory['result']['exposure'][prefix+'_'+state]+=1
+        M.PHASE_BINDINGS['frame']['inventory']=self.prior_pins('inventory',inventory)
+        binding['prior_inventory_sha256']=hashlib.sha256(M.core.canonical(inventory['result'])).hexdigest();self.bind_frame(binding)
+        count=self.target_reads;self.assert_cleared(M.inspect('frame','1'),'PHASE_PRIOR_INVALID');self.assertEqual(self.target_reads,count)
+
+    def test_internal_completed_counter_gate_is_after_header_before_member(self):
+        layout,inventory,binding=self.prepared_frame();prior=deepcopy(inventory['result'])
+        for prefix in ('member_opens','decompressions','utf8_decodes','xml_parses'):
+            for state in ('started','completed'):prior['exposure'][prefix+'_'+state]+=1
+        binding['prior_inventory_sha256']=hashlib.sha256(M.core.canonical(prior)).hexdigest()
+        with patch.object(zipfile.ZipFile,'open',side_effect=AssertionError('NO_XML_MEMBER_OPEN')):
+            result=M._run_production(self.raw,'frame',g34_identity(self.commit),binding,layout['result'],prior)
+        self.assertEqual(result['reason'],'PRIOR_RECEIPT_INVALID');self.assertTrue(result['exposure']['header_replay_completed'])
+        self.assertFalse(result['exposure']['archive_open_started']);self.assertIsNone(result['inventory'])

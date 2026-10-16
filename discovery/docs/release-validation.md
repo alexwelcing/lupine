@@ -769,3 +769,26 @@ Unsupported sheets/rows/meanings force NO_GO, even for empty structural frames.
 Pure preparation and design review establish no actual workbook result or
 scientific admission. G20 remains unresolved/G21 blocked; no fresh allocation,
 physical-performance claim or extension of the expired schedule follows.
+
+## Complete bounded Li route integration — October 16
+
+[The integrated route](../reports/phase2-li-complete-readiness-integration-v1/README.md)
+passes 602 generated methods while holding 345 runtime files and two contracts.
+All 339 predecessor runtime files and the strict core remain unchanged. Completed
+historical counter consistency and exact phase lineage reject contradictions;
+they do not substitute for external source authentication or physical evidence.
+All sheets and explicit rows are accounted for. Unsupported semantics, including
+empty structural-only frames, force an explicit negative result.
+
+The predecessor repair passes original CI, clean packaging and independent artifact
+verification. The new commit requires its own fresh gates before actual use.
+No complete-route actual operation has occurred; later phase bindings are absent.
+CLI exit zero can represent a completed negative C and is not readiness. The
+reviewed recorder must compare stdout (serialized return) with the persisted file
+after cleanup, preserve mismatches, and stop after mechanical or ambiguous failure.
+
+The publication whitespace gate subsequently stopped on one extra terminal LF in
+the new pure independent test. Root removed that byte, retained the original and
+verified identical syntax trees. The normalized 35-method module passes separately;
+the 602-method result precedes formatting. Exact published-source CI is still
+required, and no whitespace or scientific check was weakened.

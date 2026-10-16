@@ -1,0 +1,33 @@
+{
+  "actual_operations": 0,
+  "author_methods": 42,
+  "core_sha256": "5fd1b06c683bb44ed582964bc59f5281cbdbe7e880c749ec9c55276145fa5219",
+  "execution_receipt": ".cache/phase2-li-complete-readiness-production-v1/receipts/inventory-first/execution.json",
+  "execution_sha256": "4653415527451787a6a8d67d2f058b9005c72701e1b92b662bbade9ac20f1484",
+  "files": {
+    "contract.inventory-draft.md": {
+      "bytes": 10992,
+      "sha256": "d22ba1669aa51aac3f49d8a5bbcb00aed10be105121a5765d9f93009927be7db"
+    },
+    "interface.inventory-v1.json": {
+      "bytes": 6461,
+      "sha256": "0454cebf34d19e20f2f6babf8c59f8943d0356fe1b89c3a4f4db3e6b6afe6414"
+    },
+    "inventory-amendment.json": {
+      "bytes": 718,
+      "sha256": "4b06c1171a0d26c4a27d803857677cf38bada3cb358300e195d488a7fc43d8cc"
+    },
+    "li_v3_readiness_production.py": {
+      "bytes": 42389,
+      "sha256": "60d0790742982172a6184f3948f6aacdf9336026263a91485fcac102ff1a6ec3"
+    },
+    "test_li_v3_readiness_production.py": {
+      "bytes": 35020,
+      "sha256": "407e820ca0d534d06cce6edf7535e00bb7fef71292df6c22a9d17c5b81e629e7"
+    }
+  },
+  "independent_candidate_executions": 0,
+  "process_seconds": 40.278842,
+  "scope": "Preserved inventory-only intermediate before consolidated A/C feasibility decision; no final promotion hold.",
+  "unittest_seconds": 38.461
+}

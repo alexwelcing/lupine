@@ -1,0 +1,27 @@
+{
+  "at": "2026-10-16T14:06:38.476486+00:00",
+  "candidate_executions": 0,
+  "draft_source_sha256": "80e0d39728320d115ddc8a9ce3467904294a57310af719c81e9686786de25263",
+  "independent_fixture_strategy": "Reuse this reviewer own independently packed 15-part generated workbook and manually declared G34 projection. Build fresh temporary Git baseline/current commits, eight own committed files and generated capture/prerequisite/objects. Patch fixture identity constants and parent source context only; never invoke real checkout production guard.",
+  "predeclared_challenges": [
+    "Positive temporary-Git source guard with exact worktree/index/HEAD and ancestor baseline; altered/missing/index-only source, changed baseline manifest/count and parent context block before cache.",
+    "Fixed previous producer differs from current source baseline; canonical exact prerequisite/capture/object identities and same-buffer fixed replay precede all XML.",
+    "No caller source/expectation/path/binding interface; invalid phase/run, symlinks, consumed reservation/public slots and source mismatch fail closed.",
+    "Documentary/frame unbound stops before object read; when explicitly fixture-bound, exactly both fixed prior slots must be complete/identical with trusted identity and reviewed manifest hashes.",
+    "Returned nested report mutations cannot change trusted PHASE_BINDINGS.",
+    "Read/write/close/replay/post-context failures preserve partial exposure and consume slots without retries; late descriptor close divergence must be explicit.",
+    "Full phase-A generated route uses only expected metadata/two documentary sheets; B/C fixture bindings retain manifest premises and no endpoint conversion."
+  ],
+  "prehold_findings": [
+    "One prior receipt was accepted despite paired-prior requirement; author accepted repair.",
+    "Returned phase_binding_pins aliases trusted PHASE_BINDINGS; author accepted detached-copy repair."
+  ],
+  "real_constant_source_audit": {
+    "baseline_commit": "2975d6d0b9111cc84adb82ccc673bc82339ab154",
+    "baseline_manifest_sha256": "b2c35e48c8dc837d78aba0047d112dabbd30b8ff11e66bba0f45e9da92a0eb2f",
+    "baseline_runtime_count": 339,
+    "g34_producer": "a064a2c0e4a7cce1fbcb0541f49aae132944e785",
+    "g34_receipt_sha256": "68c9042325e93cebd08f9dd056ccbf8833b16f4f045f25bbe2e8be69623326be"
+  },
+  "scope": "Single independent generated production-adapter review; no actual guard/cache/object/source operation or network."
+}

@@ -1,0 +1,56 @@
+{
+  "actual_audit_runs_before_binding": 0,
+  "auditor_sha256": "1813a9a94d7d4b9b17ec788703d433072a827480a1fc8a6d1f0c348890539a84",
+  "baseline_commit": "2975d6d0b9111cc84adb82ccc673bc82339ab154",
+  "ci_success_established": false,
+  "earlier_setup_inspection": {
+    "artifact_auditor_invoked": false,
+    "artifact_or_prepared_source_changed": false,
+    "cause": "Display-only metadata inspection attempted to slice a dict-valued final-copyset files field.",
+    "command_result": "FAIL",
+    "error": "KeyError: slice(None, 2, None)",
+    "resolution": "Inspect mapping as mapping; no audit requirements or source changes."
+  },
+  "head_verified": "ddd4a6a8df0f908a162b7e5387b0faac325180d6",
+  "metadata": [
+    {
+      "bytes": 656,
+      "sha256": "99f029f2a644473c1a94801cd2c83f2bed4b2cd100fab940d2898258279a5748",
+      "snapshot": "actual-inputs/published.json",
+      "source": ".cache/phase2-rhizo-census-ci-repair-v1/published.json"
+    },
+    {
+      "bytes": 36103,
+      "sha256": "f8477f4b0f5df0cf1526acf8183ea0ecd3cc0bc6d39ca286b7d41d65ed6b2d0f",
+      "snapshot": "actual-inputs/final-copyset.json",
+      "source": ".cache/phase2-rhizo-census-ci-repair-v1/final-copyset.json"
+    },
+    {
+      "bytes": 282,
+      "sha256": "4acfde4e2d6fe869ecb980ed7f04e53b4ef1f3363451b67031c599ae0a81f777",
+      "snapshot": "actual-inputs/package-execution.json",
+      "source": ".cache/phase2-rhizo-census-repair-verification-v1/package-execution.json"
+    },
+    {
+      "bytes": 472,
+      "sha256": "511cae81ae875482f21851963603eb0615368ebef65d8b31d345e44405e79cee",
+      "snapshot": "actual-inputs/retained-audit-execution.json",
+      "source": ".cache/phase2-rhizo-census-repair-verification-v1/retained-audit-execution.json"
+    },
+    {
+      "bytes": 3746,
+      "sha256": "65ffa117b3fc517b7577a464e11e086a101fbe88c416f436927d40f5da2f7b1f",
+      "snapshot": "actual-inputs/retained-audit.json",
+      "source": ".cache/phase2-rhizo-census-repair-verification-v1/retained-audit.json"
+    }
+  ],
+  "preparation_inventory_sha256": "ea6ac8ef51e4ec1b929317508eeacb834c102afc9fd717fb5380a9760b1b4504",
+  "published_commit": "ddd4a6a8df0f908a162b7e5387b0faac325180d6",
+  "recorded_at": "2026-10-16T15:28:02.017498+00:00",
+  "retained_directory": ".cache/phase2-rhizo-census-repair-verification-v1/retained",
+  "root_gate_generic_retained_verifier_exit_code": 0,
+  "root_gate_package_exit_code": 0,
+  "runtime_manifest_sha256": "67d686934ba718b50f8d14e1efa9e2c8dfbc96bc88e43d1a341b4719440509aa",
+  "schema": "lupine.rhizo.census.repair-independent-artifact-binding.v1",
+  "worktree_clean": true
+}

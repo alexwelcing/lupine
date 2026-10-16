@@ -1,0 +1,8 @@
+{
+  "encoding": "utf-8",
+  "original_bytes": 790,
+  "original_filename": "stderr.log",
+  "original_sha256": "6ae0142d58ab15f2282e55993f8a3d9c14a4abeadca83f14649a4087008be33a",
+  "schema": "lupine.lossless-source-text.v1",
+  "text": "test_01_positive_synthetic_git_guard_and_phase_a_complete_route (held_independent_production_tests.ProductionReadinessReview.test_01_positive_synthetic_git_guard_and_phase_a_complete_route) ... ok\ntest_02_worktree_changes_fail_before_cache (held_independent_production_tests.ProductionReadinessReview.test_02_worktree_changes_fail_before_cache) ... ok\ntest_03_index_change_and_missing_file_block (held_independent_production_tests.ProductionReadinessReview.test_03_index_change_and_missing_file_block) ... ok\ntest_04_baseline_and_parent_identity_inconsistency_block (held_independent_production_tests.ProductionReadinessReview.test_04_baseline_and_parent_identity_inconsistency_block) ... ok\n\n----------------------------------------------------------------------\nRan 4 tests in 1.677s\n\nOK\n"
+}

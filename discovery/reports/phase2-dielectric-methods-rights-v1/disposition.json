@@ -1,0 +1,23 @@
+{
+  "benchmark_selected": false,
+  "data_file_requests": 0,
+  "followup_scope_conditional_datacite_request": "UNEXECUTED_CANCELLED_BY_ROOT_STOP",
+  "http_statuses": [
+    200,
+    200
+  ],
+  "independent_review": "An attempted existing-child scope review was unavailable due agent thread limit; no independent-review pass claimed.",
+  "new_DFT": false,
+  "numeric_targets_or_table_cells_displayed": false,
+  "qualitative_results_researcher_exposure": true,
+  "raw_article_machine_exposure": true,
+  "reason": "Root requested completion with current bounded methods evidence; no Dryad followup. Narrow metadata projection did not identify a Dryad DOI, without establishing absence.",
+  "redirects_followed": 0,
+  "repository_metadata_requests": 0,
+  "requests_completed": 2,
+  "retries": 0,
+  "runtime_tests": false,
+  "schema": "lupine.discovery.dielectric_methods.disposition.v1",
+  "scientific_admission": false,
+  "status": "STOPPED_AT_TWO_REQUESTS_WITH_DOCUMENTARY_METHODS_AND_UNRESOLVED_RIGHTS"
+}

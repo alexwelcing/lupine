@@ -1,0 +1,7 @@
+{
+  "raw_data_or_fulltext_requested": false,
+  "requests": 4,
+  "scientific_admission": false,
+  "source_commit": "cc3573b8a6b19ef32c9a06595f187615f25012de",
+  "status": "BOUNDED_METADATA_REQUESTS_COMPLETED"
+}

@@ -1,34 +1,30 @@
 # Project state
 
-The [census CI repair](reports/phase2-rhizo-census-ci-repair-v1/README.md) updates
-one stale retention test to the exact 17-check package contract, preserving all
-omission/extra/reorder rejection cases. Both Python jobs failed at 2975 while
-browser/Lean passed. Local reproduction ran 1860 tests with one failure;
-all 12 corrected test methods and 109 integrated focused methods now pass. One
-runtime test changes; 338 of 339 files are unchanged. Fresh exact-commit CI and
-clean package verification remain the next root-owned release gates.
+The [complete bounded Li route](reports/phase2-li-complete-readiness-integration-v1/README.md)
+is integrated with 602 passing generated tests. It preserves the strict pure core,
+accounts for all sheets and explicit rows, and rejects unsupported semantic premises.
+All 345 runtime files and two contract documents held during the test run; 339
+predecessor runtime files remain unchanged. No actual complete-route operation ran.
 
-The [prior clean wheel and independent audit](reports/phase2-rhizo-census-verification-v1/README.md)
-passed at 2975: 28 demonstrations/six schemas/17 checks, 5,442 source/Git blobs,
-339 runtime files and 117 wheel members. Those checks did not override the failed
-full-suite result. The working census interface retains its 80-check browser pass
-and complete 144-pair/16-group/36-reference descriptive scope. Reference choice
-remains UNKNOWN, scientific admission NOT_ADMITTED, all tolerances NULL.
+The [census repair baseline](reports/phase2-rhizo-census-repair-verification-v1/README.md)
+passes all four original CI jobs, fresh clean packaging and independent artifact
+verification. The earlier 1,860-test run with one stale expectation failure remains
+recorded. The correction preserves the full ordered 17-check contract and all
+omission/extra/reorder rejections. The historical census interface remains available;
+scientific admission is NOT_ADMITTED, reference choice UNKNOWN and tolerances NULL.
 
-The [strict pure Li preparation](reports/phase2-li-complete-readiness-preparation-v1/README.md)
-and [complete-route amendment](reports/phase2-li-complete-route-amendment-v1/README.md)
-are recorded. Every sheet/explicit row will be accounted for; unsupported roles,
-column meanings and row classes remain unresolved and force NO_GO. The adapter
-and independent tests are being prepared separately; no actual complete-route
-source operation has occurred. G34 remains the completed header-only result:
-one failing member-profile family, 31 passing, zero member/XML decoding.
+Root owns exact new-commit CI/package/artifact verification, then the fixed layout
+pair. Later inventory and frame bindings are absent and require reviewed provenance.
+The prior G31/G34 blocks remain historical results. Unknown meanings and completed
+negative frames do not become readiness or physical validation. G20 remains
+unresolved and G21 blocked; historical scientific failures and lack of demonstrated
+predictive superiority are unchanged. No new DFT, fit, allocation or deployment
+occurred. The expired automation stays disabled; this is renewed active work.
 
-G20 remains unresolved/G21 blocked. Historical scientific failures, unknown
-physical validity and lack of demonstrated predictive superiority are unchanged.
-No new DFT, fit, allocation, deployment or scheduled recurrence was introduced.
-The expired automation remains disabled. Root owns repair publication and exact
-verification, then final integration of the independently reviewed Li adapter.
-[GOAL](GOAL.md#renewed-active-work--2026-10-16) records the active work.
+
+The publication whitespace gate required removal of one extra terminal LF from
+a new test. Its syntax tree is unchanged; 35 focused methods pass on the final
+bytes. The earlier 602-method result remains separately preserved.
 
 Snapshot: 2026-10-11 01:40 UTC (exact CI observation `2026-10-11T01:40:16.973611+00:00`). Tested runtime/artifact source: `6585a605d5d325e84423c7e35c7286efe85cfb6f`. [Scoped decision and evidence](reports/research-preview-decision.md).
 

@@ -1,0 +1,76 @@
+{
+  "author_behavior_source": "540088bce4341b1f4137e44ef75244ada5786d000c50af597083dadbfc02c9d8",
+  "entries": [
+    {
+      "byte_identical": true,
+      "bytes": 81591,
+      "destination": "scripts/li_v3_readiness.py",
+      "overlay": ".cache/phase2-li-complete-readiness-production-v1/promotion/scripts/li_v3_readiness.py",
+      "sha256": "5fd1b06c683bb44ed582964bc59f5281cbdbe7e880c749ec9c55276145fa5219",
+      "source": ".cache/phase2-li-complete-readiness-production-v1/li_v3_readiness.py"
+    },
+    {
+      "byte_identical": true,
+      "bytes": 60305,
+      "destination": "scripts/li_v3_readiness_production.py",
+      "overlay": ".cache/phase2-li-complete-readiness-production-v1/promotion/scripts/li_v3_readiness_production.py",
+      "sha256": "540088bce4341b1f4137e44ef75244ada5786d000c50af597083dadbfc02c9d8",
+      "source": ".cache/phase2-li-complete-readiness-production-v1/li_v3_readiness_production.py"
+    },
+    {
+      "byte_identical": true,
+      "bytes": 23867,
+      "destination": "tests/test_li_v3_readiness.py",
+      "overlay": ".cache/phase2-li-complete-readiness-production-v1/promotion/tests/test_li_v3_readiness.py",
+      "sha256": "f961582942c7e1964ef2b1b462d81520278a85c17a459be24c099c95ef9654a3",
+      "source": ".cache/phase2-li-complete-readiness-candidate-v1/promotion/tests/test_li_v3_readiness.py"
+    },
+    {
+      "byte_identical": true,
+      "bytes": 60150,
+      "destination": "tests/test_li_v3_readiness_review.py",
+      "overlay": ".cache/phase2-li-complete-readiness-production-v1/promotion/tests/test_li_v3_readiness_review.py",
+      "sha256": "7ec52e6a72aef1b289503d187fa5966025a1d488ca60f55200d12fd9c10b85f0",
+      "source": ".cache/phase2-li-complete-readiness-review-v1/test_li_v3_readiness_review.py"
+    },
+    {
+      "byte_identical": true,
+      "bytes": 43260,
+      "destination": "tests/test_li_v3_readiness_production.py",
+      "overlay": ".cache/phase2-li-complete-readiness-production-v1/promotion/tests/test_li_v3_readiness_production.py",
+      "sha256": "5829e9a328c4f90b306a0a5614a01bb609fd6c3de05ec95d80883c1d9abd13e3",
+      "source": ".cache/phase2-li-complete-readiness-production-v1/test_li_v3_readiness_production.py"
+    },
+    {
+      "byte_identical": true,
+      "bytes": 85024,
+      "destination": "tests/test_li_v3_readiness_production_review.py",
+      "overlay": ".cache/phase2-li-complete-readiness-production-v1/promotion/tests/test_li_v3_readiness_production_review.py",
+      "sha256": "23f263d40f819a5ed9724006835369d6b721a24c2a5cd8c71158b547d01b04b8",
+      "source": ".cache/phase2-li-complete-readiness-production-review-v1/test_li_v3_readiness_production_review.py"
+    },
+    {
+      "byte_identical": true,
+      "bytes": 10283,
+      "destination": "docs/li-v3-readiness.md",
+      "overlay": ".cache/phase2-li-complete-readiness-production-v1/promotion/docs/li-v3-readiness.md",
+      "sha256": "295a04a9b411001e22a4e39c831c609203c2feb1958be5e663cfbb6a9e4704b7",
+      "source": ".cache/phase2-li-complete-readiness-candidate-v1/README.md"
+    },
+    {
+      "byte_identical": true,
+      "bytes": 15962,
+      "destination": "docs/li-v3-readiness-production.md",
+      "overlay": ".cache/phase2-li-complete-readiness-production-v1/promotion/docs/li-v3-readiness-production.md",
+      "sha256": "e0f1794f938afde364138cc324451822d00c9b470e087cfc96b1f9038856cc5b",
+      "source": ".cache/phase2-li-complete-readiness-production-v1/README.md"
+    }
+  ],
+  "executed_here": false,
+  "expected_runtime_manifest_count_after_promotion": 345,
+  "guarded_contract_paths": 2,
+  "root_required": "Run focused integrated Li tests against exact final eight-file overlay after narrow published-baseline rebind; current pure portable author adaptation is not yet executed. No actual operations.",
+  "runtime_python_paths": 6,
+  "status": "PREPARED_PENDING_FINAL_BASELINE_REBIND_AND_CONTRACT_COUNT_CLARIFICATION",
+  "total_guarded_promotion_paths": 8
+}

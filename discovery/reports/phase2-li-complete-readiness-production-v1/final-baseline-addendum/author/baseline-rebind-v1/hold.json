@@ -1,0 +1,41 @@
+{
+  "actual_operations": 0,
+  "all_other_adapter_AST_unchanged": true,
+  "authorized_adapter_assignments_only": [
+    "BASELINE_COMMIT",
+    "BASELINE_MANIFEST_SHA256"
+  ],
+  "baseline_runtime_count": 339,
+  "core_tests_interface_unchanged": true,
+  "files": {
+    "README.md": {
+      "bytes": 18081,
+      "sha256": "1fd11e47c4a332034b213348e4a85165e18ba0693791483cd703c326eb8d87ca"
+    },
+    "interface.complete-route-v2.json": {
+      "bytes": 10467,
+      "sha256": "4c16d7156f43388982ce778a0c90ba503e3a3765e6cc444e038d7a15f61e91c1"
+    },
+    "li_v3_readiness.py": {
+      "bytes": 81591,
+      "sha256": "5fd1b06c683bb44ed582964bc59f5281cbdbe7e880c749ec9c55276145fa5219"
+    },
+    "li_v3_readiness_production.py": {
+      "bytes": 61640,
+      "sha256": "77dece96850b09be2f13acd275cc28789ea0e3bc408cfcec86bcd02f488fed85"
+    },
+    "test_li_v3_readiness_production.py": {
+      "bytes": 46051,
+      "sha256": "809c0126ef9f130fad264ef2617f67b9b99db103a3a14c476a6e60bfb4905470"
+    }
+  },
+  "held_at": "2026-10-16T15:24:58.371569+00:00",
+  "new_guarded_document_paths": 2,
+  "new_runtime_python_paths": 6,
+  "post_promotion_runtime_count": 345,
+  "verification_pending": [
+    "six existing generated author baseline methods",
+    "four existing generated independent guard methods",
+    "root exact integrated tests and publication gates"
+  ]
+}

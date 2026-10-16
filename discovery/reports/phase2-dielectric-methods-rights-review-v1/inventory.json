@@ -1,0 +1,22 @@
+{
+  "bytes": 14807,
+  "file_count": 3,
+  "files": [
+    {
+      "bytes": 2141,
+      "path": "README.md",
+      "sha256": "c63c0f2452c6c611b1600f98ca072a86a87afb7fca991ab4caa437f1e6e0786c"
+    },
+    {
+      "bytes": 4135,
+      "path": "review.json",
+      "sha256": "3e7b152187831b816c320e6b3a3b60e229de0d598ebf27d1bd0dc74868230280"
+    },
+    {
+      "bytes": 8531,
+      "path": "source-bindings.json",
+      "sha256": "84399fd05c2b60ea84dfed58117b00d7740604fedcafacf4922c0e968e8c90ef"
+    }
+  ],
+  "schema": "lupine.discovery.documentary_review_inventory.v1"
+}

@@ -1,0 +1,31 @@
+{
+  "article_license_links": [
+    "http://creativecommons.org/licenses/by/4.0",
+    "http://www.nature.com/sdata/"
+  ],
+  "dryad_citation_identifiers": [],
+  "no_table_cell_or_observation_value_disclosed": true,
+  "same_source_sha256": "1711b5f59a82ed48acca1a97312a863180bf09a07597c44b0a3cfa109402cb19",
+  "table_caption_metadata_only": [
+    {
+      "caption": "Dielectric tensors shape for different crystal symmetries.",
+      "cell_contents_disclosed": false,
+      "id": "t1"
+    },
+    {
+      "caption": "Description of metadata keys.",
+      "cell_contents_disclosed": false,
+      "id": "t2"
+    },
+    {
+      "caption": "Description of metadata keys.",
+      "cell_contents_disclosed": false,
+      "id": "t3"
+    },
+    {
+      "caption": "Comparison with experimental data.",
+      "cell_contents_disclosed": false,
+      "id": "t4"
+    }
+  ]
+}

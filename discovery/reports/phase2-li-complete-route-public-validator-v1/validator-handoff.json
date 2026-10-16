@@ -1,0 +1,31 @@
+{
+  "design_handoff_unchanged": {
+    "bytes": 445,
+    "path": "handoff.json",
+    "sha256": "d5d25276d4547bbb216ea5256e090b437697ff4ab63476e3a34baf54a53d8f54"
+  },
+  "inventory": {
+    "bytes": 4568,
+    "path": "validator-inventory.json",
+    "sha256": "049e9017c858021d174502d5732087167b49b9b90b22c98583f97e077377ff70"
+  },
+  "next_action": "Root recorder may bind exact validator bytes and independently authenticate gates and public evidence; this handoff authorizes no operation.",
+  "release_pins": null,
+  "review": {
+    "bytes": 1725,
+    "path": "validator-review.json",
+    "sha256": "e22613c6725567cc7287bda37647f3fb6efef8981827e7b6b4e1e5d3c92f1af4"
+  },
+  "schema": "lupine.complete-route.public-review-validator-handoff.v1",
+  "source": {
+    "bytes": 50912,
+    "path": "public_review_validator.py",
+    "sha256": "db934708623a69282918c35f96d1eec442c94a5e4d6af109e51e2079653f14ca"
+  },
+  "status": "GENERATED_TESTS_PASS_NO_OPERATION_APPROVAL",
+  "tests": {
+    "bytes": 27752,
+    "path": "test_public_review_validator.py",
+    "sha256": "835cab953d7251d509bcaa965675560b94835ccb242077b56de66134e29a3085"
+  }
+}

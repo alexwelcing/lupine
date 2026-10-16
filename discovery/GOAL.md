@@ -88,30 +88,36 @@ previously unused source with paired outcomes and credible study grouping.
 | G32 | Pure documentary-role layout projection with bounded storage coordinates, types and merge declarations | PREPARED / actual binding blocked on envelope | [Generated candidate and independent review](reports/phase2-documentary-layout-preparation-v1/README.md): 33 author/27 independent tests pass; namespace strengthening and original failures retained. No runtime promotion or actual worksheet access. |
 | G33 | Bounded Rhizo declared-reference provenance and historical recorded-label readiness | COMPLETE for fixed stored fields; NOT_ADMITTED | [One 36-object inspection](reports/phase2-rhizo-recorded-label-readiness-v1/README.md) confirms all 144 stored prediction/reference pairs are exact numeric fields with matching literal units; all tolerances are NULL. The source is exposed; historical reference choice and physical validity remain UNKNOWN. No performance comparison or fresh screening claim. |
 | G34 | One categorical all-entry Li header diagnostic with exact first-rejection preservation and explicit unchecked dependencies | DONE; BLOCKED_SCHEMA preserved | [Verified a064a2c0 and actual pair](reports/phase2-growth-predicate-verification-v1/ROOT-CHECKPOINT.md): all four CI jobs, clean package and independent artifacts pass. Two identical receipts report only MEMBER_KIND_PROFILE failing; 31 families pass, none unchecked. All 335 runtime files held; zero member/XML decoding. Independent public review passes 410 checks, with its first harness failure preserved. |
-| G35 | Fixed exposed Rhizo census and exact readable workbench, preserving unknown physical scope | IMPLEMENTED / CI regression repaired, fresh verification pending | [144 pairs, 16 groups and 36 reference checks](reports/phase2-rhizo-stored-census-v1/README.md), independent arithmetic/scope reviews; [80 browser checks and final 97 focused tests](reports/phase2-rhizo-census-integration-v1/README.md). Exact public values and exports; no winner, tolerance criterion or fresh scientific admission. |
-| G36 | One complete bounded Li compatibility/documentary/frame route | ACTIVE / generated pure tests pass | Author 38 and independent 35 methods pass; the same 35 also pass in portable form. Pure code makes no actual-source or production claim. Root owns integration; actual phases require fixed provenance and reviewed documentary/frame bindings, otherwise a specific NO-GO. |
+| G35 | Fixed exposed Rhizo census and exact readable workbench, preserving unknown physical scope | COMPLETE / repaired source verified | [144 pairs, 16 groups and 36 reference checks](reports/phase2-rhizo-stored-census-v1/README.md), independent arithmetic/scope reviews; [80 browser checks and final 97 focused tests](reports/phase2-rhizo-census-integration-v1/README.md). Exact public values and exports; no winner, tolerance criterion or fresh scientific admission. |
+| G36 | One complete bounded Li compatibility/documentary/frame route | INTEGRATED / 602 generated tests pass; actual route pending | [Integrated adapter and evidence](reports/phase2-li-complete-readiness-integration-v1/README.md): all 339 predecessors unchanged; complete identities and unresolved structural accounting, with exact prior lineage and counter consistency. Root owns new-commit release gates and fixed layout pair; later bindings remain absent. |
 
-Current owner/checkpoint: root repaired the stale package-check expectation
-after both Python CI jobs failed at 2975. The [original full run and correction](reports/phase2-rhizo-census-ci-repair-v1/README.md)
-retain 1860 tests/one failure, followed by 12 proposed and 109 integrated
-passing methods. Only one runtime test changes; 338 of 339 files remain unchanged.
-Next: publish this repair, verify exact remote/full CI, clean package and
-independent artifact deltas. The [prior clean package/audit](reports/phase2-rhizo-census-verification-v1/README.md)
-passed at 2975 but did not close its failed full-suite gate.
+Current owner/checkpoint: root integrated the complete bounded Li route.
+[602 focused methods pass](reports/phase2-li-complete-readiness-integration-v1/README.md),
+holding 345 runtime files and two contract documents. All 339 predecessor runtime
+files remain unchanged. The strict pure core and all earlier failures are preserved.
+[The repair baseline](reports/phase2-rhizo-census-repair-verification-v1/README.md)
+passes original full CI, clean packaging and independent artifact checks.
 
-The historical Rhizo census remains 144 pairs/16 groups/36 reference groups.
-Equal stored values/spellings/citations do not establish physical comparability,
-historical reference choice or a winner; all tolerances remain NULL. Public
-aggregates are exposed and cannot become a fresh evaluation set.
+Next: publish this increment, verify its own exact remote/CI and clean artifacts,
+then execute the fixed bounded layout pair through the reviewed recorder. Inventory
+and frame remain unbound until exact prior results and semantic premises are
+reviewed and committed. No actual operation through this new route has occurred.
+Unknown roles/meaning remain explicit NO_GO; G20 is unresolved and G21 blocked.
 
-The [strict pure Li preparation](reports/phase2-li-complete-readiness-preparation-v1/README.md)
-passes 38 author/35 independent methods, with the same 35 in portable form.
-The [accepted prospective route](reports/phase2-li-complete-route-amendment-v1/README.md)
-adds complete worksheet identity and row accounting while preserving unknown
-semantic roles as explicit negative results. The production adapter is separate;
-its final baseline must bind the repaired source before publication and actual
-use. No actual workbook operation has occurred through this new route. Original
-G31/G34 blocks remain; G20 is unresolved and G21 blocked.
+The historical Rhizo census remains descriptive: 144 pairs, 16 groups and 36
+reference groups. Physical comparability and historical reference choice remain
+unresolved, all tolerances NULL, and exposed aggregates cannot become a fresh test.
+
+Parallel [fallback source research](reports/phase2-dielectric-methods-rights-v1/README.md)
+records archived DFPT methods and a qualitative-results exposure during prose
+projection. Rights, pairing, processed schema and overlap remain unresolved;
+no dataset was acquired or selected as a benchmark. Li remains the primary route.
+
+
+Publication detail: the whitespace gate rejected one extra final LF in the new
+pure independent test. [Normalization](reports/phase2-li-complete-readiness-integration-v1/formatting/README.md)
+preserves its syntax tree; the normalized module separately passes 35 methods.
+The 602-method result remains tied to its original preformat bytes.
 
 The prospective planning probe is intentionally hypothetical. An IID score
 distribution permits exact prospective threshold arithmetic; it is

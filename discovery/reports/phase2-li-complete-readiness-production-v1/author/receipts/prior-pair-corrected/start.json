@@ -1,0 +1,33 @@
+{
+  "at": "2026-10-16T14:05:47.524898+00:00",
+  "source": {
+    "li_v3_readiness.py": {
+      "bytes": 81591,
+      "sha256": "5fd1b06c683bb44ed582964bc59f5281cbdbe7e880c749ec9c55276145fa5219"
+    },
+    "li_v3_readiness_production.py": {
+      "bytes": 26079,
+      "sha256": "80e0d39728320d115ddc8a9ce3467904294a57310af719c81e9686786de25263"
+    },
+    "test_li_v3_readiness_production.py": {
+      "bytes": 24411,
+      "sha256": "3c8c2b89e71bf86d6b74c22dd7629bc030771ed01756bb54379092589389b982"
+    },
+    "scope.json": {
+      "bytes": 711,
+      "sha256": "8d58e756800538624f80add1f80cce229b7af9d84dcc03a7382b292a4a176b6b"
+    }
+  },
+  "held_dependencies": {
+    "scripts/li_v3_compatible_envelope.py": true,
+    "scripts/li_v3_compatible_zip_diagnostic.py": true,
+    "scripts/li_v3_custody.py": true,
+    "scripts/li_v3_flag_diagnostic.py": true,
+    "scripts/li_v3_growth_envelope.py": true,
+    "scripts/li_v3_growth_hint_shape.py": true,
+    "scripts/li_v3_growth_predicate_audit.py": true,
+    "scripts/li_v3_local_extra_headers.py": true,
+    "scripts/li_v3_notebook_methods.py": true,
+    "scripts/li_v3_zip_diagnostic.py": true
+  }
+}

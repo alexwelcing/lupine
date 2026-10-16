@@ -1,0 +1,47 @@
+{
+  "bytes": 202922,
+  "checks_sha256": "2cb4d278308b1cec5c4a32fc09afa874b5c764b8c22cd60559848a6219a97e27",
+  "count": 9,
+  "destination_subfolder": "reports/phase2-li-complete-readiness-integration-v1/execution",
+  "files": {
+    "reports/phase2-li-complete-readiness-integration-v1/execution/README.md": {
+      "bytes": 2770,
+      "sha256": "b0f429948c0551315ffd17b3ec93bd4a4e7a7f2b6a4e4e2e930ab1e54da650e6"
+    },
+    "reports/phase2-li-complete-readiness-integration-v1/execution/focused-first/execution.json": {
+      "bytes": 421,
+      "sha256": "72baa5b288c08d69b97419e433aff5cba0cc4b0501ac28e85a98330941b6cfce"
+    },
+    "reports/phase2-li-complete-readiness-integration-v1/execution/focused-first/start.json": {
+      "bytes": 41183,
+      "sha256": "94556ce2c0045952b17966f5168d79233c5af7a9e8ccfd538dc8790da156bf0f"
+    },
+    "reports/phase2-li-complete-readiness-integration-v1/execution/focused-first/stderr.txt": {
+      "bytes": 106676,
+      "sha256": "d72ae4411e5cc2758c0d761b93a9a3c7307968a315f62128e558b7db1daeeaba"
+    },
+    "reports/phase2-li-complete-readiness-integration-v1/execution/focused-first/stdout.txt": {
+      "bytes": 22,
+      "sha256": "3c55e309a0a40298bda184ef0c57b51745eea8a35eb79d09076208030cbf66f4"
+    },
+    "reports/phase2-li-complete-readiness-integration-v1/execution/promote_and_test.py": {
+      "bytes": 4679,
+      "sha256": "4bfbe3f6c6783d992a0d2c83f0b1de6f08d788614a572ca58acd9d35c193f746"
+    },
+    "reports/phase2-li-complete-readiness-integration-v1/execution/promotion.json": {
+      "bytes": 41485,
+      "sha256": "ec7679abeda210cec88b98618e7fc8a006a373fd54867efdbaa9d511e3ddb2bb"
+    },
+    "reports/phase2-li-complete-readiness-integration-v1/execution/publication-checks.json": {
+      "bytes": 2082,
+      "sha256": "2cb4d278308b1cec5c4a32fc09afa874b5c764b8c22cd60559848a6219a97e27"
+    },
+    "reports/phase2-li-complete-readiness-integration-v1/execution/publication-copy-map.json": {
+      "bytes": 3604,
+      "sha256": "90f6f2c317b846e48c11142259b2bba7bf9e4fcc4b78ec31eb745155702b937a"
+    }
+  },
+  "old311_unchanged": true,
+  "schema": "li.readiness.root-integration-publication-overlay.v1",
+  "source_copy_entries": 6
+}

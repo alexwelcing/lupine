@@ -1,0 +1,19 @@
+{
+  "bytes_retained": 8662,
+  "complete_response_read": true,
+  "finished_at": "2026-10-16T15:15:42.323441+00:00",
+  "headers": {
+    "Content-Length": "8662",
+    "Content-Type": "application/json; charset=utf-8",
+    "ETag": "\"42052cb354aa3a43415b8970dab07fdd57152b4851b4247f48390cf79afdc653\"",
+    "Last-Modified": "Sun, 06 Oct 2024 12:31:55 GMT",
+    "X-RateLimit-Remaining": "14986"
+  },
+  "over_cap": false,
+  "request_count": 1,
+  "sha256": "f8898faae7a9a77fc9a3181156c7d461e0298d39f65a63beea29237d66ff3879",
+  "started_at": "2026-10-16T15:15:41.520426+00:00",
+  "status": 200,
+  "transport_error_category": null,
+  "url": "https://api.github.com/repos/hackingmaterials/matminer/commits/v0.9.3"
+}

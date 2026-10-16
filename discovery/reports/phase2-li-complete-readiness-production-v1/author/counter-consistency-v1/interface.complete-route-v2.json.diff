@@ -1,0 +1,17 @@
+--- behavior540:interface.complete-route-v2.json
++++ counter-corrected:interface.complete-route-v2.json
+@@ -2,6 +2,14 @@
+   "C_reconstruction": "Full original A/B lineage and complete same-source payload replay including workbook_sheets before records. Semantic requests reconstruct strict documentary projection. Explicit all-structural/no-assertion branch skips strict projection with nulls, never an empty success. Every observed row retained; all observed row/cell caps checked before selected semantic value processing.",
+   "additional_result_keys": "All phases add workbook_sheets and sheet_name_exposure. Inventory/frame retain inventory and inventory_exposure. Frame also adds semantic_projection_state and strict_documentary_sha256. Failure nulls workbook_sheets/inventory/documentary/frame and sets semantic state NOT_COMPLETED, digest null; exposure retained.",
+   "canonical": "Compact sorted ensure_ascii JSON + LF, ASCII; hashes include LF.",
++  "completed_prior_counter_consistency": {
++    "authenticated_pair": "M_B=M_A+s; outer fixed pins gate before target access and inner generated seam after header replay before XML",
++    "inventory": "s=int(any declared_type==s); M=D>=6+s; U=X=M+2",
++    "layout": "M=D=U=X>=6",
++    "meaning": "Necessary consistency, not proof of historical operation authenticity",
++    "scope": "Only completed historical A/B; never failure prefixes or C total counters",
++    "started_completed": "All four operation pairs are equal exact ints under existing bounds"
++  },
+   "default_phase_bindings": {
+     "frame": null,
+     "inventory": null

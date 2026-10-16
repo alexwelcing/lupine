@@ -1,0 +1,15 @@
+{
+  "bytes_retained": 28096,
+  "complete_response_read": true,
+  "finished_at": "2026-10-16T15:15:44.163219+00:00",
+  "headers": {
+    "Content-Type": "application/json"
+  },
+  "over_cap": false,
+  "request_count": 1,
+  "sha256": "85f966296f5cc16e8d2d80f3e687b22d93f4d4b2ae303da28bd14a6b5b6d57e6",
+  "started_at": "2026-10-16T15:15:43.445914+00:00",
+  "status": 200,
+  "transport_error_category": null,
+  "url": "https://api.crossref.org/works/10.1038/sdata.2016.134"
+}

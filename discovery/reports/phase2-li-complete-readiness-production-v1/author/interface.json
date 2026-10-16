@@ -1,0 +1,55 @@
+{
+  "canonical": "Compact sorted ensure_ascii JSON + LF, ASCII; hashes include LF.",
+  "outer_keys": [
+    "schema",
+    "parser_profile",
+    "synthetic_fixture",
+    "phase",
+    "status",
+    "engineering_status",
+    "reason",
+    "implementation",
+    "source_identity_verified",
+    "observed",
+    "prerequisite_receipt_sha256",
+    "capture_receipt_sha256",
+    "phase_binding_pins",
+    "result",
+    "scientific_counts",
+    "fits",
+    "splits",
+    "operation_exposure"
+  ],
+  "phase_binding_shape": {
+    "binding": {
+      "path": ".cache/li-v3-custody/complete-readiness-bindings-v1/{phase}.json",
+      "sha256": "digest"
+    },
+    "documentary": "frame only: same ordered fixed-slot1/2 list for documentary",
+    "layout": [
+      {
+        "path": ".cache/li-v3-custody/complete-readiness-v1/layout/{slot}/public.json",
+        "producer": "40hex",
+        "sha256": "digest"
+      }
+    ]
+  },
+  "phases": [
+    "layout",
+    "documentary",
+    "frame"
+  ],
+  "prerequisite_fixture": "Construct from unchanged diagnostic._production_report and generated _production_inspect outside tested invocation; pin generated canonical hash/projection. Independent lane must use its own fixtures/manual expectation.",
+  "prior_pair_rule": "Exactly two ordered fixed-slot1/2 receipt pins; each exact hash/producer and complete canonical receipt equality. Documentary/frame unbound None by default.",
+  "production_call": "inspect(phase, run); no caller source/path/expectation/binding",
+  "result_differences_from_pure": {
+    "production_binding": "FIXED_LI_V3_SOURCE_G34_PREREQUISITE",
+    "schema": "lupine.discovery.li_v3.readiness.result.v1",
+    "synthetic_fixture": false
+  },
+  "slots": [
+    "1",
+    "2"
+  ],
+  "test_seams": "Generated tests may patch ROOT/custody.ROOT, __file__, baseline constants, source/capture/prerequisite/projection identities and PHASE_BINDINGS to generated equivalents; mock only preceding diagnostic.production_context and capture validator. Full current production_context runs solely in temporary generated Git repo. No real guards/cache."
+}

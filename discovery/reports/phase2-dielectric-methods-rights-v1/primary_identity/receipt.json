@@ -1,0 +1,14 @@
+{
+  "bytes": 6457,
+  "finished_at": "2026-10-16T15:27:43.417898+00:00",
+  "headers": {
+    "Content-Type": "application/json;charset=UTF-8"
+  },
+  "over_cap": false,
+  "requests": 1,
+  "sha256": "98399faa6e2cb65882f37c0f60b9c9370357615d8a3b8b9c840949b0a85f4517",
+  "started_at": "2026-10-16T15:27:41.880548+00:00",
+  "status": 200,
+  "transport_error": null,
+  "url": "https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=DOI%3A10.1038%2Fsdata.2016.134&format=json&resultType=core&pageSize=1"
+}

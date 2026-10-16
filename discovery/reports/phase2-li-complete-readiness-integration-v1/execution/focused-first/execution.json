@@ -1,0 +1,11 @@
+{
+  "started_at": "2026-10-16T15:28:39.186503+00:00",
+  "finished_at": "2026-10-16T15:29:39.987217+00:00",
+  "process_seconds": 60.798815574999026,
+  "exit_code": 0,
+  "held_file_count": 347,
+  "source_unchanged": true,
+  "stdout_sha256": "3c55e309a0a40298bda184ef0c57b51745eea8a35eb79d09076208030cbf66f4",
+  "stderr_sha256": "d72ae4411e5cc2758c0d761b93a9a3c7307968a315f62128e558b7db1daeeaba",
+  "actual_operations": 0
+}

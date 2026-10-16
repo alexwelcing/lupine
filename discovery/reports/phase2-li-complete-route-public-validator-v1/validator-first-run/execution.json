@@ -1,0 +1,25 @@
+{
+  "command": [
+    "python",
+    "-B",
+    "-m",
+    "unittest",
+    "-v",
+    "test_public_review_validator"
+  ],
+  "elapsed_seconds": 0.3111691630037967,
+  "exit_code": 0,
+  "finished_at": "2026-10-16T15:37:28.690217+00:00",
+  "scope": "Authored generated public JSON and normalized recordings only; own validator import only; no product imports, source guard, actual inputs, network, or tracked edits.",
+  "source_after": {
+    "public_review_validator.py": "01cc1a5f070b8c73360cae46ea2135d2e9da6e8a2eac9bed533847324f6a7885",
+    "test_public_review_validator.py": "a65b502728ec4aa366833afb9e31bafc5e36c875c879502d90f79240ba84db39"
+  },
+  "source_before": {
+    "public_review_validator.py": "01cc1a5f070b8c73360cae46ea2135d2e9da6e8a2eac9bed533847324f6a7885",
+    "test_public_review_validator.py": "a65b502728ec4aa366833afb9e31bafc5e36c875c879502d90f79240ba84db39"
+  },
+  "started_at": "2026-10-16T15:37:28.379448+00:00",
+  "stderr_sha256": "03771d4254734b17bf3ba779d43e06cf7c48943419fff9140a20690827a1bb18",
+  "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

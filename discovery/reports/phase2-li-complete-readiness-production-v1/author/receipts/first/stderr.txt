@@ -1,0 +1,811 @@
+test_all_three_phases_complete_metadata_only (test_li_v3_readiness_production.ProductionAuthorTests.test_all_three_phases_complete_metadata_only) ... FAIL
+test_all_three_phases_complete_metadata_only (test_li_v3_readiness_production.ProductionAuthorTests.test_all_three_phases_complete_metadata_only) ... FAIL
+test_capture_fail_before_target (test_li_v3_readiness_production.ProductionAuthorTests.test_capture_fail_before_target) ... FAIL
+test_capture_fail_before_target (test_li_v3_readiness_production.ProductionAuthorTests.test_capture_fail_before_target) ... FAIL
+test_committed_baseline_runtime_drift (test_li_v3_readiness_production.ProductionAuthorTests.test_committed_baseline_runtime_drift) ... FAIL
+test_generated_full_result_equivalence (test_li_v3_readiness_production.ProductionAuthorTests.test_generated_full_result_equivalence) ... FAIL
+test_generated_full_result_equivalence (test_li_v3_readiness_production.ProductionAuthorTests.test_generated_full_result_equivalence) ... FAIL
+test_index_drift (test_li_v3_readiness_production.ProductionAuthorTests.test_index_drift) ... FAIL
+test_invalid_bound_prior_hash_stops_before_target (test_li_v3_readiness_production.ProductionAuthorTests.test_invalid_bound_prior_hash_stops_before_target) ... FAIL
+test_invalid_bound_prior_hash_stops_before_target (test_li_v3_readiness_production.ProductionAuthorTests.test_invalid_bound_prior_hash_stops_before_target) ... FAIL
+test_late_context_failure_clears_result (test_li_v3_readiness_production.ProductionAuthorTests.test_late_context_failure_clears_result) ... FAIL
+test_late_context_failure_clears_result (test_li_v3_readiness_production.ProductionAuthorTests.test_late_context_failure_clears_result) ... FAIL
+test_layout_complete_and_persisted (test_li_v3_readiness_production.ProductionAuthorTests.test_layout_complete_and_persisted) ... FAIL
+test_layout_complete_and_persisted (test_li_v3_readiness_production.ProductionAuthorTests.test_layout_complete_and_persisted) ... FAIL
+test_output_directory_close_failure_clears_result (test_li_v3_readiness_production.ProductionAuthorTests.test_output_directory_close_failure_clears_result) ... FAIL
+test_output_directory_close_failure_clears_result (test_li_v3_readiness_production.ProductionAuthorTests.test_output_directory_close_failure_clears_result) ... FAIL
+test_oversized_public_metadata_is_not_echoed (test_li_v3_readiness_production.ProductionAuthorTests.test_oversized_public_metadata_is_not_echoed) ... ERROR
+test_oversized_public_metadata_is_not_echoed (test_li_v3_readiness_production.ProductionAuthorTests.test_oversized_public_metadata_is_not_echoed) ... FAIL
+test_own_source_worktree_drift (test_li_v3_readiness_production.ProductionAuthorTests.test_own_source_worktree_drift) ... FAIL
+test_partial_public_write_consumed (test_li_v3_readiness_production.ProductionAuthorTests.test_partial_public_write_consumed) ... FAIL
+test_partial_public_write_consumed (test_li_v3_readiness_production.ProductionAuthorTests.test_partial_public_write_consumed) ... FAIL
+test_partial_reservation_consumed (test_li_v3_readiness_production.ProductionAuthorTests.test_partial_reservation_consumed) ... FAIL
+test_partial_reservation_consumed (test_li_v3_readiness_production.ProductionAuthorTests.test_partial_reservation_consumed) ... FAIL
+test_partial_target_read_is_explicit (test_li_v3_readiness_production.ProductionAuthorTests.test_partial_target_read_is_explicit) ... FAIL
+test_partial_target_read_is_explicit (test_li_v3_readiness_production.ProductionAuthorTests.test_partial_target_read_is_explicit) ... FAIL
+test_prerequisite_bytes_and_producer_fail_before_target (test_li_v3_readiness_production.ProductionAuthorTests.test_prerequisite_bytes_and_producer_fail_before_target) ... FAIL
+test_prerequisite_bytes_and_producer_fail_before_target (test_li_v3_readiness_production.ProductionAuthorTests.test_prerequisite_bytes_and_producer_fail_before_target) ... FAIL
+test_replay_mismatch_before_xml (test_li_v3_readiness_production.ProductionAuthorTests.test_replay_mismatch_before_xml) ... FAIL
+test_replay_mismatch_before_xml (test_li_v3_readiness_production.ProductionAuthorTests.test_replay_mismatch_before_xml) ... FAIL
+test_same_buffer_object_to_replay_and_package (test_li_v3_readiness_production.ProductionAuthorTests.test_same_buffer_object_to_replay_and_package) ... FAIL
+test_same_buffer_object_to_replay_and_package (test_li_v3_readiness_production.ProductionAuthorTests.test_same_buffer_object_to_replay_and_package) ... FAIL
+test_slot_is_exclusive_and_cli_is_closed (test_li_v3_readiness_production.ProductionAuthorTests.test_slot_is_exclusive_and_cli_is_closed) ... FAIL
+test_slot_is_exclusive_and_cli_is_closed (test_li_v3_readiness_production.ProductionAuthorTests.test_slot_is_exclusive_and_cli_is_closed) ... FAIL
+test_source_identity_failure_before_xml (test_li_v3_readiness_production.ProductionAuthorTests.test_source_identity_failure_before_xml) ... FAIL
+test_source_identity_failure_before_xml (test_li_v3_readiness_production.ProductionAuthorTests.test_source_identity_failure_before_xml) ... FAIL
+test_unbound_baseline_stops_before_cache (test_li_v3_readiness_production.ProductionAuthorTests.test_unbound_baseline_stops_before_cache) ... FAIL
+test_unbound_later_phase_stops_before_target (test_li_v3_readiness_production.ProductionAuthorTests.test_unbound_later_phase_stops_before_target) ... FAIL
+test_unbound_later_phase_stops_before_target (test_li_v3_readiness_production.ProductionAuthorTests.test_unbound_later_phase_stops_before_target) ... FAIL
+
+======================================================================
+ERROR: test_oversized_public_metadata_is_not_echoed (test_li_v3_readiness_production.ProductionAuthorTests.test_oversized_public_metadata_is_not_echoed)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lupine-discovery-branch/discovery/.cache/phase2-li-complete-readiness-production-v1/test_li_v3_readiness_production.py", line 342, in test_oversized_public_metadata_is_not_echoed
+    context=M.production_context();context['files'][M.FROZEN_PATHS[-1]]='b'*64
+            ^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/lupine-discovery-branch/discovery/.cache/phase2-li-complete-readiness-production-v1/li_v3_readiness_production.py", line 147, in production_context
+    raise ProductionError('FROZEN_SOURCE_REQUIRED') from None
+readiness_production_author.ProductionError: FROZEN_SOURCE_REQUIRED
+
+======================================================================
+FAIL: test_all_three_phases_complete_metadata_only (test_li_v3_readiness_production.ProductionAuthorTests.test_all_three_phases_complete_metadata_only)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lupine-discovery-branch/discovery/.cache/phase2-li-complete-readiness-production-v1/test_li_v3_readiness_production.py", line 218, in test_all_three_phases_complete_metadata_only
+    layout,binding,doc=self.documentary();frame=frame_binding(self.raw,layout['result'],doc['result'],binding)
+                       ^^^^^^^^^^^^^^^^^^
+  File "/workspace/lupine-discovery-branch/discovery/.cache/phase2-li-complete-readiness-production-v1/test_li_v3_readiness_production.py", line 198, in documentary
+    layout=self.layout();binding=doc_binding(self.raw,layout['result'])
+           ^^^^^^^^^^^^^
+  File "/workspace/lupine-discovery-branch/discovery/.cache/phase2-li-complete-readiness-production-v1/test_li_v3_readiness_production.py", line 195, in layout
+    report=M.inspect('layout','1');self.assertEqual(report['reason'],'LAYOUT_READY_MAPPING_UNBOUND',report);return report
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'FROZEN_SOURCE_REQUIRED' != 'LAYOUT_READY_MAPPING_UNBOUND'
+- FROZEN_SOURCE_REQUIRED
++ LAYOUT_READY_MAPPING_UNBOUND
+ : {'schema': 'lupine.discovery.li_v3.readiness.production.v1', 'parser_profile': 'li_v3.complete_bounded_readiness.v1', 'synthetic_fixture': False, 'phase': 'layout', 'status': 'BLOCKED_GUARD', 'engineering_status': 'NO_GO', 'reason': 'FROZEN_SOURCE_REQUIRED', 'implementation': None, 'source_identity_verified': False, 'observed': None, 'prerequisite_receipt_sha256': None, 'capture_receipt_sha256': None, 'phase_binding_pins': None, 'result': {'schema': 'lupine.discovery.li_v3.readiness.result.v1', 'synthetic_fixture': False, 'production_binding': 'FIXED_LI_V3_SOURCE_G34_PREREQUISITE', 'phase': 'layout', 'status': 'BLOCKED_SCHEMA', 'engineering_status': 'NO_GO', 'reason': 'FROZEN_SOURCE_REQUIRED', 'validation_reason_before_cleanup': None, 'source_sha256': None, 'replay_matched': False, 'package': None, 'roles': None, 'documentary': None, 'frame': None, 'exposure': {'whole_buffer_supplied': False, 'header_replay_started': False, 'header_replay_completed': False, 'archive_open_started': False, 'archive_open_completed': False, 'archive_close_started': False, 'archive_close_completed': False, 'archive_close_error': None, 'member_opens_started': 0, 'member_opens_completed': 0, 'decompressions_started': 0, 'decompressions_completed': 0, 'utf8_decodes_started': 0, 'utf8_decodes_completed': 0, 'xml_parses_started': 0, 'xml_parses_completed': 0, 'character_data_state': 'NOT_ATTEMPTED', 'layout_roles': {}}, 'numeric_outcome_interpretation': False, 'formula_evaluation': False, 'scientific_eligibility_decisions': False, 'sampling_independence_established': False, 'scientific_counts': None, 'fits': 0, 'splits': 0}, 'scientific_counts': None, 'fits': 0, 'splits': 0, 'operation_exposure': {'reservation_write_attempted': False, 'reservation_may_exist': False, 'reservation_created': False, 'raw_buffer_read_started': False, 'raw_buffer_read_completed': False, 'target_bearing_source_bytes_read': False, 'source_buffer_verified': False, 'output_write_attempted': False, 'output_may_exist': False, 'output_directory_close_error': None}}
+
+======================================================================
+FAIL: test_all_three_phases_complete_metadata_only (test_li_v3_readiness_production.ProductionAuthorTests.test_all_three_phases_complete_metadata_only)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/contextlib.py", line 618, in close
+    self.__exit__(None, None, None)
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/contextlib.py", line 610, in __exit__
+    raise exc_details[1]
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/contextlib.py", line 595, in __exit__
+    if cb(*exc_details):
+       ^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/tempfile.py", line 950, in __exit__
+    self.cleanup()
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/tempfile.py", line 954, in cleanup
+    self._rmtree(self.name, ignore_errors=self._ignore_cleanup_errors)
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/tempfile.py", line 934, in _rmtree
+    _shutil.rmtree(name, onexc=onexc)
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/shutil.py", line 759, in rmtree
+    _rmtree_safe_fd(stack, onexc)
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/shutil.py", line 674, in _rmtree_safe_fd
+    topfd = os.open(name, os.O_RDONLY | os.O_NONBLOCK, dir_fd=dirfd)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<string>", line 13, in audit
+AssertionError: FORBIDDEN_REPOSITORY_READ
+
+======================================================================
+FAIL: test_capture_fail_before_target (test_li_v3_readiness_production.ProductionAuthorTests.test_capture_fail_before_target)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lupine-discovery-branch/discovery/.cache/phase2-li-complete-readiness-production-v1/test_li_v3_readiness_production.py", line 257, in test_capture_fail_before_target
+    self.write(M.custody.CAPTURE,b'bad');self.assert_cleared(M.inspect('layout','1'),'CAPTURE_RECEIPT_INVALID')
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/lupine-discovery-branch/discovery/.cache/phase2-li-complete-readiness-production-v1/test_li_v3_readiness_production.py", line 185, in assert_cleared
+    self.assertEqual(report['reason'],reason,report)
+AssertionError: 'FROZEN_SOURCE_REQUIRED' != 'CAPTURE_RECEIPT_INVALID'
+- FROZEN_SOURCE_REQUIRED
++ CAPTURE_RECEIPT_INVALID
+ : {'schema': 'lupine.discovery.li_v3.readiness.production.v1', 'parser_profile': 'li_v3.complete_bounded_readiness.v1', 'synthetic_fixture': False, 'phase': 'layout', 'status': 'BLOCKED_GUARD', 'engineering_status': 'NO_GO', 'reason': 'FROZEN_SOURCE_REQUIRED', 'implementation': None, 'source_identity_verified': False, 'observed': None, 'prerequisite_receipt_sha256': None, 'capture_receipt_sha256': None, 'phase_binding_pins': None, 'result': {'schema': 'lupine.discovery.li_v3.readiness.result.v1', 'synthetic_fixture': False, 'production_binding': 'FIXED_LI_V3_SOURCE_G34_PREREQUISITE', 'phase': 'layout', 'status': 'BLOCKED_SCHEMA', 'engineering_status': 'NO_GO', 'reason': 'FROZEN_SOURCE_REQUIRED', 'validation_reason_before_cleanup': None, 'source_sha256': None, 'replay_matched': False, 'package': None, 'roles': None, 'documentary': None, 'frame': None, 'exposure': {'whole_buffer_supplied': False, 'header_replay_started': False, 'header_replay_completed': False, 'archive_open_started': False, 'archive_open_completed': False, 'archive_close_started': False, 'archive_close_completed': False, 'archive_close_error': None, 'member_opens_started': 0, 'member_opens_completed': 0, 'decompressions_started': 0, 'decompressions_completed': 0, 'utf8_decodes_started': 0, 'utf8_decodes_completed': 0, 'xml_parses_started': 0, 'xml_parses_completed': 0, 'character_data_state': 'NOT_ATTEMPTED', 'layout_roles': {}}, 'numeric_outcome_interpretation': False, 'formula_evaluation': False, 'scientific_eligibility_decisions': False, 'sampling_independence_established': False, 'scientific_counts': None, 'fits': 0, 'splits': 0}, 'scientific_counts': None, 'fits': 0, 'splits': 0, 'operation_exposure': {'reservation_write_attempted': False, 'reservation_may_exist': False, 'reservation_created': False, 'raw_buffer_read_started': False, 'raw_buffer_read_completed': False, 'target_bearing_source_bytes_read': False, 'source_buffer_verified': False, 'output_write_attempted': False, 'output_may_exist': False, 'output_directory_close_error': None}}
+
+======================================================================
+FAIL: test_capture_fail_before_target (test_li_v3_readiness_production.ProductionAuthorTests.test_capture_fail_before_target)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/contextlib.py", line 618, in close
+    self.__exit__(None, None, None)
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/contextlib.py", line 610, in __exit__
+    raise exc_details[1]
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/contextlib.py", line 595, in __exit__
+    if cb(*exc_details):
+       ^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/tempfile.py", line 950, in __exit__
+    self.cleanup()
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/tempfile.py", line 954, in cleanup
+    self._rmtree(self.name, ignore_errors=self._ignore_cleanup_errors)
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/tempfile.py", line 934, in _rmtree
+    _shutil.rmtree(name, onexc=onexc)
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/shutil.py", line 759, in rmtree
+    _rmtree_safe_fd(stack, onexc)
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/shutil.py", line 674, in _rmtree_safe_fd
+    topfd = os.open(name, os.O_RDONLY | os.O_NONBLOCK, dir_fd=dirfd)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<string>", line 13, in audit
+AssertionError: FORBIDDEN_REPOSITORY_READ
+
+======================================================================
+FAIL: test_committed_baseline_runtime_drift (test_li_v3_readiness_production.ProductionAuthorTests.test_committed_baseline_runtime_drift)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/contextlib.py", line 618, in close
+    self.__exit__(None, None, None)
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/contextlib.py", line 610, in __exit__
+    raise exc_details[1]
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/contextlib.py", line 595, in __exit__
+    if cb(*exc_details):
+       ^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/tempfile.py", line 950, in __exit__
+    self.cleanup()
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/tempfile.py", line 954, in cleanup
+    self._rmtree(self.name, ignore_errors=self._ignore_cleanup_errors)
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/tempfile.py", line 934, in _rmtree
+    _shutil.rmtree(name, onexc=onexc)
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/shutil.py", line 759, in rmtree
+    _rmtree_safe_fd(stack, onexc)
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/shutil.py", line 674, in _rmtree_safe_fd
+    topfd = os.open(name, os.O_RDONLY | os.O_NONBLOCK, dir_fd=dirfd)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<string>", line 13, in audit
+AssertionError: FORBIDDEN_REPOSITORY_READ
+
+======================================================================
+FAIL: test_generated_full_result_equivalence (test_li_v3_readiness_production.ProductionAuthorTests.test_generated_full_result_equivalence)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lupine-discovery-branch/discovery/.cache/phase2-li-complete-readiness-production-v1/test_li_v3_readiness_production.py", line 211, in test_generated_full_result_equivalence
+    report=self.layout()['result']
+           ^^^^^^^^^^^^^
+  File "/workspace/lupine-discovery-branch/discovery/.cache/phase2-li-complete-readiness-production-v1/test_li_v3_readiness_production.py", line 195, in layout
+    report=M.inspect('layout','1');self.assertEqual(report['reason'],'LAYOUT_READY_MAPPING_UNBOUND',report);return report
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'FROZEN_SOURCE_REQUIRED' != 'LAYOUT_READY_MAPPING_UNBOUND'
+- FROZEN_SOURCE_REQUIRED
++ LAYOUT_READY_MAPPING_UNBOUND
+ : {'schema': 'lupine.discovery.li_v3.readiness.production.v1', 'parser_profile': 'li_v3.complete_bounded_readiness.v1', 'synthetic_fixture': False, 'phase': 'layout', 'status': 'BLOCKED_GUARD', 'engineering_status': 'NO_GO', 'reason': 'FROZEN_SOURCE_REQUIRED', 'implementation': None, 'source_identity_verified': False, 'observed': None, 'prerequisite_receipt_sha256': None, 'capture_receipt_sha256': None, 'phase_binding_pins': None, 'result': {'schema': 'lupine.discovery.li_v3.readiness.result.v1', 'synthetic_fixture': False, 'production_binding': 'FIXED_LI_V3_SOURCE_G34_PREREQUISITE', 'phase': 'layout', 'status': 'BLOCKED_SCHEMA', 'engineering_status': 'NO_GO', 'reason': 'FROZEN_SOURCE_REQUIRED', 'validation_reason_before_cleanup': None, 'source_sha256': None, 'replay_matched': False, 'package': None, 'roles': None, 'documentary': None, 'frame': None, 'exposure': {'whole_buffer_supplied': False, 'header_replay_started': False, 'header_replay_completed': False, 'archive_open_started': False, 'archive_open_completed': False, 'archive_close_started': False, 'archive_close_completed': False, 'archive_close_error': None, 'member_opens_started': 0, 'member_opens_completed': 0, 'decompressions_started': 0, 'decompressions_completed': 0, 'utf8_decodes_started': 0, 'utf8_decodes_completed': 0, 'xml_parses_started': 0, 'xml_parses_completed': 0, 'character_data_state': 'NOT_ATTEMPTED', 'layout_roles': {}}, 'numeric_outcome_interpretation': False, 'formula_evaluation': False, 'scientific_eligibility_decisions': False, 'sampling_independence_established': False, 'scientific_counts': None, 'fits': 0, 'splits': 0}, 'scientific_counts': None, 'fits': 0, 'splits': 0, 'operation_exposure': {'reservation_write_attempted': False, 'reservation_may_exist': False, 'reservation_created': False, 'raw_buffer_read_started': False, 'raw_buffer_read_completed': False, 'target_bearing_source_bytes_read': False, 'source_buffer_verified': False, 'output_write_attempted': False, 'output_may_exist': False, 'output_directory_close_error': None}}
+
+======================================================================
+FAIL: test_generated_full_result_equivalence (test_li_v3_readiness_production.ProductionAuthorTests.test_generated_full_result_equivalence)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/contextlib.py", line 618, in close
+    self.__exit__(None, None, None)
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/contextlib.py", line 610, in __exit__
+    raise exc_details[1]
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/contextlib.py", line 595, in __exit__
+    if cb(*exc_details):
+       ^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/tempfile.py", line 950, in __exit__
+    self.cleanup()
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/tempfile.py", line 954, in cleanup
+    self._rmtree(self.name, ignore_errors=self._ignore_cleanup_errors)
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/tempfile.py", line 934, in _rmtree
+    _shutil.rmtree(name, onexc=onexc)
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/shutil.py", line 759, in rmtree
+    _rmtree_safe_fd(stack, onexc)
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/shutil.py", line 674, in _rmtree_safe_fd
+    topfd = os.open(name, os.O_RDONLY | os.O_NONBLOCK, dir_fd=dirfd)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<string>", line 13, in audit
+AssertionError: FORBIDDEN_REPOSITORY_READ
+
+======================================================================
+FAIL: test_index_drift (test_li_v3_readiness_production.ProductionAuthorTests.test_index_drift)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/contextlib.py", line 618, in close
+    self.__exit__(None, None, None)
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/contextlib.py", line 610, in __exit__
+    raise exc_details[1]
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/contextlib.py", line 595, in __exit__
+    if cb(*exc_details):
+       ^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/tempfile.py", line 950, in __exit__
+    self.cleanup()
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/tempfile.py", line 954, in cleanup
+    self._rmtree(self.name, ignore_errors=self._ignore_cleanup_errors)
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/tempfile.py", line 934, in _rmtree
+    _shutil.rmtree(name, onexc=onexc)
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/shutil.py", line 759, in rmtree
+    _rmtree_safe_fd(stack, onexc)
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/shutil.py", line 674, in _rmtree_safe_fd
+    topfd = os.open(name, os.O_RDONLY | os.O_NONBLOCK, dir_fd=dirfd)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<string>", line 13, in audit
+AssertionError: FORBIDDEN_REPOSITORY_READ
+
+======================================================================
+FAIL: test_invalid_bound_prior_hash_stops_before_target (test_li_v3_readiness_production.ProductionAuthorTests.test_invalid_bound_prior_hash_stops_before_target)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lupine-discovery-branch/discovery/.cache/phase2-li-complete-readiness-production-v1/test_li_v3_readiness_production.py", line 336, in test_invalid_bound_prior_hash_stops_before_target
+    layout=self.layout();binding=doc_binding(self.raw,layout['result'])
+           ^^^^^^^^^^^^^
+  File "/workspace/lupine-discovery-branch/discovery/.cache/phase2-li-complete-readiness-production-v1/test_li_v3_readiness_production.py", line 195, in layout
+    report=M.inspect('layout','1');self.assertEqual(report['reason'],'LAYOUT_READY_MAPPING_UNBOUND',report);return report
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'FROZEN_SOURCE_REQUIRED' != 'LAYOUT_READY_MAPPING_UNBOUND'
+- FROZEN_SOURCE_REQUIRED
++ LAYOUT_READY_MAPPING_UNBOUND
+ : {'schema': 'lupine.discovery.li_v3.readiness.production.v1', 'parser_profile': 'li_v3.complete_bounded_readiness.v1', 'synthetic_fixture': False, 'phase': 'layout', 'status': 'BLOCKED_GUARD', 'engineering_status': 'NO_GO', 'reason': 'FROZEN_SOURCE_REQUIRED', 'implementation': None, 'source_identity_verified': False, 'observed': None, 'prerequisite_receipt_sha256': None, 'capture_receipt_sha256': None, 'phase_binding_pins': None, 'result': {'schema': 'lupine.discovery.li_v3.readiness.result.v1', 'synthetic_fixture': False, 'production_binding': 'FIXED_LI_V3_SOURCE_G34_PREREQUISITE', 'phase': 'layout', 'status': 'BLOCKED_SCHEMA', 'engineering_status': 'NO_GO', 'reason': 'FROZEN_SOURCE_REQUIRED', 'validation_reason_before_cleanup': None, 'source_sha256': None, 'replay_matched': False, 'package': None, 'roles': None, 'documentary': None, 'frame': None, 'exposure': {'whole_buffer_supplied': False, 'header_replay_started': False, 'header_replay_completed': False, 'archive_open_started': False, 'archive_open_completed': False, 'archive_close_started': False, 'archive_close_completed': False, 'archive_close_error': None, 'member_opens_started': 0, 'member_opens_completed': 0, 'decompressions_started': 0, 'decompressions_completed': 0, 'utf8_decodes_started': 0, 'utf8_decodes_completed': 0, 'xml_parses_started': 0, 'xml_parses_completed': 0, 'character_data_state': 'NOT_ATTEMPTED', 'layout_roles': {}}, 'numeric_outcome_interpretation': False, 'formula_evaluation': False, 'scientific_eligibility_decisions': False, 'sampling_independence_established': False, 'scientific_counts': None, 'fits': 0, 'splits': 0}, 'scientific_counts': None, 'fits': 0, 'splits': 0, 'operation_exposure': {'reservation_write_attempted': False, 'reservation_may_exist': False, 'reservation_created': False, 'raw_buffer_read_started': False, 'raw_buffer_read_completed': False, 'target_bearing_source_bytes_read': False, 'source_buffer_verified': False, 'output_write_attempted': False, 'output_may_exist': False, 'output_directory_close_error': None}}
+
+======================================================================
+FAIL: test_invalid_bound_prior_hash_stops_before_target (test_li_v3_readiness_production.ProductionAuthorTests.test_invalid_bound_prior_hash_stops_before_target)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/contextlib.py", line 618, in close
+    self.__exit__(None, None, None)
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/contextlib.py", line 610, in __exit__
+    raise exc_details[1]
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/contextlib.py", line 595, in __exit__
+    if cb(*exc_details):
+       ^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/tempfile.py", line 950, in __exit__
+    self.cleanup()
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/tempfile.py", line 954, in cleanup
+    self._rmtree(self.name, ignore_errors=self._ignore_cleanup_errors)
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/tempfile.py", line 934, in _rmtree
+    _shutil.rmtree(name, onexc=onexc)
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/shutil.py", line 759, in rmtree
+    _rmtree_safe_fd(stack, onexc)
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/shutil.py", line 674, in _rmtree_safe_fd
+    topfd = os.open(name, os.O_RDONLY | os.O_NONBLOCK, dir_fd=dirfd)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<string>", line 13, in audit
+AssertionError: FORBIDDEN_REPOSITORY_READ
+
+======================================================================
+FAIL: test_late_context_failure_clears_result (test_li_v3_readiness_production.ProductionAuthorTests.test_late_context_failure_clears_result)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lupine-discovery-branch/discovery/.cache/phase2-li-complete-readiness-production-v1/test_li_v3_readiness_production.py", line 323, in test_late_context_failure_clears_result
+    self.assert_cleared(report,'SOURCE_CONTEXT_CHANGED');self.assertTrue(report['result']['exposure']['archive_close_completed'])
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/lupine-discovery-branch/discovery/.cache/phase2-li-complete-readiness-production-v1/test_li_v3_readiness_production.py", line 185, in assert_cleared
+    self.assertEqual(report['reason'],reason,report)
+AssertionError: 'FROZEN_SOURCE_REQUIRED' != 'SOURCE_CONTEXT_CHANGED'
+- FROZEN_SOURCE_REQUIRED
++ SOURCE_CONTEXT_CHANGED
+ : {'schema': 'lupine.discovery.li_v3.readiness.production.v1', 'parser_profile': 'li_v3.complete_bounded_readiness.v1', 'synthetic_fixture': False, 'phase': 'layout', 'status': 'BLOCKED_GUARD', 'engineering_status': 'NO_GO', 'reason': 'FROZEN_SOURCE_REQUIRED', 'implementation': None, 'source_identity_verified': False, 'observed': None, 'prerequisite_receipt_sha256': None, 'capture_receipt_sha256': None, 'phase_binding_pins': None, 'result': {'schema': 'lupine.discovery.li_v3.readiness.result.v1', 'synthetic_fixture': False, 'production_binding': 'FIXED_LI_V3_SOURCE_G34_PREREQUISITE', 'phase': 'layout', 'status': 'BLOCKED_SCHEMA', 'engineering_status': 'NO_GO', 'reason': 'FROZEN_SOURCE_REQUIRED', 'validation_reason_before_cleanup': None, 'source_sha256': None, 'replay_matched': False, 'package': None, 'roles': None, 'documentary': None, 'frame': None, 'exposure': {'whole_buffer_supplied': False, 'header_replay_started': False, 'header_replay_completed': False, 'archive_open_started': False, 'archive_open_completed': False, 'archive_close_started': False, 'archive_close_completed': False, 'archive_close_error': None, 'member_opens_started': 0, 'member_opens_completed': 0, 'decompressions_started': 0, 'decompressions_completed': 0, 'utf8_decodes_started': 0, 'utf8_decodes_completed': 0, 'xml_parses_started': 0, 'xml_parses_completed': 0, 'character_data_state': 'NOT_ATTEMPTED', 'layout_roles': {}}, 'numeric_outcome_interpretation': False, 'formula_evaluation': False, 'scientific_eligibility_decisions': False, 'sampling_independence_established': False, 'scientific_counts': None, 'fits': 0, 'splits': 0}, 'scientific_counts': None, 'fits': 0, 'splits': 0, 'operation_exposure': {'reservation_write_attempted': False, 'reservation_may_exist': False, 'reservation_created': False, 'raw_buffer_read_started': False, 'raw_buffer_read_completed': False, 'target_bearing_source_bytes_read': False, 'source_buffer_verified': False, 'output_write_attempted': False, 'output_may_exist': False, 'output_directory_close_error': None}}
+
+======================================================================
+FAIL: test_late_context_failure_clears_result (test_li_v3_readiness_production.ProductionAuthorTests.test_late_context_failure_clears_result)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/contextlib.py", line 618, in close
+    self.__exit__(None, None, None)
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/contextlib.py", line 610, in __exit__
+    raise exc_details[1]
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/contextlib.py", line 595, in __exit__
+    if cb(*exc_details):
+       ^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/tempfile.py", line 950, in __exit__
+    self.cleanup()
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/tempfile.py", line 954, in cleanup
+    self._rmtree(self.name, ignore_errors=self._ignore_cleanup_errors)
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/tempfile.py", line 934, in _rmtree
+    _shutil.rmtree(name, onexc=onexc)
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/shutil.py", line 759, in rmtree
+    _rmtree_safe_fd(stack, onexc)
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/shutil.py", line 674, in _rmtree_safe_fd
+    topfd = os.open(name, os.O_RDONLY | os.O_NONBLOCK, dir_fd=dirfd)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<string>", line 13, in audit
+AssertionError: FORBIDDEN_REPOSITORY_READ
+
+======================================================================
+FAIL: test_layout_complete_and_persisted (test_li_v3_readiness_production.ProductionAuthorTests.test_layout_complete_and_persisted)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lupine-discovery-branch/discovery/.cache/phase2-li-complete-readiness-production-v1/test_li_v3_readiness_production.py", line 205, in test_layout_complete_and_persisted
+    report=self.layout();self.assertEqual(self.target_reads,1)
+           ^^^^^^^^^^^^^
+  File "/workspace/lupine-discovery-branch/discovery/.cache/phase2-li-complete-readiness-production-v1/test_li_v3_readiness_production.py", line 195, in layout
+    report=M.inspect('layout','1');self.assertEqual(report['reason'],'LAYOUT_READY_MAPPING_UNBOUND',report);return report
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'FROZEN_SOURCE_REQUIRED' != 'LAYOUT_READY_MAPPING_UNBOUND'
+- FROZEN_SOURCE_REQUIRED
++ LAYOUT_READY_MAPPING_UNBOUND
+ : {'schema': 'lupine.discovery.li_v3.readiness.production.v1', 'parser_profile': 'li_v3.complete_bounded_readiness.v1', 'synthetic_fixture': False, 'phase': 'layout', 'status': 'BLOCKED_GUARD', 'engineering_status': 'NO_GO', 'reason': 'FROZEN_SOURCE_REQUIRED', 'implementation': None, 'source_identity_verified': False, 'observed': None, 'prerequisite_receipt_sha256': None, 'capture_receipt_sha256': None, 'phase_binding_pins': None, 'result': {'schema': 'lupine.discovery.li_v3.readiness.result.v1', 'synthetic_fixture': False, 'production_binding': 'FIXED_LI_V3_SOURCE_G34_PREREQUISITE', 'phase': 'layout', 'status': 'BLOCKED_SCHEMA', 'engineering_status': 'NO_GO', 'reason': 'FROZEN_SOURCE_REQUIRED', 'validation_reason_before_cleanup': None, 'source_sha256': None, 'replay_matched': False, 'package': None, 'roles': None, 'documentary': None, 'frame': None, 'exposure': {'whole_buffer_supplied': False, 'header_replay_started': False, 'header_replay_completed': False, 'archive_open_started': False, 'archive_open_completed': False, 'archive_close_started': False, 'archive_close_completed': False, 'archive_close_error': None, 'member_opens_started': 0, 'member_opens_completed': 0, 'decompressions_started': 0, 'decompressions_completed': 0, 'utf8_decodes_started': 0, 'utf8_decodes_completed': 0, 'xml_parses_started': 0, 'xml_parses_completed': 0, 'character_data_state': 'NOT_ATTEMPTED', 'layout_roles': {}}, 'numeric_outcome_interpretation': False, 'formula_evaluation': False, 'scientific_eligibility_decisions': False, 'sampling_independence_established': False, 'scientific_counts': None, 'fits': 0, 'splits': 0}, 'scientific_counts': None, 'fits': 0, 'splits': 0, 'operation_exposure': {'reservation_write_attempted': False, 'reservation_may_exist': False, 'reservation_created': False, 'raw_buffer_read_started': False, 'raw_buffer_read_completed': False, 'target_bearing_source_bytes_read': False, 'source_buffer_verified': False, 'output_write_attempted': False, 'output_may_exist': False, 'output_directory_close_error': None}}
+
+======================================================================
+FAIL: test_layout_complete_and_persisted (test_li_v3_readiness_production.ProductionAuthorTests.test_layout_complete_and_persisted)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/contextlib.py", line 618, in close
+    self.__exit__(None, None, None)
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/contextlib.py", line 610, in __exit__
+    raise exc_details[1]
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/contextlib.py", line 595, in __exit__
+    if cb(*exc_details):
+       ^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/tempfile.py", line 950, in __exit__
+    self.cleanup()
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/tempfile.py", line 954, in cleanup
+    self._rmtree(self.name, ignore_errors=self._ignore_cleanup_errors)
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/tempfile.py", line 934, in _rmtree
+    _shutil.rmtree(name, onexc=onexc)
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/shutil.py", line 759, in rmtree
+    _rmtree_safe_fd(stack, onexc)
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/shutil.py", line 674, in _rmtree_safe_fd
+    topfd = os.open(name, os.O_RDONLY | os.O_NONBLOCK, dir_fd=dirfd)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<string>", line 13, in audit
+AssertionError: FORBIDDEN_REPOSITORY_READ
+
+======================================================================
+FAIL: test_output_directory_close_failure_clears_result (test_li_v3_readiness_production.ProductionAuthorTests.test_output_directory_close_failure_clears_result)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lupine-discovery-branch/discovery/.cache/phase2-li-complete-readiness-production-v1/test_li_v3_readiness_production.py", line 332, in test_output_directory_close_failure_clears_result
+    self.assert_cleared(report,'INTERNAL_FAILURE');self.assertEqual(report['operation_exposure']['output_directory_close_error'],'INTERNAL_FAILURE')
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/lupine-discovery-branch/discovery/.cache/phase2-li-complete-readiness-production-v1/test_li_v3_readiness_production.py", line 185, in assert_cleared
+    self.assertEqual(report['reason'],reason,report)
+AssertionError: 'FROZEN_SOURCE_REQUIRED' != 'INTERNAL_FAILURE'
+- FROZEN_SOURCE_REQUIRED
++ INTERNAL_FAILURE
+ : {'schema': 'lupine.discovery.li_v3.readiness.production.v1', 'parser_profile': 'li_v3.complete_bounded_readiness.v1', 'synthetic_fixture': False, 'phase': 'layout', 'status': 'BLOCKED_GUARD', 'engineering_status': 'NO_GO', 'reason': 'FROZEN_SOURCE_REQUIRED', 'implementation': None, 'source_identity_verified': False, 'observed': None, 'prerequisite_receipt_sha256': None, 'capture_receipt_sha256': None, 'phase_binding_pins': None, 'result': {'schema': 'lupine.discovery.li_v3.readiness.result.v1', 'synthetic_fixture': False, 'production_binding': 'FIXED_LI_V3_SOURCE_G34_PREREQUISITE', 'phase': 'layout', 'status': 'BLOCKED_SCHEMA', 'engineering_status': 'NO_GO', 'reason': 'FROZEN_SOURCE_REQUIRED', 'validation_reason_before_cleanup': None, 'source_sha256': None, 'replay_matched': False, 'package': None, 'roles': None, 'documentary': None, 'frame': None, 'exposure': {'whole_buffer_supplied': False, 'header_replay_started': False, 'header_replay_completed': False, 'archive_open_started': False, 'archive_open_completed': False, 'archive_close_started': False, 'archive_close_completed': False, 'archive_close_error': None, 'member_opens_started': 0, 'member_opens_completed': 0, 'decompressions_started': 0, 'decompressions_completed': 0, 'utf8_decodes_started': 0, 'utf8_decodes_completed': 0, 'xml_parses_started': 0, 'xml_parses_completed': 0, 'character_data_state': 'NOT_ATTEMPTED', 'layout_roles': {}}, 'numeric_outcome_interpretation': False, 'formula_evaluation': False, 'scientific_eligibility_decisions': False, 'sampling_independence_established': False, 'scientific_counts': None, 'fits': 0, 'splits': 0}, 'scientific_counts': None, 'fits': 0, 'splits': 0, 'operation_exposure': {'reservation_write_attempted': False, 'reservation_may_exist': False, 'reservation_created': False, 'raw_buffer_read_started': False, 'raw_buffer_read_completed': False, 'target_bearing_source_bytes_read': False, 'source_buffer_verified': False, 'output_write_attempted': False, 'output_may_exist': False, 'output_directory_close_error': None}}
+
+======================================================================
+FAIL: test_output_directory_close_failure_clears_result (test_li_v3_readiness_production.ProductionAuthorTests.test_output_directory_close_failure_clears_result)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/contextlib.py", line 618, in close
+    self.__exit__(None, None, None)
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/contextlib.py", line 610, in __exit__
+    raise exc_details[1]
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/contextlib.py", line 595, in __exit__
+    if cb(*exc_details):
+       ^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/tempfile.py", line 950, in __exit__
+    self.cleanup()
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/tempfile.py", line 954, in cleanup
+    self._rmtree(self.name, ignore_errors=self._ignore_cleanup_errors)
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/tempfile.py", line 934, in _rmtree
+    _shutil.rmtree(name, onexc=onexc)
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/shutil.py", line 759, in rmtree
+    _rmtree_safe_fd(stack, onexc)
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/shutil.py", line 674, in _rmtree_safe_fd
+    topfd = os.open(name, os.O_RDONLY | os.O_NONBLOCK, dir_fd=dirfd)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<string>", line 13, in audit
+AssertionError: FORBIDDEN_REPOSITORY_READ
+
+======================================================================
+FAIL: test_oversized_public_metadata_is_not_echoed (test_li_v3_readiness_production.ProductionAuthorTests.test_oversized_public_metadata_is_not_echoed)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/contextlib.py", line 618, in close
+    self.__exit__(None, None, None)
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/contextlib.py", line 610, in __exit__
+    raise exc_details[1]
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/contextlib.py", line 595, in __exit__
+    if cb(*exc_details):
+       ^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/tempfile.py", line 950, in __exit__
+    self.cleanup()
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/tempfile.py", line 954, in cleanup
+    self._rmtree(self.name, ignore_errors=self._ignore_cleanup_errors)
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/tempfile.py", line 934, in _rmtree
+    _shutil.rmtree(name, onexc=onexc)
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/shutil.py", line 759, in rmtree
+    _rmtree_safe_fd(stack, onexc)
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/shutil.py", line 674, in _rmtree_safe_fd
+    topfd = os.open(name, os.O_RDONLY | os.O_NONBLOCK, dir_fd=dirfd)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<string>", line 13, in audit
+AssertionError: FORBIDDEN_REPOSITORY_READ
+
+======================================================================
+FAIL: test_own_source_worktree_drift (test_li_v3_readiness_production.ProductionAuthorTests.test_own_source_worktree_drift)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/contextlib.py", line 618, in close
+    self.__exit__(None, None, None)
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/contextlib.py", line 610, in __exit__
+    raise exc_details[1]
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/contextlib.py", line 595, in __exit__
+    if cb(*exc_details):
+       ^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/tempfile.py", line 950, in __exit__
+    self.cleanup()
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/tempfile.py", line 954, in cleanup
+    self._rmtree(self.name, ignore_errors=self._ignore_cleanup_errors)
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/tempfile.py", line 934, in _rmtree
+    _shutil.rmtree(name, onexc=onexc)
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/shutil.py", line 759, in rmtree
+    _rmtree_safe_fd(stack, onexc)
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/shutil.py", line 674, in _rmtree_safe_fd
+    topfd = os.open(name, os.O_RDONLY | os.O_NONBLOCK, dir_fd=dirfd)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<string>", line 13, in audit
+AssertionError: FORBIDDEN_REPOSITORY_READ
+
+======================================================================
+FAIL: test_partial_public_write_consumed (test_li_v3_readiness_production.ProductionAuthorTests.test_partial_public_write_consumed)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lupine-discovery-branch/discovery/.cache/phase2-li-complete-readiness-production-v1/test_li_v3_readiness_production.py", line 307, in test_partial_public_write_consumed
+    self.assert_cleared(report,'FILE_WRITE_FAILED');self.assertTrue(report['operation_exposure']['output_may_exist'])
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/lupine-discovery-branch/discovery/.cache/phase2-li-complete-readiness-production-v1/test_li_v3_readiness_production.py", line 185, in assert_cleared
+    self.assertEqual(report['reason'],reason,report)
+AssertionError: 'FROZEN_SOURCE_REQUIRED' != 'FILE_WRITE_FAILED'
+- FROZEN_SOURCE_REQUIRED
++ FILE_WRITE_FAILED
+ : {'schema': 'lupine.discovery.li_v3.readiness.production.v1', 'parser_profile': 'li_v3.complete_bounded_readiness.v1', 'synthetic_fixture': False, 'phase': 'layout', 'status': 'BLOCKED_GUARD', 'engineering_status': 'NO_GO', 'reason': 'FROZEN_SOURCE_REQUIRED', 'implementation': None, 'source_identity_verified': False, 'observed': None, 'prerequisite_receipt_sha256': None, 'capture_receipt_sha256': None, 'phase_binding_pins': None, 'result': {'schema': 'lupine.discovery.li_v3.readiness.result.v1', 'synthetic_fixture': False, 'production_binding': 'FIXED_LI_V3_SOURCE_G34_PREREQUISITE', 'phase': 'layout', 'status': 'BLOCKED_SCHEMA', 'engineering_status': 'NO_GO', 'reason': 'FROZEN_SOURCE_REQUIRED', 'validation_reason_before_cleanup': None, 'source_sha256': None, 'replay_matched': False, 'package': None, 'roles': None, 'documentary': None, 'frame': None, 'exposure': {'whole_buffer_supplied': False, 'header_replay_started': False, 'header_replay_completed': False, 'archive_open_started': False, 'archive_open_completed': False, 'archive_close_started': False, 'archive_close_completed': False, 'archive_close_error': None, 'member_opens_started': 0, 'member_opens_completed': 0, 'decompressions_started': 0, 'decompressions_completed': 0, 'utf8_decodes_started': 0, 'utf8_decodes_completed': 0, 'xml_parses_started': 0, 'xml_parses_completed': 0, 'character_data_state': 'NOT_ATTEMPTED', 'layout_roles': {}}, 'numeric_outcome_interpretation': False, 'formula_evaluation': False, 'scientific_eligibility_decisions': False, 'sampling_independence_established': False, 'scientific_counts': None, 'fits': 0, 'splits': 0}, 'scientific_counts': None, 'fits': 0, 'splits': 0, 'operation_exposure': {'reservation_write_attempted': False, 'reservation_may_exist': False, 'reservation_created': False, 'raw_buffer_read_started': False, 'raw_buffer_read_completed': False, 'target_bearing_source_bytes_read': False, 'source_buffer_verified': False, 'output_write_attempted': False, 'output_may_exist': False, 'output_directory_close_error': None}}
+
+======================================================================
+FAIL: test_partial_public_write_consumed (test_li_v3_readiness_production.ProductionAuthorTests.test_partial_public_write_consumed)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/contextlib.py", line 618, in close
+    self.__exit__(None, None, None)
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/contextlib.py", line 610, in __exit__
+    raise exc_details[1]
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/contextlib.py", line 595, in __exit__
+    if cb(*exc_details):
+       ^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/tempfile.py", line 950, in __exit__
+    self.cleanup()
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/tempfile.py", line 954, in cleanup
+    self._rmtree(self.name, ignore_errors=self._ignore_cleanup_errors)
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/tempfile.py", line 934, in _rmtree
+    _shutil.rmtree(name, onexc=onexc)
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/shutil.py", line 759, in rmtree
+    _rmtree_safe_fd(stack, onexc)
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/shutil.py", line 674, in _rmtree_safe_fd
+    topfd = os.open(name, os.O_RDONLY | os.O_NONBLOCK, dir_fd=dirfd)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<string>", line 13, in audit
+AssertionError: FORBIDDEN_REPOSITORY_READ
+
+======================================================================
+FAIL: test_partial_reservation_consumed (test_li_v3_readiness_production.ProductionAuthorTests.test_partial_reservation_consumed)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lupine-discovery-branch/discovery/.cache/phase2-li-complete-readiness-production-v1/test_li_v3_readiness_production.py", line 297, in test_partial_reservation_consumed
+    self.assert_cleared(report,'FILE_WRITE_FAILED');self.assertTrue(report['operation_exposure']['reservation_may_exist'])
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/lupine-discovery-branch/discovery/.cache/phase2-li-complete-readiness-production-v1/test_li_v3_readiness_production.py", line 185, in assert_cleared
+    self.assertEqual(report['reason'],reason,report)
+AssertionError: 'FROZEN_SOURCE_REQUIRED' != 'FILE_WRITE_FAILED'
+- FROZEN_SOURCE_REQUIRED
++ FILE_WRITE_FAILED
+ : {'schema': 'lupine.discovery.li_v3.readiness.production.v1', 'parser_profile': 'li_v3.complete_bounded_readiness.v1', 'synthetic_fixture': False, 'phase': 'layout', 'status': 'BLOCKED_GUARD', 'engineering_status': 'NO_GO', 'reason': 'FROZEN_SOURCE_REQUIRED', 'implementation': None, 'source_identity_verified': False, 'observed': None, 'prerequisite_receipt_sha256': None, 'capture_receipt_sha256': None, 'phase_binding_pins': None, 'result': {'schema': 'lupine.discovery.li_v3.readiness.result.v1', 'synthetic_fixture': False, 'production_binding': 'FIXED_LI_V3_SOURCE_G34_PREREQUISITE', 'phase': 'layout', 'status': 'BLOCKED_SCHEMA', 'engineering_status': 'NO_GO', 'reason': 'FROZEN_SOURCE_REQUIRED', 'validation_reason_before_cleanup': None, 'source_sha256': None, 'replay_matched': False, 'package': None, 'roles': None, 'documentary': None, 'frame': None, 'exposure': {'whole_buffer_supplied': False, 'header_replay_started': False, 'header_replay_completed': False, 'archive_open_started': False, 'archive_open_completed': False, 'archive_close_started': False, 'archive_close_completed': False, 'archive_close_error': None, 'member_opens_started': 0, 'member_opens_completed': 0, 'decompressions_started': 0, 'decompressions_completed': 0, 'utf8_decodes_started': 0, 'utf8_decodes_completed': 0, 'xml_parses_started': 0, 'xml_parses_completed': 0, 'character_data_state': 'NOT_ATTEMPTED', 'layout_roles': {}}, 'numeric_outcome_interpretation': False, 'formula_evaluation': False, 'scientific_eligibility_decisions': False, 'sampling_independence_established': False, 'scientific_counts': None, 'fits': 0, 'splits': 0}, 'scientific_counts': None, 'fits': 0, 'splits': 0, 'operation_exposure': {'reservation_write_attempted': False, 'reservation_may_exist': False, 'reservation_created': False, 'raw_buffer_read_started': False, 'raw_buffer_read_completed': False, 'target_bearing_source_bytes_read': False, 'source_buffer_verified': False, 'output_write_attempted': False, 'output_may_exist': False, 'output_directory_close_error': None}}
+
+======================================================================
+FAIL: test_partial_reservation_consumed (test_li_v3_readiness_production.ProductionAuthorTests.test_partial_reservation_consumed)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/contextlib.py", line 618, in close
+    self.__exit__(None, None, None)
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/contextlib.py", line 610, in __exit__
+    raise exc_details[1]
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/contextlib.py", line 595, in __exit__
+    if cb(*exc_details):
+       ^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/tempfile.py", line 950, in __exit__
+    self.cleanup()
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/tempfile.py", line 954, in cleanup
+    self._rmtree(self.name, ignore_errors=self._ignore_cleanup_errors)
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/tempfile.py", line 934, in _rmtree
+    _shutil.rmtree(name, onexc=onexc)
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/shutil.py", line 759, in rmtree
+    _rmtree_safe_fd(stack, onexc)
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/shutil.py", line 674, in _rmtree_safe_fd
+    topfd = os.open(name, os.O_RDONLY | os.O_NONBLOCK, dir_fd=dirfd)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<string>", line 13, in audit
+AssertionError: FORBIDDEN_REPOSITORY_READ
+
+======================================================================
+FAIL: test_partial_target_read_is_explicit (test_li_v3_readiness_production.ProductionAuthorTests.test_partial_target_read_is_explicit)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lupine-discovery-branch/discovery/.cache/phase2-li-complete-readiness-production-v1/test_li_v3_readiness_production.py", line 287, in test_partial_target_read_is_explicit
+    self.assert_cleared(report,'INTERNAL_FAILURE');self.assertTrue(report['operation_exposure']['raw_buffer_read_started'])
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/lupine-discovery-branch/discovery/.cache/phase2-li-complete-readiness-production-v1/test_li_v3_readiness_production.py", line 185, in assert_cleared
+    self.assertEqual(report['reason'],reason,report)
+AssertionError: 'FROZEN_SOURCE_REQUIRED' != 'INTERNAL_FAILURE'
+- FROZEN_SOURCE_REQUIRED
++ INTERNAL_FAILURE
+ : {'schema': 'lupine.discovery.li_v3.readiness.production.v1', 'parser_profile': 'li_v3.complete_bounded_readiness.v1', 'synthetic_fixture': False, 'phase': 'layout', 'status': 'BLOCKED_GUARD', 'engineering_status': 'NO_GO', 'reason': 'FROZEN_SOURCE_REQUIRED', 'implementation': None, 'source_identity_verified': False, 'observed': None, 'prerequisite_receipt_sha256': None, 'capture_receipt_sha256': None, 'phase_binding_pins': None, 'result': {'schema': 'lupine.discovery.li_v3.readiness.result.v1', 'synthetic_fixture': False, 'production_binding': 'FIXED_LI_V3_SOURCE_G34_PREREQUISITE', 'phase': 'layout', 'status': 'BLOCKED_SCHEMA', 'engineering_status': 'NO_GO', 'reason': 'FROZEN_SOURCE_REQUIRED', 'validation_reason_before_cleanup': None, 'source_sha256': None, 'replay_matched': False, 'package': None, 'roles': None, 'documentary': None, 'frame': None, 'exposure': {'whole_buffer_supplied': False, 'header_replay_started': False, 'header_replay_completed': False, 'archive_open_started': False, 'archive_open_completed': False, 'archive_close_started': False, 'archive_close_completed': False, 'archive_close_error': None, 'member_opens_started': 0, 'member_opens_completed': 0, 'decompressions_started': 0, 'decompressions_completed': 0, 'utf8_decodes_started': 0, 'utf8_decodes_completed': 0, 'xml_parses_started': 0, 'xml_parses_completed': 0, 'character_data_state': 'NOT_ATTEMPTED', 'layout_roles': {}}, 'numeric_outcome_interpretation': False, 'formula_evaluation': False, 'scientific_eligibility_decisions': False, 'sampling_independence_established': False, 'scientific_counts': None, 'fits': 0, 'splits': 0}, 'scientific_counts': None, 'fits': 0, 'splits': 0, 'operation_exposure': {'reservation_write_attempted': False, 'reservation_may_exist': False, 'reservation_created': False, 'raw_buffer_read_started': False, 'raw_buffer_read_completed': False, 'target_bearing_source_bytes_read': False, 'source_buffer_verified': False, 'output_write_attempted': False, 'output_may_exist': False, 'output_directory_close_error': None}}
+
+======================================================================
+FAIL: test_partial_target_read_is_explicit (test_li_v3_readiness_production.ProductionAuthorTests.test_partial_target_read_is_explicit)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/contextlib.py", line 618, in close
+    self.__exit__(None, None, None)
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/contextlib.py", line 610, in __exit__
+    raise exc_details[1]
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/contextlib.py", line 595, in __exit__
+    if cb(*exc_details):
+       ^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/tempfile.py", line 950, in __exit__
+    self.cleanup()
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/tempfile.py", line 954, in cleanup
+    self._rmtree(self.name, ignore_errors=self._ignore_cleanup_errors)
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/tempfile.py", line 934, in _rmtree
+    _shutil.rmtree(name, onexc=onexc)
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/shutil.py", line 759, in rmtree
+    _rmtree_safe_fd(stack, onexc)
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/shutil.py", line 674, in _rmtree_safe_fd
+    topfd = os.open(name, os.O_RDONLY | os.O_NONBLOCK, dir_fd=dirfd)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<string>", line 13, in audit
+AssertionError: FORBIDDEN_REPOSITORY_READ
+
+======================================================================
+FAIL: test_prerequisite_bytes_and_producer_fail_before_target (test_li_v3_readiness_production.ProductionAuthorTests.test_prerequisite_bytes_and_producer_fail_before_target)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lupine-discovery-branch/discovery/.cache/phase2-li-complete-readiness-production-v1/test_li_v3_readiness_production.py", line 249, in test_prerequisite_bytes_and_producer_fail_before_target
+    self.write(M.PREREQUISITE,b'bad');self.assert_cleared(M.inspect('layout','1'),'G34_PREREQUISITE_INVALID')
+                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/lupine-discovery-branch/discovery/.cache/phase2-li-complete-readiness-production-v1/test_li_v3_readiness_production.py", line 185, in assert_cleared
+    self.assertEqual(report['reason'],reason,report)
+AssertionError: 'FROZEN_SOURCE_REQUIRED' != 'G34_PREREQUISITE_INVALID'
+- FROZEN_SOURCE_REQUIRED
++ G34_PREREQUISITE_INVALID
+ : {'schema': 'lupine.discovery.li_v3.readiness.production.v1', 'parser_profile': 'li_v3.complete_bounded_readiness.v1', 'synthetic_fixture': False, 'phase': 'layout', 'status': 'BLOCKED_GUARD', 'engineering_status': 'NO_GO', 'reason': 'FROZEN_SOURCE_REQUIRED', 'implementation': None, 'source_identity_verified': False, 'observed': None, 'prerequisite_receipt_sha256': None, 'capture_receipt_sha256': None, 'phase_binding_pins': None, 'result': {'schema': 'lupine.discovery.li_v3.readiness.result.v1', 'synthetic_fixture': False, 'production_binding': 'FIXED_LI_V3_SOURCE_G34_PREREQUISITE', 'phase': 'layout', 'status': 'BLOCKED_SCHEMA', 'engineering_status': 'NO_GO', 'reason': 'FROZEN_SOURCE_REQUIRED', 'validation_reason_before_cleanup': None, 'source_sha256': None, 'replay_matched': False, 'package': None, 'roles': None, 'documentary': None, 'frame': None, 'exposure': {'whole_buffer_supplied': False, 'header_replay_started': False, 'header_replay_completed': False, 'archive_open_started': False, 'archive_open_completed': False, 'archive_close_started': False, 'archive_close_completed': False, 'archive_close_error': None, 'member_opens_started': 0, 'member_opens_completed': 0, 'decompressions_started': 0, 'decompressions_completed': 0, 'utf8_decodes_started': 0, 'utf8_decodes_completed': 0, 'xml_parses_started': 0, 'xml_parses_completed': 0, 'character_data_state': 'NOT_ATTEMPTED', 'layout_roles': {}}, 'numeric_outcome_interpretation': False, 'formula_evaluation': False, 'scientific_eligibility_decisions': False, 'sampling_independence_established': False, 'scientific_counts': None, 'fits': 0, 'splits': 0}, 'scientific_counts': None, 'fits': 0, 'splits': 0, 'operation_exposure': {'reservation_write_attempted': False, 'reservation_may_exist': False, 'reservation_created': False, 'raw_buffer_read_started': False, 'raw_buffer_read_completed': False, 'target_bearing_source_bytes_read': False, 'source_buffer_verified': False, 'output_write_attempted': False, 'output_may_exist': False, 'output_directory_close_error': None}}
+
+======================================================================
+FAIL: test_prerequisite_bytes_and_producer_fail_before_target (test_li_v3_readiness_production.ProductionAuthorTests.test_prerequisite_bytes_and_producer_fail_before_target)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/contextlib.py", line 618, in close
+    self.__exit__(None, None, None)
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/contextlib.py", line 610, in __exit__
+    raise exc_details[1]
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/contextlib.py", line 595, in __exit__
+    if cb(*exc_details):
+       ^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/tempfile.py", line 950, in __exit__
+    self.cleanup()
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/tempfile.py", line 954, in cleanup
+    self._rmtree(self.name, ignore_errors=self._ignore_cleanup_errors)
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/tempfile.py", line 934, in _rmtree
+    _shutil.rmtree(name, onexc=onexc)
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/shutil.py", line 759, in rmtree
+    _rmtree_safe_fd(stack, onexc)
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/shutil.py", line 674, in _rmtree_safe_fd
+    topfd = os.open(name, os.O_RDONLY | os.O_NONBLOCK, dir_fd=dirfd)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<string>", line 13, in audit
+AssertionError: FORBIDDEN_REPOSITORY_READ
+
+======================================================================
+FAIL: test_replay_mismatch_before_xml (test_li_v3_readiness_production.ProductionAuthorTests.test_replay_mismatch_before_xml)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lupine-discovery-branch/discovery/.cache/phase2-li-complete-readiness-production-v1/test_li_v3_readiness_production.py", line 265, in test_replay_mismatch_before_xml
+    self.assert_cleared(report,'G34_REPLAY_MISMATCH');self.assertEqual(self.target_reads,1)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/lupine-discovery-branch/discovery/.cache/phase2-li-complete-readiness-production-v1/test_li_v3_readiness_production.py", line 185, in assert_cleared
+    self.assertEqual(report['reason'],reason,report)
+AssertionError: 'FROZEN_SOURCE_REQUIRED' != 'G34_REPLAY_MISMATCH'
+- FROZEN_SOURCE_REQUIRED
++ G34_REPLAY_MISMATCH
+ : {'schema': 'lupine.discovery.li_v3.readiness.production.v1', 'parser_profile': 'li_v3.complete_bounded_readiness.v1', 'synthetic_fixture': False, 'phase': 'layout', 'status': 'BLOCKED_GUARD', 'engineering_status': 'NO_GO', 'reason': 'FROZEN_SOURCE_REQUIRED', 'implementation': None, 'source_identity_verified': False, 'observed': None, 'prerequisite_receipt_sha256': None, 'capture_receipt_sha256': None, 'phase_binding_pins': None, 'result': {'schema': 'lupine.discovery.li_v3.readiness.result.v1', 'synthetic_fixture': False, 'production_binding': 'FIXED_LI_V3_SOURCE_G34_PREREQUISITE', 'phase': 'layout', 'status': 'BLOCKED_SCHEMA', 'engineering_status': 'NO_GO', 'reason': 'FROZEN_SOURCE_REQUIRED', 'validation_reason_before_cleanup': None, 'source_sha256': None, 'replay_matched': False, 'package': None, 'roles': None, 'documentary': None, 'frame': None, 'exposure': {'whole_buffer_supplied': False, 'header_replay_started': False, 'header_replay_completed': False, 'archive_open_started': False, 'archive_open_completed': False, 'archive_close_started': False, 'archive_close_completed': False, 'archive_close_error': None, 'member_opens_started': 0, 'member_opens_completed': 0, 'decompressions_started': 0, 'decompressions_completed': 0, 'utf8_decodes_started': 0, 'utf8_decodes_completed': 0, 'xml_parses_started': 0, 'xml_parses_completed': 0, 'character_data_state': 'NOT_ATTEMPTED', 'layout_roles': {}}, 'numeric_outcome_interpretation': False, 'formula_evaluation': False, 'scientific_eligibility_decisions': False, 'sampling_independence_established': False, 'scientific_counts': None, 'fits': 0, 'splits': 0}, 'scientific_counts': None, 'fits': 0, 'splits': 0, 'operation_exposure': {'reservation_write_attempted': False, 'reservation_may_exist': False, 'reservation_created': False, 'raw_buffer_read_started': False, 'raw_buffer_read_completed': False, 'target_bearing_source_bytes_read': False, 'source_buffer_verified': False, 'output_write_attempted': False, 'output_may_exist': False, 'output_directory_close_error': None}}
+
+======================================================================
+FAIL: test_replay_mismatch_before_xml (test_li_v3_readiness_production.ProductionAuthorTests.test_replay_mismatch_before_xml)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/contextlib.py", line 618, in close
+    self.__exit__(None, None, None)
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/contextlib.py", line 610, in __exit__
+    raise exc_details[1]
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/contextlib.py", line 595, in __exit__
+    if cb(*exc_details):
+       ^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/tempfile.py", line 950, in __exit__
+    self.cleanup()
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/tempfile.py", line 954, in cleanup
+    self._rmtree(self.name, ignore_errors=self._ignore_cleanup_errors)
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/tempfile.py", line 934, in _rmtree
+    _shutil.rmtree(name, onexc=onexc)
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/shutil.py", line 759, in rmtree
+    _rmtree_safe_fd(stack, onexc)
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/shutil.py", line 674, in _rmtree_safe_fd
+    topfd = os.open(name, os.O_RDONLY | os.O_NONBLOCK, dir_fd=dirfd)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<string>", line 13, in audit
+AssertionError: FORBIDDEN_REPOSITORY_READ
+
+======================================================================
+FAIL: test_same_buffer_object_to_replay_and_package (test_li_v3_readiness_production.ProductionAuthorTests.test_same_buffer_object_to_replay_and_package)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lupine-discovery-branch/discovery/.cache/phase2-li-complete-readiness-production-v1/test_li_v3_readiness_production.py", line 273, in test_same_buffer_object_to_replay_and_package
+    with patch.object(M.diagnostic,'_production_inspect',replay),patch.object(M.core,'_package',parse):self.layout()
+                                                                                                       ^^^^^^^^^^^^^
+  File "/workspace/lupine-discovery-branch/discovery/.cache/phase2-li-complete-readiness-production-v1/test_li_v3_readiness_production.py", line 195, in layout
+    report=M.inspect('layout','1');self.assertEqual(report['reason'],'LAYOUT_READY_MAPPING_UNBOUND',report);return report
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'FROZEN_SOURCE_REQUIRED' != 'LAYOUT_READY_MAPPING_UNBOUND'
+- FROZEN_SOURCE_REQUIRED
++ LAYOUT_READY_MAPPING_UNBOUND
+ : {'schema': 'lupine.discovery.li_v3.readiness.production.v1', 'parser_profile': 'li_v3.complete_bounded_readiness.v1', 'synthetic_fixture': False, 'phase': 'layout', 'status': 'BLOCKED_GUARD', 'engineering_status': 'NO_GO', 'reason': 'FROZEN_SOURCE_REQUIRED', 'implementation': None, 'source_identity_verified': False, 'observed': None, 'prerequisite_receipt_sha256': None, 'capture_receipt_sha256': None, 'phase_binding_pins': None, 'result': {'schema': 'lupine.discovery.li_v3.readiness.result.v1', 'synthetic_fixture': False, 'production_binding': 'FIXED_LI_V3_SOURCE_G34_PREREQUISITE', 'phase': 'layout', 'status': 'BLOCKED_SCHEMA', 'engineering_status': 'NO_GO', 'reason': 'FROZEN_SOURCE_REQUIRED', 'validation_reason_before_cleanup': None, 'source_sha256': None, 'replay_matched': False, 'package': None, 'roles': None, 'documentary': None, 'frame': None, 'exposure': {'whole_buffer_supplied': False, 'header_replay_started': False, 'header_replay_completed': False, 'archive_open_started': False, 'archive_open_completed': False, 'archive_close_started': False, 'archive_close_completed': False, 'archive_close_error': None, 'member_opens_started': 0, 'member_opens_completed': 0, 'decompressions_started': 0, 'decompressions_completed': 0, 'utf8_decodes_started': 0, 'utf8_decodes_completed': 0, 'xml_parses_started': 0, 'xml_parses_completed': 0, 'character_data_state': 'NOT_ATTEMPTED', 'layout_roles': {}}, 'numeric_outcome_interpretation': False, 'formula_evaluation': False, 'scientific_eligibility_decisions': False, 'sampling_independence_established': False, 'scientific_counts': None, 'fits': 0, 'splits': 0}, 'scientific_counts': None, 'fits': 0, 'splits': 0, 'operation_exposure': {'reservation_write_attempted': False, 'reservation_may_exist': False, 'reservation_created': False, 'raw_buffer_read_started': False, 'raw_buffer_read_completed': False, 'target_bearing_source_bytes_read': False, 'source_buffer_verified': False, 'output_write_attempted': False, 'output_may_exist': False, 'output_directory_close_error': None}}
+
+======================================================================
+FAIL: test_same_buffer_object_to_replay_and_package (test_li_v3_readiness_production.ProductionAuthorTests.test_same_buffer_object_to_replay_and_package)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/contextlib.py", line 618, in close
+    self.__exit__(None, None, None)
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/contextlib.py", line 610, in __exit__
+    raise exc_details[1]
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/contextlib.py", line 595, in __exit__
+    if cb(*exc_details):
+       ^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/tempfile.py", line 950, in __exit__
+    self.cleanup()
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/tempfile.py", line 954, in cleanup
+    self._rmtree(self.name, ignore_errors=self._ignore_cleanup_errors)
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/tempfile.py", line 934, in _rmtree
+    _shutil.rmtree(name, onexc=onexc)
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/shutil.py", line 759, in rmtree
+    _rmtree_safe_fd(stack, onexc)
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/shutil.py", line 674, in _rmtree_safe_fd
+    topfd = os.open(name, os.O_RDONLY | os.O_NONBLOCK, dir_fd=dirfd)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<string>", line 13, in audit
+AssertionError: FORBIDDEN_REPOSITORY_READ
+
+======================================================================
+FAIL: test_slot_is_exclusive_and_cli_is_closed (test_li_v3_readiness_production.ProductionAuthorTests.test_slot_is_exclusive_and_cli_is_closed)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lupine-discovery-branch/discovery/.cache/phase2-li-complete-readiness-production-v1/test_li_v3_readiness_production.py", line 311, in test_slot_is_exclusive_and_cli_is_closed
+    self.layout();self.assert_cleared(M.inspect('layout','1'),'OUTPUT_CONFLICT')
+    ^^^^^^^^^^^^^
+  File "/workspace/lupine-discovery-branch/discovery/.cache/phase2-li-complete-readiness-production-v1/test_li_v3_readiness_production.py", line 195, in layout
+    report=M.inspect('layout','1');self.assertEqual(report['reason'],'LAYOUT_READY_MAPPING_UNBOUND',report);return report
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'FROZEN_SOURCE_REQUIRED' != 'LAYOUT_READY_MAPPING_UNBOUND'
+- FROZEN_SOURCE_REQUIRED
++ LAYOUT_READY_MAPPING_UNBOUND
+ : {'schema': 'lupine.discovery.li_v3.readiness.production.v1', 'parser_profile': 'li_v3.complete_bounded_readiness.v1', 'synthetic_fixture': False, 'phase': 'layout', 'status': 'BLOCKED_GUARD', 'engineering_status': 'NO_GO', 'reason': 'FROZEN_SOURCE_REQUIRED', 'implementation': None, 'source_identity_verified': False, 'observed': None, 'prerequisite_receipt_sha256': None, 'capture_receipt_sha256': None, 'phase_binding_pins': None, 'result': {'schema': 'lupine.discovery.li_v3.readiness.result.v1', 'synthetic_fixture': False, 'production_binding': 'FIXED_LI_V3_SOURCE_G34_PREREQUISITE', 'phase': 'layout', 'status': 'BLOCKED_SCHEMA', 'engineering_status': 'NO_GO', 'reason': 'FROZEN_SOURCE_REQUIRED', 'validation_reason_before_cleanup': None, 'source_sha256': None, 'replay_matched': False, 'package': None, 'roles': None, 'documentary': None, 'frame': None, 'exposure': {'whole_buffer_supplied': False, 'header_replay_started': False, 'header_replay_completed': False, 'archive_open_started': False, 'archive_open_completed': False, 'archive_close_started': False, 'archive_close_completed': False, 'archive_close_error': None, 'member_opens_started': 0, 'member_opens_completed': 0, 'decompressions_started': 0, 'decompressions_completed': 0, 'utf8_decodes_started': 0, 'utf8_decodes_completed': 0, 'xml_parses_started': 0, 'xml_parses_completed': 0, 'character_data_state': 'NOT_ATTEMPTED', 'layout_roles': {}}, 'numeric_outcome_interpretation': False, 'formula_evaluation': False, 'scientific_eligibility_decisions': False, 'sampling_independence_established': False, 'scientific_counts': None, 'fits': 0, 'splits': 0}, 'scientific_counts': None, 'fits': 0, 'splits': 0, 'operation_exposure': {'reservation_write_attempted': False, 'reservation_may_exist': False, 'reservation_created': False, 'raw_buffer_read_started': False, 'raw_buffer_read_completed': False, 'target_bearing_source_bytes_read': False, 'source_buffer_verified': False, 'output_write_attempted': False, 'output_may_exist': False, 'output_directory_close_error': None}}
+
+======================================================================
+FAIL: test_slot_is_exclusive_and_cli_is_closed (test_li_v3_readiness_production.ProductionAuthorTests.test_slot_is_exclusive_and_cli_is_closed)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/contextlib.py", line 618, in close
+    self.__exit__(None, None, None)
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/contextlib.py", line 610, in __exit__
+    raise exc_details[1]
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/contextlib.py", line 595, in __exit__
+    if cb(*exc_details):
+       ^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/tempfile.py", line 950, in __exit__
+    self.cleanup()
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/tempfile.py", line 954, in cleanup
+    self._rmtree(self.name, ignore_errors=self._ignore_cleanup_errors)
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/tempfile.py", line 934, in _rmtree
+    _shutil.rmtree(name, onexc=onexc)
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/shutil.py", line 759, in rmtree
+    _rmtree_safe_fd(stack, onexc)
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/shutil.py", line 674, in _rmtree_safe_fd
+    topfd = os.open(name, os.O_RDONLY | os.O_NONBLOCK, dir_fd=dirfd)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<string>", line 13, in audit
+AssertionError: FORBIDDEN_REPOSITORY_READ
+
+======================================================================
+FAIL: test_source_identity_failure_before_xml (test_li_v3_readiness_production.ProductionAuthorTests.test_source_identity_failure_before_xml)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lupine-discovery-branch/discovery/.cache/phase2-li-complete-readiness-production-v1/test_li_v3_readiness_production.py", line 279, in test_source_identity_failure_before_xml
+    self.assert_cleared(report,'SOURCE_MD5_MISMATCH');self.assertFalse(report['result']['exposure']['header_replay_started'])
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/lupine-discovery-branch/discovery/.cache/phase2-li-complete-readiness-production-v1/test_li_v3_readiness_production.py", line 185, in assert_cleared
+    self.assertEqual(report['reason'],reason,report)
+AssertionError: 'FROZEN_SOURCE_REQUIRED' != 'SOURCE_MD5_MISMATCH'
+- FROZEN_SOURCE_REQUIRED
++ SOURCE_MD5_MISMATCH
+ : {'schema': 'lupine.discovery.li_v3.readiness.production.v1', 'parser_profile': 'li_v3.complete_bounded_readiness.v1', 'synthetic_fixture': False, 'phase': 'layout', 'status': 'BLOCKED_GUARD', 'engineering_status': 'NO_GO', 'reason': 'FROZEN_SOURCE_REQUIRED', 'implementation': None, 'source_identity_verified': False, 'observed': None, 'prerequisite_receipt_sha256': None, 'capture_receipt_sha256': None, 'phase_binding_pins': None, 'result': {'schema': 'lupine.discovery.li_v3.readiness.result.v1', 'synthetic_fixture': False, 'production_binding': 'FIXED_LI_V3_SOURCE_G34_PREREQUISITE', 'phase': 'layout', 'status': 'BLOCKED_SCHEMA', 'engineering_status': 'NO_GO', 'reason': 'FROZEN_SOURCE_REQUIRED', 'validation_reason_before_cleanup': None, 'source_sha256': None, 'replay_matched': False, 'package': None, 'roles': None, 'documentary': None, 'frame': None, 'exposure': {'whole_buffer_supplied': False, 'header_replay_started': False, 'header_replay_completed': False, 'archive_open_started': False, 'archive_open_completed': False, 'archive_close_started': False, 'archive_close_completed': False, 'archive_close_error': None, 'member_opens_started': 0, 'member_opens_completed': 0, 'decompressions_started': 0, 'decompressions_completed': 0, 'utf8_decodes_started': 0, 'utf8_decodes_completed': 0, 'xml_parses_started': 0, 'xml_parses_completed': 0, 'character_data_state': 'NOT_ATTEMPTED', 'layout_roles': {}}, 'numeric_outcome_interpretation': False, 'formula_evaluation': False, 'scientific_eligibility_decisions': False, 'sampling_independence_established': False, 'scientific_counts': None, 'fits': 0, 'splits': 0}, 'scientific_counts': None, 'fits': 0, 'splits': 0, 'operation_exposure': {'reservation_write_attempted': False, 'reservation_may_exist': False, 'reservation_created': False, 'raw_buffer_read_started': False, 'raw_buffer_read_completed': False, 'target_bearing_source_bytes_read': False, 'source_buffer_verified': False, 'output_write_attempted': False, 'output_may_exist': False, 'output_directory_close_error': None}}
+
+======================================================================
+FAIL: test_source_identity_failure_before_xml (test_li_v3_readiness_production.ProductionAuthorTests.test_source_identity_failure_before_xml)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/contextlib.py", line 618, in close
+    self.__exit__(None, None, None)
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/contextlib.py", line 610, in __exit__
+    raise exc_details[1]
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/contextlib.py", line 595, in __exit__
+    if cb(*exc_details):
+       ^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/tempfile.py", line 950, in __exit__
+    self.cleanup()
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/tempfile.py", line 954, in cleanup
+    self._rmtree(self.name, ignore_errors=self._ignore_cleanup_errors)
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/tempfile.py", line 934, in _rmtree
+    _shutil.rmtree(name, onexc=onexc)
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/shutil.py", line 759, in rmtree
+    _rmtree_safe_fd(stack, onexc)
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/shutil.py", line 674, in _rmtree_safe_fd
+    topfd = os.open(name, os.O_RDONLY | os.O_NONBLOCK, dir_fd=dirfd)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<string>", line 13, in audit
+AssertionError: FORBIDDEN_REPOSITORY_READ
+
+======================================================================
+FAIL: test_unbound_baseline_stops_before_cache (test_li_v3_readiness_production.ProductionAuthorTests.test_unbound_baseline_stops_before_cache)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/contextlib.py", line 618, in close
+    self.__exit__(None, None, None)
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/contextlib.py", line 610, in __exit__
+    raise exc_details[1]
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/contextlib.py", line 595, in __exit__
+    if cb(*exc_details):
+       ^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/tempfile.py", line 950, in __exit__
+    self.cleanup()
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/tempfile.py", line 954, in cleanup
+    self._rmtree(self.name, ignore_errors=self._ignore_cleanup_errors)
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/tempfile.py", line 934, in _rmtree
+    _shutil.rmtree(name, onexc=onexc)
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/shutil.py", line 759, in rmtree
+    _rmtree_safe_fd(stack, onexc)
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/shutil.py", line 674, in _rmtree_safe_fd
+    topfd = os.open(name, os.O_RDONLY | os.O_NONBLOCK, dir_fd=dirfd)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<string>", line 13, in audit
+AssertionError: FORBIDDEN_REPOSITORY_READ
+
+======================================================================
+FAIL: test_unbound_later_phase_stops_before_target (test_li_v3_readiness_production.ProductionAuthorTests.test_unbound_later_phase_stops_before_target)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lupine-discovery-branch/discovery/.cache/phase2-li-complete-readiness-production-v1/test_li_v3_readiness_production.py", line 227, in test_unbound_later_phase_stops_before_target
+    self.assert_cleared(M.inspect(phase,'1'),'PHASE_BINDING_UNBOUND')
+  File "/workspace/lupine-discovery-branch/discovery/.cache/phase2-li-complete-readiness-production-v1/test_li_v3_readiness_production.py", line 185, in assert_cleared
+    self.assertEqual(report['reason'],reason,report)
+AssertionError: 'FROZEN_SOURCE_REQUIRED' != 'PHASE_BINDING_UNBOUND'
+- FROZEN_SOURCE_REQUIRED
++ PHASE_BINDING_UNBOUND
+ : {'schema': 'lupine.discovery.li_v3.readiness.production.v1', 'parser_profile': 'li_v3.complete_bounded_readiness.v1', 'synthetic_fixture': False, 'phase': 'documentary', 'status': 'BLOCKED_GUARD', 'engineering_status': 'NO_GO', 'reason': 'FROZEN_SOURCE_REQUIRED', 'implementation': None, 'source_identity_verified': False, 'observed': None, 'prerequisite_receipt_sha256': None, 'capture_receipt_sha256': None, 'phase_binding_pins': None, 'result': {'schema': 'lupine.discovery.li_v3.readiness.result.v1', 'synthetic_fixture': False, 'production_binding': 'FIXED_LI_V3_SOURCE_G34_PREREQUISITE', 'phase': 'documentary', 'status': 'BLOCKED_SCHEMA', 'engineering_status': 'NO_GO', 'reason': 'FROZEN_SOURCE_REQUIRED', 'validation_reason_before_cleanup': None, 'source_sha256': None, 'replay_matched': False, 'package': None, 'roles': None, 'documentary': None, 'frame': None, 'exposure': {'whole_buffer_supplied': False, 'header_replay_started': False, 'header_replay_completed': False, 'archive_open_started': False, 'archive_open_completed': False, 'archive_close_started': False, 'archive_close_completed': False, 'archive_close_error': None, 'member_opens_started': 0, 'member_opens_completed': 0, 'decompressions_started': 0, 'decompressions_completed': 0, 'utf8_decodes_started': 0, 'utf8_decodes_completed': 0, 'xml_parses_started': 0, 'xml_parses_completed': 0, 'character_data_state': 'NOT_ATTEMPTED', 'layout_roles': {}}, 'numeric_outcome_interpretation': False, 'formula_evaluation': False, 'scientific_eligibility_decisions': False, 'sampling_independence_established': False, 'scientific_counts': None, 'fits': 0, 'splits': 0}, 'scientific_counts': None, 'fits': 0, 'splits': 0, 'operation_exposure': {'reservation_write_attempted': False, 'reservation_may_exist': False, 'reservation_created': False, 'raw_buffer_read_started': False, 'raw_buffer_read_completed': False, 'target_bearing_source_bytes_read': False, 'source_buffer_verified': False, 'output_write_attempted': False, 'output_may_exist': False, 'output_directory_close_error': None}}
+
+======================================================================
+FAIL: test_unbound_later_phase_stops_before_target (test_li_v3_readiness_production.ProductionAuthorTests.test_unbound_later_phase_stops_before_target)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/contextlib.py", line 618, in close
+    self.__exit__(None, None, None)
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/contextlib.py", line 610, in __exit__
+    raise exc_details[1]
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/contextlib.py", line 595, in __exit__
+    if cb(*exc_details):
+       ^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/tempfile.py", line 950, in __exit__
+    self.cleanup()
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/tempfile.py", line 954, in cleanup
+    self._rmtree(self.name, ignore_errors=self._ignore_cleanup_errors)
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/tempfile.py", line 934, in _rmtree
+    _shutil.rmtree(name, onexc=onexc)
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/shutil.py", line 759, in rmtree
+    _rmtree_safe_fd(stack, onexc)
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/shutil.py", line 674, in _rmtree_safe_fd
+    topfd = os.open(name, os.O_RDONLY | os.O_NONBLOCK, dir_fd=dirfd)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<string>", line 13, in audit
+AssertionError: FORBIDDEN_REPOSITORY_READ
+
+----------------------------------------------------------------------
+Ran 21 tests in 6.905s
+
+FAILED (failures=37, errors=1)

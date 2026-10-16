@@ -1,0 +1,199 @@
+{
+  "all_four_new_logs_preserved": true,
+  "all_original185_files_unchanged": true,
+  "final_source_release_or_full51_pass_claimed": false,
+  "markdown_link_count": 46,
+  "markdown_links": [
+    {
+      "from": "README.md",
+      "target": "author/receipts/prior-pair-corrected/execution.json"
+    },
+    {
+      "from": "README.md",
+      "target": "author/receipts/inventory-first/execution.json"
+    },
+    {
+      "from": "README.md",
+      "target": "author/receipts/complete-route-first/execution.json"
+    },
+    {
+      "from": "README.md",
+      "target": "author/complete-route-hold.json"
+    },
+    {
+      "from": "README.md",
+      "target": "independent/fixture-correction-1/execution.json"
+    },
+    {
+      "from": "README.md",
+      "target": "../phase2-li-complete-readiness-preparation-v1/README.md"
+    },
+    {
+      "from": "README.md",
+      "target": "author/README.md"
+    },
+    {
+      "from": "README.md",
+      "target": "author/receipts/first/execution.json"
+    },
+    {
+      "from": "README.md",
+      "target": "author/dirfd-harness-correction.json"
+    },
+    {
+      "from": "README.md",
+      "target": "independent/first/execution.json"
+    },
+    {
+      "from": "README.md",
+      "target": "independent/fixture-correction-1.json"
+    },
+    {
+      "from": "README.md",
+      "target": "independent/fixture-correction-1.diff.utf8.json"
+    },
+    {
+      "from": "README.md",
+      "target": "independent/README.md"
+    },
+    {
+      "from": "README.md",
+      "target": "independent/behavior-review.json"
+    },
+    {
+      "from": "README.md",
+      "target": "source-review/behavior-hold-review.json"
+    },
+    {
+      "from": "README.md",
+      "target": "independent/before-counter-ledger-disposition/README.md.utf8.json"
+    },
+    {
+      "from": "README.md",
+      "target": "author/root-operation-prerequisites.json"
+    },
+    {
+      "from": "README.md",
+      "target": "independent/rebind-plan.json"
+    },
+    {
+      "from": "README.md",
+      "target": "publication-copy-map.json"
+    },
+    {
+      "from": "README.md",
+      "target": "publication-checks.json"
+    },
+    {
+      "from": "PUBLICATION.md",
+      "target": "counter-addendum/README.md"
+    },
+    {
+      "from": "PUBLICATION.md",
+      "target": "README.md"
+    },
+    {
+      "from": "independent/COUNTER-CORRECTION.md",
+      "target": "counter-review.json"
+    },
+    {
+      "from": "independent/COUNTER-CORRECTION.md",
+      "target": "counter-before-fix-first/execution.json"
+    },
+    {
+      "from": "independent/COUNTER-CORRECTION.md",
+      "target": "counter-fixed-first/execution.json"
+    },
+    {
+      "from": "independent/COUNTER-CORRECTION.md",
+      "target": "test_li_v3_readiness_production_review_final.py"
+    },
+    {
+      "from": "independent/COUNTER-CORRECTION.md",
+      "target": "counter-delta-audit.json"
+    },
+    {
+      "from": "independent/COUNTER-CORRECTION.md",
+      "target": "handoff.json"
+    },
+    {
+      "from": "independent/README.md",
+      "target": "first/"
+    },
+    {
+      "from": "independent/README.md",
+      "target": "fixture-correction-1.json"
+    },
+    {
+      "from": "independent/README.md",
+      "target": "behavior-review.json"
+    },
+    {
+      "from": "independent/README.md",
+      "target": "test_li_v3_readiness_production_review.py"
+    },
+    {
+      "from": "independent/README.md",
+      "target": "static-first.json"
+    },
+    {
+      "from": "independent/README.md",
+      "target": "rebind-plan.json"
+    },
+    {
+      "from": "counter-addendum/README.md",
+      "target": "../author/receipts/completed-counter-first/execution.json"
+    },
+    {
+      "from": "counter-addendum/README.md",
+      "target": "../author/counter-consistency-v1/verification-scope.json"
+    },
+    {
+      "from": "counter-addendum/README.md",
+      "target": "../independent/counter-fixed-first/execution.json"
+    },
+    {
+      "from": "counter-addendum/README.md",
+      "target": "../independent/counter-before-fix-first/execution.json"
+    },
+    {
+      "from": "counter-addendum/README.md",
+      "target": "../independent/COUNTER-CORRECTION.md"
+    },
+    {
+      "from": "counter-addendum/README.md",
+      "target": "../independent/counter-delta-audit.json"
+    },
+    {
+      "from": "counter-addendum/README.md",
+      "target": "../source-review/counter-consistency-correction-v1/SOURCE-REVIEW.md"
+    },
+    {
+      "from": "counter-addendum/README.md",
+      "target": "../README.md"
+    },
+    {
+      "from": "counter-addendum/README.md",
+      "target": "../independent/counter-handoff.json"
+    },
+    {
+      "from": "counter-addendum/README.md",
+      "target": "../author/counter-consistency-v1/hold.json"
+    },
+    {
+      "from": "counter-addendum/README.md",
+      "target": "copy-map.json"
+    },
+    {
+      "from": "counter-addendum/README.md",
+      "target": "checks.json"
+    }
+  ],
+  "new_exact_copies": 64,
+  "new_lossless_wrappers": 10,
+  "new_originals": 74,
+  "new_source_hashes_held_before_after_copy": true,
+  "no_new_tests_or_actual_source_operations": true,
+  "no_private_or_generated_repository_body_reads": true,
+  "status": "PASS_ADDITIVE_BYTES_LINKS_WHITESPACE"
+}

@@ -1,0 +1,15 @@
+# Author evidence bundle map
+
+The promotion candidates are `li_v3_readiness.py`, `li_v3_readiness_production.py`, `test_li_v3_readiness_production.py` and `README.md`. The reviewed pure author/reviewer tests and independent production reviewer test come from their separate exact handoffs. Root alone copies the final eight runtime paths, commits and publishes them.
+
+`complete-route-hold.json` is the immutable 56-method behavior-review hold at baseline2975. It is not final production authorization: root is repairing a separate CI failure and will supply a published descendant baseline. Any final baseline substitution must have its own preserved input snapshot, narrow diff and executed guard-check receipt. Do not replace or relabel this earlier hold.
+
+`strict-checkpoint-v1/` preserves strict adapter80e0 and its24-method author result. `inventory-checkpoint-v1/` preserves inventory adapter60d0 and its42-method first result. The final consolidated route starts with adapter5400 and56 author methods in `receipts/complete-route-first/`. All historical source/test snapshots and stdout/stderr logs remain exact. `receipts/first/` retains the first descriptor-relative harness failure; `dirfd-harness-correction.json` documents its classification. The later passing run is not substituted for that failure.
+
+`complete-route-source-audit.json`, `complete_frame_binding-adaptation.diff`, `complete_frame-adaptation.diff` and `inventory-to-complete-route.diff` describe the final consolidated source. `audit_complete_route.py` reads source only and does not import a project or candidate module. It verifies the pure-core digest and unchanged strict DATA branch after namespace qualification; it does not prove scientific or actual-source correctness.
+
+Earlier `source-audit.json`, `hold.json`, `interface.json`, `orchestration-copy.diff` and other before/draft files are retained historical checkpoints. Files ending `functions.py.txt`, `copy.py.txt`, `header.py.txt`, `methods.py.txt` or `orchestration.py.txt` are intermediate authoring fragments, not executable or promotable source. The current complete module and explicit final diffs are authoritative. The v2 interface preserves and supersedes the earlier v1 wire contract prospectively.
+
+Generated temporary Git repositories (`generated-production-*`), Python caches and other transient execution trees are excluded from publication. Their contents are invented test data, not actual source evidence. No actual Li private object, private capture, target buffer or operation result is acquired by this bundle. The fixed public G34 projection is the separately authorized existing prerequisite.
+
+Final inventory and handoff will list exact allowlisted evidence files, exclusions, source/test identities, author and independent receipts, and the final baseline rebind separately. Neither source hashes, generated test passes, AST equality nor clean cleanup alone establishes physical truth, fresh statistical independence or admission of the Li source.

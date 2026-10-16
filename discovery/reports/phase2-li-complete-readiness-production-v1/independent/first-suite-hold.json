@@ -1,0 +1,9 @@
+{
+  "at": "2026-10-16T14:41:55.052821+00:00",
+  "candidate_executions_so_far": 0,
+  "candidate_sha256": "540088bce4341b1f4137e44ef75244ada5786d000c50af597083dadbfc02c9d8",
+  "methods": 50,
+  "scope": "Pre-rebind source: baseline2975/b2c35/339, with root-announced CI repair pending. Only generated Git/objects and fixed-pure helpers; no real production guard/private source/network. Final publication requires declared baseline-pin repair and necessary verification.",
+  "status": "FROZEN_FOR_FIRST_GENERATED_EXECUTION",
+  "test_sha256": "dc46e8c0844f4035e6c81e81ecd942bde098856e35ccdefda37af1e6aa66ce34"
+}

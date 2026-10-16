@@ -1,0 +1,19 @@
+{
+  "allowed_source_changes": [
+    "BASELINE_COMMIT",
+    "BASELINE_MANIFEST_SHA256"
+  ],
+  "before_source": "counter-fixed-first/li_v3_readiness_production.py",
+  "before_source_sha256": "a3370ac84762ef7f859061bde93f118a1c1981b02460e9ddd0b1cd38e55b840b",
+  "expected_unchanged_runtime_files": 338,
+  "production_operations": "NONE_AUTHORIZED_FOR_THIS_REVIEW",
+  "root_supplied_commit": "ddd4a6a8df0f908a162b7e5387b0faac325180d6",
+  "root_supplied_manifest_sha256": "67d686934ba718b50f8d14e1efa9e2c8dfbc96bc88e43d1a341b4719440509aa",
+  "runtime_count": 339,
+  "schema": "li.readiness.independent-final-baseline-request.v1",
+  "single_runtime_change": {
+    "after_sha256": "bce07a6927df9efe261f0477eae7b65f7babbd227721fb77333b7fe34188cf82",
+    "path": "tests/test_retained_mpea_transport.py"
+  },
+  "test_plan": "Existing first four generated guard methods only; no broad algorithm rerun."
+}

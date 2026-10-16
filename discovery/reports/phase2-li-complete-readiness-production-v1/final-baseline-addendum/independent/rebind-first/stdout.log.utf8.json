@@ -1,0 +1,8 @@
+{
+  "encoding": "utf-8",
+  "original_bytes": 82,
+  "original_filename": "stdout.log",
+  "original_sha256": "d1fba0cb484b360dc50fc68b4753025d6b3392fa53d55fde88074ce90204ba24",
+  "schema": "lupine.lossless-source-text.v1",
+  "text": "{\"tests_run\": 4, \"failures\": 0, \"errors\": 0, \"guard_violations\": [], \"status\": 0}\n"
+}

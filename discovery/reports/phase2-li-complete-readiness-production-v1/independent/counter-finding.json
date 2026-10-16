@@ -1,0 +1,31 @@
+{
+  "actual_source_access": false,
+  "planned_post_fix_methods": [
+    "test_22_inventory_scope_full_accounting_and_detached_pin_metadata",
+    "test_27_whole_shared_table_exposure_with_unrelated_text_withheld",
+    "test_29_frame_reconstructs_strict_mapping_before_record_read_and_keeps_all_rows",
+    "test_33_outer_frame_requires_both_inventory_receipts_and_committed_binding_pin",
+    "test_51_completed_historical_counter_relations_reject_resealed_contradictions"
+  ],
+  "portable_test_sha256": "2f2295d0f04fbc0f3399f904eed757e8a6c0f713a13cf9bb13850c52ea1e91e0",
+  "post_fix_status": "NOT_EXECUTED_AWAITING_HELD_SOURCE",
+  "pre_fix_execution": {
+    "coverage_limit": "The final inline-only paired-prior assertion failed outside subTest, so execution stopped before the shared-string branch. No claim all33 prepared variants ran on old source.",
+    "errors": 0,
+    "failure_records": 16,
+    "guard_violations": 0,
+    "methods": 1,
+    "path": "counter-before-fix-first/execution.json",
+    "runtime_held": 339,
+    "sha256": "5ec2abbcb2e242d7490673949be5b53a15f10d3f44ac0f6bd751ca0da21b5408"
+  },
+  "root_accepted_relations": [
+    "A: M=D=U=X>=6",
+    "B: s=any declared_type s; M=D>=6+s and U=X=M+2",
+    "Paired same-source A/B: M_B=M_A+s"
+  ],
+  "schema": "li.readiness.independent-counter-finding.v1",
+  "scope": "Completed A/B priors only. Existing exact-int/start=complete rules retained; no failure/C-ledger constraints or full history authentication claimed.",
+  "source_finding": "Completed aggregate historical counters can contradict completed role ledgers, or be locally consistent but disagree across authenticated same-source A/B lineage.",
+  "source_sha256": "540088bce4341b1f4137e44ef75244ada5786d000c50af597083dadbfc02c9d8"
+}

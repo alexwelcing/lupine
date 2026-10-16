@@ -1,0 +1,97 @@
+{
+  "acquisition_script_sha256": "d6782aa9cc0ed06f82946e3cd03f040c29b5dd2f13df950141e55b6bdef5d273",
+  "exact_source_commit": "cc3573b8a6b19ef32c9a06595f187615f25012de",
+  "local_documentary_inputs": [
+    {
+      "bytes": 2988,
+      "path": "reports/next-independent-study-v1/README.md",
+      "read_scope": "Previously published source-readiness documentation; no underlying data acquisition",
+      "sha256": "24933e25f626d59210471503206fac33436c7a484267737e21fa61a0c7cef62b"
+    },
+    {
+      "bytes": 5664,
+      "path": "reports/next-independent-study-v1/recommendation.md",
+      "read_scope": "Previously published source-readiness documentation; no underlying data acquisition",
+      "sha256": "e1230db4310f229cbd9a5331346a72b078f1de09b124f402d3786571bf75de28"
+    },
+    {
+      "bytes": 4309,
+      "path": "reports/next-independent-study-v1/source-leads.md",
+      "read_scope": "Previously published source-readiness documentation; no underlying data acquisition",
+      "sha256": "bcd7ccbf233ab0cbce27043a579d7aa8c14aa7db70ea8b5009f350e367d600cd"
+    },
+    {
+      "bytes": 9309,
+      "path": "reports/phase2-source-readiness-v1/README.md",
+      "read_scope": "Previously published source-readiness documentation; no underlying data acquisition",
+      "sha256": "bd351e8814fb33776e375ed48d1bf2e3aae985404dd8a33920bf40e46a0ca1c5"
+    },
+    {
+      "bytes": 4445,
+      "path": "reports/phase2-high-temperature-leads-v1/README.md",
+      "read_scope": "Previously published source-readiness documentation; no underlying data acquisition",
+      "sha256": "54191247eab5cb1455f506420ef5422081a609d4f685d1f1c4352750ce5f15a7"
+    },
+    {
+      "bytes": 8860,
+      "path": "reports/phase2-next-source-priorities-v1/README.md",
+      "read_scope": "Previously published source-readiness documentation; no underlying data acquisition",
+      "sha256": "96d4909c144cef965be752834c54fddedb16b84ef1efc9f75a4cd05bd9df0e63"
+    }
+  ],
+  "network_requests": [
+    {
+      "id": "repository_commit",
+      "projection_path": "repository_commit/projection.json",
+      "projection_sha256": "245bbc44aadca6e600246dc1079fb2b2fc296d52c9e9a485a381f4c87ba00faf",
+      "raw_body_publication_allowed": false,
+      "receipt_path": "repository_commit/receipt.json",
+      "receipt_sha256": "a8f2d3634bec6f77a83aa9ff4dd680d97e309b2f6c3995967601d0a578cd1d2e",
+      "retained_response_bytes": 8662,
+      "retained_response_sha256": "f8898faae7a9a77fc9a3181156c7d461e0298d39f65a63beea29237d66ff3879",
+      "status": 200,
+      "url": "https://api.github.com/repos/hackingmaterials/matminer/commits/v0.9.3"
+    },
+    {
+      "id": "dataset_metadata",
+      "projection_path": "dataset_metadata/projection.json",
+      "projection_sha256": "f1c5006dadbf9c82a4a9dfba99eafd7d29d55fe29e187e86432e9ae4d46d90d2",
+      "raw_body_publication_allowed": false,
+      "receipt_path": "dataset_metadata/receipt.json",
+      "receipt_sha256": "694edf5f272cd6891edaedb53e56639003dadd571375d06f263753cfef8d24b7",
+      "retained_response_bytes": 141785,
+      "retained_response_sha256": "a637a1fe146b70f5f663fd480a2475362dc446741893c3048ec992219ba2a0b0",
+      "status": 200,
+      "url": "https://raw.githubusercontent.com/hackingmaterials/matminer/cc3573b8a6b19ef32c9a06595f187615f25012de/matminer/datasets/dataset_metadata.json"
+    },
+    {
+      "id": "elastic_paper_metadata",
+      "projection_path": "elastic_paper_metadata/projection.json",
+      "projection_sha256": "fb43aa850dd15bae883db95ccf8a0265efeaced840643370ef026891fae88110",
+      "raw_body_publication_allowed": false,
+      "receipt_path": "elastic_paper_metadata/receipt.json",
+      "receipt_sha256": "59c6a272821a4f7a127435d9c9190a2d06ef851d02df5b7a3deb3dcfecd3f114",
+      "retained_response_bytes": 35546,
+      "retained_response_sha256": "cda6fc7a9f8d2a097f278a4b1f3cd69425768fe96d707985e9fabbf5403b1a89",
+      "status": 200,
+      "url": "https://api.crossref.org/works/10.1038/sdata.2015.9"
+    },
+    {
+      "id": "dielectric_paper_metadata",
+      "projection_path": "dielectric_paper_metadata/projection.json",
+      "projection_sha256": "dee9b09cb2bfffc81554b84516df4d33378cb98804b5eee2a9d084f3146a01e8",
+      "raw_body_publication_allowed": false,
+      "receipt_path": "dielectric_paper_metadata/receipt.json",
+      "receipt_sha256": "1f98b7993b92fd63c4bd8c1a9e989f900c7f7502653b9dbd3c6cdb816e1c474e",
+      "retained_response_bytes": 28096,
+      "retained_response_sha256": "85f966296f5cc16e8d2d80f3e687b22d93f4d4b2ae303da28bd14a6b5b6d57e6",
+      "status": 200,
+      "url": "https://api.crossref.org/works/10.1038/sdata.2016.134"
+    }
+  ],
+  "no_fulltext_acquisition": true,
+  "no_target_data_acquisition": true,
+  "schema": "lupine.discovery.paired_archive_fallback.source_bindings.v1",
+  "scope_hold_sha256": "93557c9b14075f39a283ceee12be208caf6e39e18c336aa98122b9b381dcf8ca",
+  "scope_sha256": "6e3a6cc365725fd2b72c6de39243ddc1a78d2220f1dbf1ac429ab527126a1297"
+}

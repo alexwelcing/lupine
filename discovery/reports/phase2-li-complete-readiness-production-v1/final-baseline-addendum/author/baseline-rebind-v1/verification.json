@@ -1,0 +1,43 @@
+{
+  "actual_operations": 0,
+  "author": {
+    "methods": 6,
+    "process_seconds": 2.352111,
+    "receipt": {
+      "bytes": 1953,
+      "path": ".cache/phase2-li-complete-readiness-production-v1/receipts/final-baseline-rebind-first/execution.json",
+      "sha256": "b78962fa26b7c99714e8d412fec13e91c4da91830a08f4d9ad966bdfb01a151f"
+    },
+    "unittest_seconds": 1.056
+  },
+  "earlier_failures": "Preserved in the immutable behavior and counter addenda; not replaced by this rebind.",
+  "final_contract_sha256": "1fd11e47c4a332034b213348e4a85165e18ba0693791483cd703c326eb8d87ca",
+  "final_source_sha256": "77dece96850b09be2f13acd275cc28789ea0e3bc408cfcec86bcd02f488fed85",
+  "first_rebind_invocations_passed": true,
+  "full_portable184_methods_run_here": false,
+  "independent": {
+    "methods": 4,
+    "process_seconds": 4.780429400001594,
+    "receipt": {
+      "bytes": 83928,
+      "path": ".cache/phase2-li-complete-readiness-production-review-v1/rebind-first/execution.json",
+      "sha256": "502dbeea41006aa8e16d1aa7f19c8ff0211eb962d5a1538d7daf2e4d9ee515cc"
+    },
+    "static_checks": 13,
+    "static_receipt": {
+      "bytes": 1891,
+      "path": ".cache/phase2-li-complete-readiness-production-review-v1/static-rebind-first.json",
+      "sha256": "b14ff9269bd04a28af3e32fa04e9cb0ba6f39422a8ed395cc95619b285d71661"
+    },
+    "unittest_seconds": 1.677
+  },
+  "new_failure_receipts": [],
+  "promotion_copyset": {
+    "bytes": 5136,
+    "path": ".cache/phase2-li-complete-readiness-production-v1/promotion-copyset.final.json",
+    "sha256": "b3b065ade262319238108efd0b6b296cc7ff947cb3c4c4eec8154d072db7559a"
+  },
+  "recorded_at": "2026-10-16T15:27:56.949654+00:00",
+  "root_integrated_total602_methods_status": "PENDING_ROOT_EXECUTION",
+  "status": "FINAL_BASELINE_GENERATED_CHECKS_PASS_PENDING_ROOT_INTEGRATION"
+}

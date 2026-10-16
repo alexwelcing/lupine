@@ -1,0 +1,25 @@
+{
+  "command": [
+    "python",
+    "-B",
+    "-m",
+    "unittest",
+    "-v",
+    "test_public_review_validator"
+  ],
+  "elapsed_seconds": 0.6354061949969037,
+  "exit_code": 1,
+  "finished_at": "2026-10-16T15:38:53.284612+00:00",
+  "scope": "Generated public JSON only; source-only review found two missing syntactic restrictions, regressions run before correction.",
+  "source_after": {
+    "public_review_validator.py": "01cc1a5f070b8c73360cae46ea2135d2e9da6e8a2eac9bed533847324f6a7885",
+    "test_public_review_validator.py": "835cab953d7251d509bcaa965675560b94835ccb242077b56de66134e29a3085"
+  },
+  "source_before": {
+    "public_review_validator.py": "01cc1a5f070b8c73360cae46ea2135d2e9da6e8a2eac9bed533847324f6a7885",
+    "test_public_review_validator.py": "835cab953d7251d509bcaa965675560b94835ccb242077b56de66134e29a3085"
+  },
+  "started_at": "2026-10-16T15:38:52.649237+00:00",
+  "stderr_sha256": "0c48c177572bc93d6bd5e75f751f3d8dc6f572d1a68d45bd3e8259afc72afc64",
+  "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

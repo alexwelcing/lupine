@@ -1,0 +1,169 @@
+{
+  "C_reconstruction": "Full original A/B lineage and complete same-source payload replay including workbook_sheets before records. Semantic requests reconstruct strict documentary projection. Explicit all-structural/no-assertion branch skips strict projection with nulls, never an empty success. Every observed row retained; all observed row/cell caps checked before selected semantic value processing.",
+  "additional_result_keys": "All phases add workbook_sheets and sheet_name_exposure. Inventory/frame retain inventory and inventory_exposure. Frame also adds semantic_projection_state and strict_documentary_sha256. Failure nulls workbook_sheets/inventory/documentary/frame and sets semantic state NOT_COMPLETED, digest null; exposure retained.",
+  "canonical": "Compact sorted ensure_ascii JSON + LF, ASCII; hashes include LF.",
+  "completed_prior_counter_consistency": {
+    "authenticated_pair": "M_B=M_A+s; outer fixed pins gate before target access and inner generated seam after header replay before XML",
+    "inventory": "s=int(any declared_type==s); M=D>=6+s; U=X=M+2",
+    "layout": "M=D=U=X>=6",
+    "meaning": "Necessary consistency, not proof of historical operation authenticity",
+    "scope": "Only completed historical A/B; never failure prefixes or C total counters",
+    "started_completed": "All four operation pairs are equal exact ints under existing bounds"
+  },
+  "default_phase_bindings": {
+    "frame": null,
+    "inventory": null
+  },
+  "empty_semantic_clarification_sha256": "41ea1b3ff2e27ba452ae2d9701a9803d711641428502f44c0b8126b8f828f206",
+  "frame_binding": "li_v3.inventory_frame_binding.v2: prior v1 keys plus unbound_row_policy=UNRESOLVED and semantic_projection=STRICT_DOCUMENTARY_RECONSTRUCTION|SEMANTIC_PROJECTION_NOT_REQUESTED. Every record role adds mode=DOCUMENTARY_BOUND_METADATA|STRUCTURAL_ONLY_UNASSIGNED. excluded_sheets exactly []. Complete exact non-documentary sheet coverage before record opens. Structural-only mode requires row_classes/metadata_columns/endpoint_columns exactly []. Semantic mode keeps existing column rules, declared row coordinates need only be a subset of observed rows; all otherwise unbound rows default UNRESOLVED. Other fields retain prior shape.",
+  "frame_output": {
+    "base": "Existing frame row/count/uncertainty fields retained. physical_explicit_rows means explicit XML rows, not physical experiments.",
+    "negative": "Any unresolved row/premise => completed NO_GO_UNRESOLVED_PREMISE. Zero/all-header/all-note rows cannot establish metadata readiness.",
+    "row_shape": "Existing role_id,row,class,class_authority,metadata,endpoint_structure,reference_join,pairing,overlap,unresolved. Unbound class is UNRESOLVED/FIXED_UNRESOLVED_POLICY. Structural-only rows have empty metadata/endpoint_structure, NOT_APPLICABLE join/pairing, NOT_ASSESSED overlap; unresolved includes SHEET_ROLE_UNASSIGNED and ROW_ROLE_UNKNOWN.",
+    "sheet_modes": [
+      {
+        "mode": "explicit mode",
+        "role_id": "binding ID",
+        "sheet_name": "exact name"
+      }
+    ],
+    "structural_completeness": "COMPLETE_EXPLICIT_XML_ROWS",
+    "unresolved_premises": [
+      "SEMANTIC_PROJECTION_NOT_REQUESTED if skipped",
+      "REQUIRED_DOCUMENTARY_MEANING_UNRESOLVED if required list empty or unresolved/missing assertion",
+      "SHEET_ROLE_UNASSIGNED if any structural-only mode",
+      "NO_DECLARED_DATA_ROWS if DATA count zero"
+    ]
+  },
+  "generated_A_equivalence": "Normalize three original production markers and remove exactly workbook_sheets/sheet_name_exposure; remaining full A report equals pure core result.",
+  "internal_call": "_run_production(raw, phase, g34_implementation, binding=None, prior_layout=None, prior_inventory=None)",
+  "inventory": {
+    "completeness": "COMPLETE_TWO_ROLE_EXPLICIT_CELL_INVENTORY",
+    "explicit_cells": "int total across both roles, <=1024",
+    "fields": [
+      {
+        "coordinate": "canonical A1",
+        "declared_type": "supported G32 storage excluding str",
+        "formula_element_present": false,
+        "role": "exact References or Column Descriptions",
+        "semantics": "UNINTERPRETED",
+        "text": "plain literal including empty string, or null for nontext",
+        "text_state": "PLAIN_LITERAL_DISCLOSED | NON_TEXT_VALUE_WITHHELD"
+      }
+    ],
+    "fresh_status": "UNESTABLISHED",
+    "non_text_cells": "int",
+    "numerical_outcome_text_absence": "UNESTABLISHED",
+    "scientific_admission": "NOT_ASSESSED",
+    "semantic_safety": "UNESTABLISHED",
+    "text_cells": "int"
+  },
+  "inventory_exposure": {
+    "completed": "bool",
+    "disclosure_policy": "ALL_ROLE_PLAIN_TEXT_MAY_INCLUDE_INCIDENTAL_OUTCOMES",
+    "fresh_status": "UNESTABLISHED",
+    "non_text_cells_accounted": "int",
+    "plain_text_cells_processed": "int",
+    "record_worksheet_member_opens": 0,
+    "scope": "INVENTORY_SUBSTAGE_ONLY",
+    "shared_strings_may_include_record_values": "bool",
+    "started": "bool",
+    "whole_documentary_worksheet_character_data": "NOT_ATTEMPTED | FULL_TWO_ROLE_WORKSHEETS_DECODED",
+    "whole_shared_strings_completed": "bool only after complete bounded SST validation",
+    "whole_shared_strings_started": "bool before entire bounded SST decode/validation"
+  },
+  "inventory_failures": [
+    "formula anywhere in either role",
+    "unsupported str/rich/required text storage or unresolved shared dependency",
+    "merged selected text",
+    "1025+ total explicit cells or text2049+ chars",
+    "any existing parser/cap/source/cleanup failure"
+  ],
+  "inventory_order": "pure.ROLES order then canonical numeric row/column order; every explicit cell is included or whole projection blocks. Empty literal text remains text=\"\". Full worksheet headers/footers/attributes are private decoding exposure, outside coordinate-cell inventory.",
+  "limits": "All existing caps unchanged;1024 covers structural nontext entries too,2048 includes empty permitted text. No first-N projection/no value-based filtering.",
+  "parent_interface_sha256": "0454cebf34d19e20f2f6babf8c59f8943d0356fe1b89c3a4f4db3e6b6afe6414",
+  "phase_bindings": {
+    "frame": {
+      "binding": {
+        "path": ".cache/li-v3-custody/complete-readiness-bindings-v1/frame.json",
+        "sha256": "exact reviewed canonical binding digest"
+      },
+      "inventory": [
+        {
+          "path": ".cache/li-v3-custody/complete-readiness-v1/inventory/1/public.json",
+          "producer": "original 40hex producer",
+          "sha256": "exact canonical public receipt digest"
+        },
+        {
+          "path": ".cache/li-v3-custody/complete-readiness-v1/inventory/2/public.json",
+          "producer": "original 40hex producer",
+          "sha256": "exact canonical public receipt digest"
+        }
+      ],
+      "layout": [
+        {
+          "path": ".cache/li-v3-custody/complete-readiness-v1/layout/1/public.json",
+          "producer": "original 40hex producer",
+          "sha256": "exact canonical public receipt digest"
+        },
+        {
+          "path": ".cache/li-v3-custody/complete-readiness-v1/layout/2/public.json",
+          "producer": "original 40hex producer",
+          "sha256": "exact canonical public receipt digest"
+        }
+      ]
+    },
+    "inventory": {
+      "layout": [
+        {
+          "path": ".cache/li-v3-custody/complete-readiness-v1/layout/1/public.json",
+          "producer": "original 40hex producer",
+          "sha256": "exact canonical public receipt digest"
+        },
+        {
+          "path": ".cache/li-v3-custody/complete-readiness-v1/layout/2/public.json",
+          "producer": "original 40hex producer",
+          "sha256": "exact canonical public receipt digest"
+        }
+      ]
+    }
+  },
+  "phases": [
+    "layout",
+    "inventory",
+    "frame"
+  ],
+  "prior_rule": "Two complete identical canonical outer receipts, exact original producer/source/closed historical shape. Root separately accepts returned/stdout/persisted agreement, exit and all cleanup before freezing dependent pins.",
+  "production_call": "inspect(phase, run); fixed slots1/2 each; no caller bytes/expectation/path/binding",
+  "profile": "li_v3.complete_bounded_structural_inventory_frame.v1",
+  "pure_core": "Unchanged5fd1; strict pure documentary API retained, no extra actual phase.",
+  "result_marker_substitutions": {
+    "production_binding": "FIXED_LI_V3_SOURCE_G34_PREREQUISITE",
+    "schema": "lupine.discovery.li_v3.readiness.result.v1",
+    "synthetic_fixture": false
+  },
+  "route_decision_sha256": "beaedd68842954d2c292491152645a6cf879541c30334a60fd4a28885753145c",
+  "semantic_projection_not_requested": "Allowed only when all roles STRUCTURAL_ONLY_UNASSIGNED; documentary_binding null, required_documentary_fields [], row_unit UNKNOWN, reference_field null, reference_keys [], overlap_manifest null. No strict binding/helper invoked or fabricated. documentary and strict_documentary_sha256 remain null; semantic_projection_state SEMANTIC_PROJECTION_NOT_REQUESTED. Mandatory completed negative frame.",
+  "semantic_projection_requested": "Existing strict nonempty nested binding/reconstruction, exact role/coordinate/storage/literal; report semantic_projection_state STRICT_DOCUMENTARY_RECONSTRUCTED, documentary payload and strict_documentary_sha256=current payload hash. Never historical receipt.",
+  "sheet_name_exposure": {
+    "completed": "bool",
+    "disclosure_policy": "COMPLETE_SHEET_NAMES_MAY_INCLUDE_INCIDENTAL_OUTCOMES",
+    "fresh_status": "UNESTABLISHED",
+    "names_projected": "int",
+    "started": "bool"
+  },
+  "success_reasons": {
+    "frame": "METADATA_FRAME_READY_FOR_SEPARATE_LABEL_RULE or completed negative NO_GO_UNRESOLVED_PREMISE",
+    "inventory": "DOCUMENTARY_TEXT_INVENTORY_COMPLETE",
+    "layout": "LAYOUT_READY_MAPPING_UNBOUND"
+  },
+  "test_seams": "Generated tests may patch ROOT/custody.ROOT, __file__, baseline constants, source/capture/prerequisite/projection identities and PHASE_BINDINGS to generated equivalents; mock only preceding diagnostic.production_context and capture validator. Full current production_context runs solely in temporary generated Git repo. No real guards/cache.",
+  "workbook_sheets": [
+    {
+      "binding_status": "EXACT_VALIDATED_WORKBOOK_RELATIONSHIP",
+      "role": "exact References | Column Descriptions | UNASSIGNED",
+      "sheet_name": "exact validated name <=31 chars"
+    }
+  ],
+  "workbook_sheets_order": "Complete workbook XML order, including hidden sheets; <=128. No member targets disclosed. No new opens."
+}

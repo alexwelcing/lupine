@@ -1,0 +1,134 @@
+--- pure5fd1:_frame
++++ adapter:_complete_frame
+@@ -1,47 +1,55 @@
+-def _frame(binding, records, documentary, package, report, shared_state):
++def _complete_frame(binding, records, documentary, package, report, shared_state):
++    """Complete bounded structural frame; semantic fields use unchanged strict rules."""
+     archive, names, types, workbook, relationships, roles, totals = package
+-    assertions = {field['field_id']: field for field in documentary['fields']}
+-    for identifier in binding['required_documentary_fields']:
+-        _require(identifier in assertions and assertions[identifier]['assertion'] == 'MANIFEST_ASSERTION',
+-                 'NO_GO_UNRESOLVED_PREMISE')
+-    for excluded in binding['excluded_sheets']:
+-        _require(excluded['documentary_field_id'] in assertions
+-                 and assertions[excluded['documentary_field_id']]['assertion'] == 'MANIFEST_ASSERTION',
+-                 'NO_GO_UNRESOLVED_PREMISE')
++    assertions = {} if documentary is None else {field['field_id']: field for field in documentary['fields']}
++    unresolved_premises = (['SEMANTIC_PROJECTION_NOT_REQUESTED'] if documentary is None else [])
++    required = binding['required_documentary_fields']
++    if not required or any(identifier not in assertions or
++            assertions[identifier]['assertion'] != 'MANIFEST_ASSERTION' for identifier in required):
++        unresolved_premises.append('REQUIRED_DOCUMENTARY_MEANING_UNRESOLVED')
++    if any(role['mode'] == 'STRUCTURAL_ONLY_UNASSIGNED' for role in records):
++        unresolved_premises.append('SHEET_ROLE_UNASSIGNED')
++    _complete_coverage(records, report['workbook_sheets'])
+     key = '{' + custody.DOCREL.removesuffix('/') + '}id'
+     workbook_map = {sheet.attrib['name']: relationships[sheet.attrib[key]][1]
+-                    for sheet in workbook.find('{' + NAMESPACE + '}sheets')}
+-    covered = set(ROLES) | {role['sheet_name'] for role in records} | {
+-        row['sheet_name'] for row in binding['excluded_sheets']}
+-    _require(covered == set(workbook_map), 'FRAME_COVERAGE_MISMATCH')
++                    for sheet in workbook.find('{' + core.NAMESPACE + '}sheets')}
+     totals['frame_sheets'] = 0
+-    all_rows, class_counts = [], {kind: 0 for kind in sorted(ROW_CLASSES)}
++    prepared, observed_rows, cells_total = [], 0, 0
++    # Decode all bounded structures before interpreting any selected metadata.
++    for role in records:
++        member = workbook_map[role['sheet_name']]
++        core._require(types.get(member) == custody.SHEET_TYPE, 'ROLE_BINDING_BLOCKED')
++        raw = core._read_member(archive, member, report, totals, 'frame_sheets')
++        root = core._xml_tree(raw, report, text_allowed=True)
++        layout = core._validate_tree_layout(root)
++        cells_total += len(layout['cells'])
++        rows = {int(row.attrib['r']): row for row in root.find('{' + core.NAMESPACE + '}sheetData')}
++        observed_rows += len(rows)
++        core._require(cells_total <= core.LIMITS['frame_cells']
++                      and observed_rows <= core.LIMITS['frame_rows'], 'FRAME_LIMIT')
++        declared = {row['row']: row['class'] for row in role['row_classes']}
++        core._require(set(declared) <= set(rows), 'FRAME_COVERAGE_MISMATCH')
++        prepared.append((role, layout, rows, declared))
++    all_rows, class_counts = [], {kind: 0 for kind in sorted(core.ROW_CLASSES)}
+     unresolved = 0
+-    cells_total = 0
+     def shared_get():
+         if shared_state[0] is None:
+-            shared_state[0] = _shared(package, report)
++            shared_state[0] = core._shared(package, report)
+         return shared_state[0]
+-    for role in records:
+-        member = workbook_map[role['sheet_name']]
+-        _require(types.get(member) == custody.SHEET_TYPE, 'ROLE_BINDING_BLOCKED')
+-        raw = _read_member(archive, member, report, totals, 'frame_sheets')
+-        root = _xml_tree(raw, report, text_allowed=True)
+-        layout = _validate_tree_layout(root)
+-        cells_total += len(layout['cells'])
+-        _require(cells_total <= LIMITS['frame_cells'], 'FRAME_LIMIT')
+-        rows = {int(row.attrib['r']): row for row in root.find('{' + NAMESPACE + '}sheetData')}
+-        declared = {row['row']: row['class'] for row in role['row_classes']}
+-        _require(set(rows) == set(declared), 'FRAME_COVERAGE_MISMATCH')
++    for role, layout, rows, declared in prepared:
++        structural = role['mode'] == 'STRUCTURAL_ONLY_UNASSIGNED'
+         for number in sorted(rows):
+-            node, kind = rows[number], declared[number]
++            node, kind = rows[number], declared.get(number, 'UNRESOLVED')
+             class_counts[kind] += 1
+             row = {'role_id': role['role_id'], 'row': number, 'class': kind,
+-                   'class_authority': 'MANIFEST_ASSERTION', 'metadata': {}, 'endpoint_structure': {},
++                   'class_authority': 'MANIFEST_ASSERTION' if number in declared else 'FIXED_UNRESOLVED_POLICY',
++                   'metadata': {}, 'endpoint_structure': {},
+                    'reference_join': 'NOT_APPLICABLE', 'pairing': 'NOT_APPLICABLE',
+                    'overlap': 'NOT_ASSESSED', 'unresolved': []}
++            if structural:
++                row['unresolved'].append('SHEET_ROLE_UNASSIGNED')
+             if kind == 'BLANK':
+-                _require(not len(node), 'FRAME_BLANK_CONTRADICTION')
++                core._require(not len(node), 'FRAME_BLANK_CONTRADICTION')
+                 row['class_authority'] = 'NO_EXPLICIT_CELLS'
+             if kind == 'UNRESOLVED':
+                 row['unresolved'].append('ROW_ROLE_UNKNOWN')
+@@ -49,21 +57,21 @@
+                 cells = {cell.attrib['r']: cell for cell in node}
+                 for field in role['metadata_columns']:
+                     coordinate = field['column'] + str(number)
+-                    _require(not _merged(coordinate, layout), 'SELECTED_CELL_MERGED')
++                    core._require(not core._merged(coordinate, layout), 'SELECTED_CELL_MERGED')
+                     cell = cells.get(coordinate)
+-                    value = None if cell is None else _cell_text(cell, shared_get)
+-                    _require(value is None or len(value) <= LIMITS['definition_chars'], 'FRAME_LIMIT')
++                    value = None if cell is None else core._cell_text(cell, shared_get)
++                    core._require(value is None or len(value) <= core.LIMITS['definition_chars'], 'FRAME_LIMIT')
+                     row['metadata'][field['field_id']] = value
+                     if field['required'] and (value is None or value == ''):
+                         row['unresolved'].append('REQUIRED_METADATA_ABSENT')
+                 for endpoint in role['endpoint_columns']:
+                     coordinate = endpoint['column'] + str(number)
+-                    _require(not _merged(coordinate, layout), 'SELECTED_CELL_MERGED')
++                    core._require(not core._merged(coordinate, layout), 'SELECTED_CELL_MERGED')
+                     cell = cells.get(coordinate)
+                     row['endpoint_structure'][endpoint['endpoint_id']] = {
+                         'cell_present': cell is not None,
+                         'declared_type': cell.attrib.get('t', 'absent') if cell is not None else None,
+-                        'formula_element_present': cell.find('{' + NAMESPACE + '}f') is not None if cell is not None else False,
++                        'formula_element_present': cell.find('{' + core.NAMESPACE + '}f') is not None if cell is not None else False,
+                         'numerical_validity': 'NOT_CHECKED'}
+                 row['pairing'] = {'SINGLE_TEST': 'MANIFEST_ASSERTED_SAME_TEST',
+                                   'AGGREGATE': 'MANIFEST_ASSERTED_AGGREGATE',
+@@ -84,10 +92,16 @@
+             if row['unresolved']:
+                 unresolved += 1
+             all_rows.append(row)
+-    _require(len(all_rows) <= LIMITS['frame_rows'], 'FRAME_LIMIT')
+-    admission = 'NO_GO_UNRESOLVED_PREMISE' if unresolved else 'METADATA_FRAME_READY_FOR_SEPARATE_LABEL_RULE'
++    if not class_counts['DATA']:
++        unresolved_premises.append('NO_DECLARED_DATA_ROWS')
++    admission = ('NO_GO_UNRESOLVED_PREMISE' if unresolved or unresolved_premises else
++                 'METADATA_FRAME_READY_FOR_SEPARATE_LABEL_RULE')
+     return {'rows': all_rows, 'physical_explicit_rows': len(all_rows), 'class_counts': class_counts,
+             'unresolved_rows': unresolved, 'admission_status': admission,
++            'structural_completeness': 'COMPLETE_EXPLICIT_XML_ROWS',
++            'unresolved_premises': unresolved_premises,
++            'sheet_modes': [{'sheet_name': role['sheet_name'], 'role_id': role['role_id'],
++                             'mode': role['mode']} for role in records],
+             'numerical_validity': 'NOT_CHECKED', 'paired_count': None,
+             'overlap_authority': 'SUPPLIED_AUTHENTICATED_MANIFEST_PREMISE' if binding['overlap_manifest'] is not None else 'NOT_ASSESSED',
+             'overlap_meaning': 'PROVENANCE_KEY_COMPARISON_ONLY', 'physical_independence': 'NOT_ESTABLISHED'}

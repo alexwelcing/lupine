@@ -1,0 +1,13 @@
+--- before/li_v3_readiness_production.py
++++ held/li_v3_readiness_production.py
+@@ -19,8 +19,8 @@
+ RESULT_SCHEMA = 'lupine.discovery.li_v3.readiness.result.v1'
+ PRODUCTION_BINDING = 'FIXED_LI_V3_SOURCE_G34_PREREQUISITE'
+ CORE_SHA256 = '5fd1b06c683bb44ed582964bc59f5281cbdbe7e880c749ec9c55276145fa5219'
+-BASELINE_COMMIT = '2975d6d0b9111cc84adb82ccc673bc82339ab154'
+-BASELINE_MANIFEST_SHA256 = 'b2c35e48c8dc837d78aba0047d112dabbd30b8ff11e66bba0f45e9da92a0eb2f'
++BASELINE_COMMIT = 'ddd4a6a8df0f908a162b7e5387b0faac325180d6'
++BASELINE_MANIFEST_SHA256 = '67d686934ba718b50f8d14e1efa9e2c8dfbc96bc88e43d1a341b4719440509aa'
+ BASELINE_RUNTIME_COUNT = 339
+ FROZEN_PATHS = (
+     'scripts/li_v3_readiness.py', 'scripts/li_v3_readiness_production.py',

@@ -1861,3 +1861,39 @@ requests use an explicit null NOT_REQUESTED projection. No actual source access.
 Author/independent adapter work continues separately and must rebind the repair
 baseline before final hold. Root owns publication/verification next. G20 remains
 unresolved/G21 blocked; all scientific negatives and disabled automation persist.
+
+## 2026-10-16T15:43:03.450011+00:00 — complete bounded Li route integrated
+
+[602 generated methods pass](phase2-li-complete-readiness-integration-v1/README.md)
+with all 345 runtime files and two contracts held: 418 existing and 184 added
+methods, including all 51 independent production methods on the final source.
+The strict core remains exact; only six Python files and two documents are added.
+All 339 predecessor runtime files remain unchanged. Full worksheet identities,
+complete explicit-cell inventory and unresolved row accounting preserve negative
+semantic outcomes. Counter contradictions reject; consistency alone is not
+historical authentication. Earlier failures and the narrow two-constant baseline
+rebind are preserved in the production evidence.
+
+[Predecessor ddd4a6a verification](phase2-rhizo-census-repair-verification-v1/README.md)
+passes all four original CI jobs, clean 28-demo/six-schema/17-check packaging and
+independent audit of 5,664 source files, 339 runtime files and 117 wheel members.
+All 110 wheel payloads are unchanged. No actual new-route operation occurred.
+Root owns this increment's publication and exact fresh release checks, followed
+by the fixed layout pair. G20 unresolved/G21 blocked; scientific negatives and
+disabled automation persist. No new DFT, fit, allocation or deployment.
+
+[Fallback metadata](phase2-paired-archive-fallback-metadata-v1/README.md) and
+[two-request dielectric methods review](phase2-dielectric-methods-rights-v1/README.md)
+record archived-calculation leads only. The first prose projection exposed
+qualitative Data Records results; original scope, exposure and modified prose
+are preserved. Dataset rights, pairing, processed semantics and equivalence remain
+unresolved. No data-file acquisition, benchmark selection or admission occurred.
+
+The first precommit check stopped on one extra blank line at the end of the new
+pure independent test. Root preserved the failed publication attempt, removed
+exactly one LF and verified identical Python syntax trees. All 35 methods in the
+normalized module pass in 1.932 seconds, holding 345 runtime files and two docs.
+The original 602-method receipt is not relabeled. No check was weakened.
+The independent dielectric documentary review confirms the bounded source claims
+and clarifies the historical locally-only flag after public excerpt publication;
+rights, pairing, processed semantics, equivalence and freshness remain unresolved.

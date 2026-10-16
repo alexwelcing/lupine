@@ -1,0 +1,38 @@
+{
+  "actual_operations": 0,
+  "author_execution": "receipts/complete-route-first/execution.json",
+  "author_execution_sha256": "e69865345c0393fad3895c11ffb8e55e6e4f8ba40960f78f32982455b8b0747d",
+  "author_methods": 56,
+  "baseline": "2975d6d0b9111cc84adb82ccc673bc82339ab154",
+  "files": {
+    "README.md": {
+      "bytes": 15962,
+      "sha256": "e0f1794f938afde364138cc324451822d00c9b470e087cfc96b1f9038856cc5b"
+    },
+    "complete-route-source-audit.json": {
+      "bytes": 681,
+      "sha256": "1158c64a6853734b777abb488bdcd3f624a83bb537e198d5eff766496d9e3dd0"
+    },
+    "interface.complete-route-v2.json": {
+      "bytes": 9912,
+      "sha256": "e8b0e6a2cbedbe1c4207a6eb45d27fa0d48f5ad64d93328b065e588f63625a84"
+    },
+    "li_v3_readiness.py": {
+      "bytes": 81591,
+      "sha256": "5fd1b06c683bb44ed582964bc59f5281cbdbe7e880c749ec9c55276145fa5219"
+    },
+    "li_v3_readiness_production.py": {
+      "bytes": 60305,
+      "sha256": "540088bce4341b1f4137e44ef75244ada5786d000c50af597083dadbfc02c9d8"
+    },
+    "test_li_v3_readiness_production.py": {
+      "bytes": 43260,
+      "sha256": "5829e9a328c4f90b306a0a5614a01bb609fd6c3de05ec95d80883c1d9abd13e3"
+    }
+  },
+  "held_at": "2026-10-16T14:41:16.075704+00:00",
+  "independent_status": "AWAITING_FIRST_EXECUTION",
+  "root_CI_status": "2975 full CI failed; separate root repair required before actual use",
+  "schema": "lupine.li.readiness.complete_route.hold.v1",
+  "source_policy": "No source/core/test/contract/interface edits until held independent run closes; preserve first failures."
+}

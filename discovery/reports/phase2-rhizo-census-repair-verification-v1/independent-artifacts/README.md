@@ -1,0 +1,13 @@
+# Prepared independent repair-artifact audit
+
+This auditor is prepared and syntax-compiled. **No final repair-artifact audit has run.** Root must supply the exact published repair commit, completed retention directory and final source-copyset checkpoint before invocation.
+
+The expected baseline is `2975d6d0b9111cc84adb82ccc673bc82339ab154`. The only allowed runtime change is `tests/test_retained_mpea_transport.py` to SHA `bce07a6927df9efe261f0477eae7b65f7babbd227721fb77333b7fe34188cf82`. Total runtime membership remains 339, all other 338 entries stay byte-identical, and no runtime file is added or removed. All 110 package payloads must remain byte-identical; no wheel payload addition/removal/change is allowed.
+
+The prepared auditor checks every scoped source archive file against the exact final Git tree/blob, independently derives the runtime set, reconciles both baseline and current manifests against their underlying bytes, enforces the single-file delta, checks every wheel payload and RECORD digest/size, and retains all 17 ordered-probe check identities in the receipt. The public census JSON must still match SHA `a9ab9d72c6c39be9338e951b657e0587ae8f4dbe534b276b8f8f8951a7b1a63a`.
+
+The archive copyset remains the unchanged packager's `discovery` and `.github/workflows/discovery-verify.yml` roots. Completed reports/docs may add files only through the final exact scoped Git commit; they do not authorize runtime/payload deltas. Root's final copyset checkpoint will be recorded before execution.
+
+The previous successful auditor is retained byte-for-byte as `predecessor-audit_retained.py` (SHA `b6566a01f8704699174dbdaaacb4a51182e58bf1e346bf249375c534ac1728db`). The [preparation delta](preparation-delta.diff.json) makes the new baseline and tighter one-file/no-payload-change contract explicit. Previous artifact and diagnosis bundles remain unchanged.
+
+The audit will not extract or execute package contents, tests, probes, census/readers or formal code; it will not open private/raw scientific data, mutate Git or use the network. Committed public source members are streamed solely for identity. Package test metadata is checked as retained assertions, without claiming independent rerun, deterministic wheel reconstruction, scientific truth or superiority. First results/failures will be retained in an exclusive output directory.

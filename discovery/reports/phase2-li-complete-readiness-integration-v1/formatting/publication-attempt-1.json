@@ -1,0 +1,8 @@
+{
+  "at": "2026-10-16T15:44:28.250420+00:00",
+  "status": "STOPPED_BEFORE_COMMIT",
+  "command": "publish.py",
+  "failure": "staged git diff --check exited2 after exact464-file staging; inspect and preserve text bytes before correction",
+  "runtime_or_product_test_failure": false,
+  "source_publish_not_performed": true
+}

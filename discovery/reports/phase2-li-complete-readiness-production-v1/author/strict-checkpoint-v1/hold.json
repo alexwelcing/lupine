@@ -1,0 +1,33 @@
+{
+  "actual_operations": 0,
+  "at": "2026-10-16T14:07:07.360531+00:00",
+  "author_run": "receipts/prior-pair-corrected/execution.json",
+  "author_tests": 24,
+  "files": {
+    "README.md": {
+      "bytes": 10422,
+      "sha256": "a08878616fa99d711399b643eb65cf813315ac2d26c54cb4eeceb5f65a80e701"
+    },
+    "interface.json": {
+      "bytes": 2089,
+      "sha256": "c7c3fc30d1be11510395fe8d9a1e1066d3d9f13e95662b5ab2b927d19bd92968"
+    },
+    "li_v3_readiness.py": {
+      "bytes": 81591,
+      "sha256": "5fd1b06c683bb44ed582964bc59f5281cbdbe7e880c749ec9c55276145fa5219"
+    },
+    "li_v3_readiness_production.py": {
+      "bytes": 26079,
+      "sha256": "80e0d39728320d115ddc8a9ce3467904294a57310af719c81e9686786de25263"
+    },
+    "orchestration-copy.diff": {
+      "bytes": 10427,
+      "sha256": "a382852679915471fd3d310cbfa7c4378730a27ecff3aa83935dea0d76d9a051"
+    },
+    "test_li_v3_readiness_production.py": {
+      "bytes": 24411,
+      "sha256": "3c8c2b89e71bf86d6b74c22dd7629bc030771ed01756bb54379092589389b982"
+    }
+  },
+  "status": "HELD_FOR_FIRST_INDEPENDENT_PRODUCTION_EXECUTION"
+}

@@ -1,0 +1,15 @@
+{
+  "bytes_retained": 35546,
+  "complete_response_read": true,
+  "finished_at": "2026-10-16T15:15:43.443939+00:00",
+  "headers": {
+    "Content-Type": "application/json"
+  },
+  "over_cap": false,
+  "request_count": 1,
+  "sha256": "cda6fc7a9f8d2a097f278a4b1f3cd69425768fe96d707985e9fabbf5403b1a89",
+  "started_at": "2026-10-16T15:15:42.722110+00:00",
+  "status": 200,
+  "transport_error_category": null,
+  "url": "https://api.crossref.org/works/10.1038/sdata.2015.9"
+}

@@ -1,0 +1,9 @@
+{
+  "credentials": false,
+  "maximum_bytes": 2097152,
+  "method": "GET",
+  "redirects": false,
+  "retries": 0,
+  "started_at": "2026-10-16T15:28:55.728478+00:00",
+  "url": "https://www.ebi.ac.uk/europepmc/webservices/rest/PMC5315501/fullTextXML"
+}

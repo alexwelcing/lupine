@@ -1,0 +1,66 @@
+def _run_production(raw, phase, g34_implementation, binding=None, prior_layout=None, prior_inventory=None):
+    report = _result(phase)
+    holder = []
+    try:
+        report['source_sha256'] = custody.sha256(raw)
+        report['exposure']['whole_buffer_supplied'] = True
+        report['_g34_implementation'] = g34_implementation
+        try:
+            _replay(raw, report)
+        finally:
+            report.pop('_g34_implementation', None)
+        mapped = fields = storage = records = None
+        if phase != 'layout':
+            layout_hash = _prior_production(prior_layout, 'layout', report['source_sha256'])
+            if phase == 'frame':
+                inventory_hash = _prior_inventory(prior_inventory, report['source_sha256'])
+                mapped, fields, storage, records = _prepare_inventory_frame(
+                    binding, report['source_sha256'], layout_hash, inventory_hash)
+        package = core._package(raw, report, holder)
+        layouts, raw_sheets = core._layout(package, report)
+        if phase != 'layout':
+            core._require(core.canonical(prior_layout['package']) == core.canonical(report['package'])
+                          and core.canonical(prior_layout['roles']) == core.canonical(layouts), 'PRIOR_RECEIPT_INVALID')
+        report['roles'] = layouts
+        shared_state = [None]
+        if phase == 'layout':
+            report.update(engineering_status='COMPLETE', reason='LAYOUT_READY_MAPPING_UNBOUND')
+        else:
+            inventory = _inventory(layouts, raw_sheets, package, report, shared_state)
+            report['inventory'] = inventory
+            if phase == 'inventory':
+                report.update(engineering_status='COMPLETE', reason='DOCUMENTARY_TEXT_INVENTORY_COMPLETE')
+            else:
+                _require(core.canonical(prior_inventory['package']) == core.canonical(report['package'])
+                         and core.canonical(prior_inventory['roles']) == core.canonical(layouts)
+                         and core.canonical(prior_inventory['inventory']) == core.canonical(inventory),
+                         'INVENTORY_PRIOR_INVALID')
+                _mapping_matches_inventory(fields, storage, inventory)
+                documentary = core._documentary(fields, layouts, raw_sheets, package, report, shared_state)
+                report['documentary'] = documentary
+                # This hashes a current in-memory payload, never a historical strict-B receipt.
+                documentary_hash = custody.sha256(core.canonical(documentary))
+                mapped['prior_documentary_sha256'] = documentary_hash
+                records = core._frame_binding(mapped, report['source_sha256'], layout_hash, documentary_hash)
+                report['frame'] = core._frame(mapped, records, documentary, package, report, shared_state)
+                report.update(engineering_status='COMPLETE', reason=report['frame']['admission_status'])
+    except ProductionError as error:
+        _clear_result(report, str(error))
+    except (core.ReadinessError, core.LayoutError) as error:
+        _clear_result(report, str(error))
+    except Exception:
+        _clear_result(report, 'INTERNAL_FAILURE')
+    finally:
+        if holder:
+            report['exposure']['archive_close_started'] = True
+            try:
+                holder[0].close()
+                report['exposure']['archive_close_completed'] = True
+            except Exception:
+                report['validation_reason_before_cleanup'] = report['reason']
+                report['exposure']['archive_close_error'] = 'ARCHIVE_CLOSE_FAILED'
+                holder[0].fp = None
+                _clear_result(report, 'ARCHIVE_CLOSE_FAILED')
+    if len(core.canonical(report)) > core.LIMITS['output']:
+        _clear_result(report, 'PUBLIC_OUTPUT_LIMIT')
+    return report

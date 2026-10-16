@@ -1,0 +1,62 @@
+{
+  "checks": [
+    {
+      "bytes": 81591,
+      "destination": "scripts/li_v3_readiness.py",
+      "passed": true,
+      "path": ".cache/phase2-li-complete-readiness-production-v1/promotion-bound/scripts/li_v3_readiness.py",
+      "sha256": "5fd1b06c683bb44ed582964bc59f5281cbdbe7e880c749ec9c55276145fa5219"
+    },
+    {
+      "bytes": 61640,
+      "destination": "scripts/li_v3_readiness_production.py",
+      "passed": true,
+      "path": ".cache/phase2-li-complete-readiness-production-v1/promotion-bound/scripts/li_v3_readiness_production.py",
+      "sha256": "77dece96850b09be2f13acd275cc28789ea0e3bc408cfcec86bcd02f488fed85"
+    },
+    {
+      "bytes": 23867,
+      "destination": "tests/test_li_v3_readiness.py",
+      "passed": true,
+      "path": ".cache/phase2-li-complete-readiness-production-v1/promotion-bound/tests/test_li_v3_readiness.py",
+      "sha256": "f961582942c7e1964ef2b1b462d81520278a85c17a459be24c099c95ef9654a3"
+    },
+    {
+      "bytes": 60150,
+      "destination": "tests/test_li_v3_readiness_review.py",
+      "passed": true,
+      "path": ".cache/phase2-li-complete-readiness-production-v1/promotion-bound/tests/test_li_v3_readiness_review.py",
+      "sha256": "7ec52e6a72aef1b289503d187fa5966025a1d488ca60f55200d12fd9c10b85f0"
+    },
+    {
+      "bytes": 46051,
+      "destination": "tests/test_li_v3_readiness_production.py",
+      "passed": true,
+      "path": ".cache/phase2-li-complete-readiness-production-v1/promotion-bound/tests/test_li_v3_readiness_production.py",
+      "sha256": "809c0126ef9f130fad264ef2617f67b9b99db103a3a14c476a6e60bfb4905470"
+    },
+    {
+      "bytes": 89651,
+      "destination": "tests/test_li_v3_readiness_production_review.py",
+      "passed": true,
+      "path": ".cache/phase2-li-complete-readiness-production-v1/promotion-bound/tests/test_li_v3_readiness_production_review.py",
+      "sha256": "2f2295d0f04fbc0f3399f904eed757e8a6c0f713a13cf9bb13850c52ea1e91e0"
+    },
+    {
+      "bytes": 10283,
+      "destination": "docs/li-v3-readiness.md",
+      "passed": true,
+      "path": ".cache/phase2-li-complete-readiness-production-v1/promotion-bound/docs/li-v3-readiness.md",
+      "sha256": "295a04a9b411001e22a4e39c831c609203c2feb1958be5e663cfbb6a9e4704b7"
+    },
+    {
+      "bytes": 18081,
+      "destination": "docs/li-v3-readiness-production.md",
+      "passed": true,
+      "path": ".cache/phase2-li-complete-readiness-production-v1/promotion-bound/docs/li-v3-readiness-production.md",
+      "sha256": "1fd11e47c4a332034b213348e4a85165e18ba0693791483cd703c326eb8d87ca"
+    }
+  ],
+  "recorded_at": "2026-10-16T15:31:49.726995+00:00",
+  "scope": "Read-only identity of eight held public source/doc overlays; no source imported or executed."
+}

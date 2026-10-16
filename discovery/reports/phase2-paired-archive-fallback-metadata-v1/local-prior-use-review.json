@@ -1,0 +1,39 @@
+{
+  "bound_sources": [
+    {
+      "path": "docs/archived-benchmark.md",
+      "sha256": "01bac68970d796b234ce9bec8e07eea67dd4516c0069062c196be15058b10159"
+    },
+    {
+      "path": "reports/phase2-source-readiness-v1/README.md",
+      "sha256": "bd351e8814fb33776e375ed48d1bf2e3aae985404dd8a33920bf40e46a0ca1c5"
+    },
+    {
+      "path": "reports/phase2-source-readiness-v1/source-bindings.json",
+      "sha256": "d7a53adf40427753d7c0c48a54ab5c6ab42407f4dd53045cd508bb695afaa973"
+    },
+    {
+      "path": "README.md",
+      "sha256": "2e06dbe88b4fc3a2e83ee2e836186ee912de8480966736092899ddc7cfe3498b"
+    }
+  ],
+  "finding": "No named acquisition, evaluation or citation for elastic_tensor_2015 or dielectric_constant was found in that publication scope. This is not a global never-exposed or never-acquired claim.",
+  "incidental_exposure": "Reviewer first30-line archived-benchmark.md read included its legacy numeric aggregate table at19\u201330; README search displayed legacy aggregate summaries. No new candidate labels or raw/result JSON were read.",
+  "method": "Bounded read/search of published README, docs, source-readiness and catalog-metadata files only; no new network, raw data or private caches.",
+  "reviewer": "/root/adversarial_review",
+  "scientific_challenge": [
+    "Archived calculation labels are not experimental or future-condition truth.",
+    "Same-tensor elastic endpoints are dependent derived quantities; related scalar/tensor features may leak an objective or constraint.",
+    "Dielectric properties and band gap require compatible structure/calculation definitions, not just shared formula.",
+    "Materials Project overlap, duplicate structures and prior model-training exposure remain unaudited.",
+    "Catalog counts do not establish usable pairs or independent calibration units.",
+    "Any later task must freeze estimand, pairing, missingness, grouping, features, thresholds and degeneracy handling before label inspection."
+  ],
+  "source_locations": {
+    "README.md": "113,117 earlier pilots/FreeSolv and distinct JARVIS route",
+    "docs/archived-benchmark.md": "3,13\u201315 earlier experimental band-gap and steel-yield archives;64\u201367 generic Matbench/matminer references",
+    "docs/constrained-benchmark-protocol.md": "94\u201397 JARVIS elastic_tensor forbidden as predictor",
+    "docs/constrained-format-amendment.md": "17\u201322 JARVIS unused elastic_tensor field",
+    "reports/phase2-source-readiness-v1/README.md": "38\u201346 Li/NIST/NIMS"
+  }
+}

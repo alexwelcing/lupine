@@ -1,0 +1,8 @@
+{
+  "encoding": "utf-8",
+  "original_bytes": 1179,
+  "original_filename": "stderr.log",
+  "original_sha256": "4a59b0846da9e195b56a7317d31d51ec5f54409de409c8e56245820231b89b13",
+  "schema": "lupine.lossless-source-text.v1",
+  "text": "test_22_inventory_scope_full_accounting_and_detached_pin_metadata (held_independent_production_tests.ProductionReadinessReview.test_22_inventory_scope_full_accounting_and_detached_pin_metadata) ... ok\ntest_27_whole_shared_table_exposure_with_unrelated_text_withheld (held_independent_production_tests.ProductionReadinessReview.test_27_whole_shared_table_exposure_with_unrelated_text_withheld) ... ok\ntest_29_frame_reconstructs_strict_mapping_before_record_read_and_keeps_all_rows (held_independent_production_tests.ProductionReadinessReview.test_29_frame_reconstructs_strict_mapping_before_record_read_and_keeps_all_rows) ... ok\ntest_33_outer_frame_requires_both_inventory_receipts_and_committed_binding_pin (held_independent_production_tests.ProductionReadinessReview.test_33_outer_frame_requires_both_inventory_receipts_and_committed_binding_pin) ... ok\ntest_51_completed_historical_counter_relations_reject_resealed_contradictions (held_independent_production_tests.ProductionReadinessReview.test_51_completed_historical_counter_relations_reject_resealed_contradictions) ... ok\n\n----------------------------------------------------------------------\nRan 5 tests in 6.184s\n\nOK\n"
+}
