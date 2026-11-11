@@ -1,1 +1,12 @@
 /lupine/targets_0K.json text eol=lf
+
+# Linguist: keep the language bar on the code we write.
+# EAM potential tables (*.eam.fs) are data, not F#/Forth source.
+*.fs linguist-detectable=false
+# LAMMPS include scripts (*.mod) are not Modula-2/AMPL source.
+*.mod linguist-detectable=false
+# Third-party interatomic potentials and LAMMPS run inputs/outputs.
+atlas-distill/lammps_runs/** linguist-vendored
+atlas-distill/potentials/** linguist-vendored
+# Retired surfaces kept for provenance.
+archive/** linguist-vendored
