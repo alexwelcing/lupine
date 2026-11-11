@@ -2,6 +2,8 @@
 
 Lupine Science measures where machine-learned models of atoms go wrong, against published references and pass/fail gates set in advance, and publishes every verdict, failures included.
 
+Our aim: make AI predictions of new materials checkable before a lab commits to them.
+
 [![Lupine Library](https://img.shields.io/badge/read-the%20library-3d4db3)](https://library.lupine.science)
 [![LUPI Viewer](https://img.shields.io/badge/view-LUPI-a8772b)](https://lupi.live)
 
@@ -93,29 +95,27 @@ Every retired public headline is listed, with the date and reason, in the
 
 ### October 2026 diagnostics, in brief
 
-A retrospective analysis of 800 previously examined configurations (MatPES and
-OMat24) found a modest mean ranking gain for model disagreement over a
+A retrospective analysis of previously examined data (800 configurations,
+MatPES and OMat24) found that a learned shared error direction added little or
+no advantage over a simple common-direction baseline; no new physical
+validation is claimed
+([explainer](https://lupine.science/articles/what-error-patterns-can-tell-us/)).
+On the same archive, model disagreement gave a modest mean ranking gain over a
 force-magnitude control, with only about half of configurations improving;
-pairwise rank fusion did not consistently beat full disagreement; a learned
-shared error direction added little or no advantage over a simple
-common-direction baseline; and a uniform-offset control ruled out uniform
-force offsets as the majority explanation, which closed the archived branch
-with no new physical validation claimed
-([explainer](https://lupine.science/articles/what-error-patterns-can-tell-us/),
-[disagreement](https://github.com/alexwelcing/lupine-rhizo/blob/f6bb6bc99df6fe42785b617361a80e699abb4d0f/docs/research-progress/2026-10-06-disagreement-panels.md),
+pairwise rank fusion did not consistently beat full disagreement; and a
+uniform-offset control ruled out uniform force offsets as the majority
+explanation, which closed the archived branch
+([disagreement](https://github.com/alexwelcing/lupine-rhizo/blob/f6bb6bc99df6fe42785b617361a80e699abb4d0f/docs/research-progress/2026-10-06-disagreement-panels.md),
 [rank fusion](https://github.com/alexwelcing/lupine-rhizo/blob/35db95adec6b3eacc76aaa992165137760f8d84b/docs/research-progress/2026-10-06-rank-fusion.md),
 [common error](https://github.com/alexwelcing/lupine-rhizo/blob/28a0fb8e464b61a88aa158621850fe2366415c5e/docs/research-progress/2026-10-06-common-error.md),
 [uniform offset](https://github.com/alexwelcing/lupine-rhizo/blob/8b2070f613de20c49667f5db5fef9bb065596a08/docs/research-progress/2026-10-06-uniform-offset.md)).
-The proposed 128-group prospective study stopped before execution: a source
-audit of the pinned MPtrj data left 9,304 candidate configurations in 8,844
-linked groups with physical and training independence unproven, and could
-not establish checkpoint-specific training independence or reference
-compatibility
+A proposed prospective study stopped before execution because training
+independence and reference compatibility could not be established; details and
+limits, including the open predictor-provenance work, are in the linked
+research notes
 ([source overlap](https://github.com/alexwelcing/lupine-rhizo/blob/5a680e11db5a18389f4d4058aaff84f8775d28dc/docs/research-progress/2026-10-06-pinned-source-overlap.md),
-[stop decision](https://github.com/alexwelcing/lupine-rhizo/blob/29bf23d9ea1bb4b1a8e84c2c2dc301519ac9d505/docs/research-progress/2026-10-06-roster-readiness.md)).
-A predictor-provenance repair passes 133 focused checks but covers only the
-CHGNet CPU adapter; real-runtime acceptance and the other adapters remain open
-([repair and limits](https://github.com/alexwelcing/lupine-rhizo/blob/a761f85b21e2398a73c38c2dd6f3da56a176dcd0/docs/research-progress/2026-10-06-predictor-provenance.md)).
+[stop decision](https://github.com/alexwelcing/lupine-rhizo/blob/29bf23d9ea1bb4b1a8e84c2c2dc301519ac9d505/docs/research-progress/2026-10-06-roster-readiness.md),
+[predictor provenance](https://github.com/alexwelcing/lupine-rhizo/blob/a761f85b21e2398a73c38c2dd6f3da56a176dcd0/docs/research-progress/2026-10-06-predictor-provenance.md)).
 Next is a planned paired-reference microstudy on new, exactly matched
 geometries.
 
