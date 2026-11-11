@@ -316,14 +316,6 @@ export const CATALOG = {
       tags: ['navigation', 'reference'],
     },
     {
-      id: 'internal-science-program',
-      source: 'docs/internal-science-program.md',
-      title: 'Internal Science Program',
-      subtitle: 'The research agenda: what we are trying to learn and how the loop pursues it.',
-      category: 'foundations',
-      tags: ['program', 'agenda', 'vision'],
-    },
-    {
       id: 'methodology',
       source: 'docs/methodology.md',
       title: 'Methodology — How We Know, and How We Catch Ourselves',
@@ -573,15 +565,6 @@ export const CATALOG = {
     },
 
     // ── Meta ────────────────────────────────────────────────────────
-    {
-      id: 'lupine-wiki',
-      source: 'docs/lupine-wiki.md',
-      title: 'Lupine Wiki — Knowledge Graph for Materials Research',
-      subtitle: 'The living sphere-grid map of the Lupine ecosystem: scan, query, render, and export to LUPI.',
-      category: 'meta',
-      tags: ['wiki', 'knowledge-graph', 'lupine', 'hermes', 'lupi'],
-      featured: true,
-    },
     {
       id: 'operating-system',
       source: 'docs/operating-system.md',
