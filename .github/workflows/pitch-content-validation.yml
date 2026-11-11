@@ -8,7 +8,6 @@ on:
     paths:
       - 'brand.config.json'
       - 'docs/brand/**'
-      - 'gcp/lupine-site-router/**'
       - 'library-site/**'
       - 'atlas/atlas-view/apps/web/public/llms*.txt'
       - 'atlas/atlas-view/apps/web/public/brand.json'
@@ -23,7 +22,6 @@ on:
     paths:
       - 'brand.config.json'
       - 'docs/brand/**'
-      - 'gcp/lupine-site-router/**'
       - 'library-site/**'
       - 'atlas/atlas-view/apps/web/public/llms*.txt'
       - 'atlas/atlas-view/apps/web/public/brand.json'

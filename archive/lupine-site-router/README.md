@@ -1,6 +1,12 @@
-# Lupine Science Start Router
+# Lupine Science Start Router (archived)
 
-This small Cloud Run service owns `lupine.science` after the retired
+> **Archived 2026-11-11. Superseded; lupine.science deploys from
+> alexwelcing/lupine-science (Cloudflare Pages).** This copy is kept for
+> history only. Its page and `llms.txt` use retired wording and are not a
+> current statement; `.github/workflows/deploy-lupine-site-router.yml` is now a
+> manual-only guard that refuses to deploy it.
+
+This small Cloud Run service owned `lupine.science` after the retired
 `lupine-start/` marketing app was archived under `archive/lupine-start/`.
 
 The page intentionally avoids publication-status counters and routes readers to

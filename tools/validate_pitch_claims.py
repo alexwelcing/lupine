@@ -26,8 +26,6 @@ ROOT = Path(__file__).resolve().parents[1]
 # Investor-facing surfaces: the journal acronym must not appear at all. "IMMI" is
 # matched case-sensitively so the lowercase asset path /immi_paper.pdf is not flagged.
 SURFACES_STRICT = [
-    "gcp/lupine-site-router/public/index.html",
-    "gcp/lupine-site-router/public/llms.txt",
     "library-site/src/i18n.js",
     "library-site/src/app.js",
     "library-site/src/llms.txt",

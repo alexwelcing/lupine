@@ -10,7 +10,6 @@ needed.
 | --- | --- |
 | `mlip-cell-runner/` | Cloud Run Jobs that execute one `(row_id, mlip_id)` MLIP cell each. |
 | `tasks-consumer/` | Rust Cloud Run service that receives Cloud Tasks and starts allowlisted jobs. |
-| `lupine-site-router/` | Small nginx Cloud Run service that owns `lupine.science` and routes to canonical surfaces. |
 
 ### `mlip-cell-runner/`
 
@@ -40,12 +39,9 @@ Key files:
 - `cloudbuild.yaml` — GCP build config.
 - `Dockerfile` — container image.
 
-### `lupine-site-router/`
-
-Static nginx service that owns the `lupine.science` apex domain after the
-retired `lupine-start/` site was archived. It routes readers to the Library,
-LUPI viewer, and GitHub source. See
-[`lupine-site-router/README.md`](./lupine-site-router/README.md).
+The old `lupine.science` start router was archived on 2026-11-11 to
+[`archive/lupine-site-router/`](../archive/lupine-site-router/README.md);
+lupine.science deploys from `alexwelcing/lupine-science` (Cloudflare Pages).
 
 ## Install
 
@@ -54,7 +50,6 @@ development prerequisites vary by service:
 
 - `mlip-cell-runner`: Python 3.10+, Docker, selected MLIP packages.
 - `tasks-consumer`: Rust 1.80+.
-- `lupine-site-router`: Docker only.
 
 Full setup is in [`docs/ONBOARDING.md`](../docs/ONBOARDING.md).
 
@@ -69,10 +64,6 @@ python -m pytest test_fixture_contract.py -q
 # tasks-consumer (Rust compile check)
 cd ../tasks-consumer
 cargo check
-
-# lupine-site-router (nginx config check)
-cd ../lupine-site-router
-docker build .
 ```
 
 ## How it connects to the rest of the repo
