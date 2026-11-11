@@ -1,7 +1,12 @@
 # LUPI — Developer Getting Started
 
 > WebGPU-powered LAMMPS molecular dynamics visualization.
-> Drag a dump file into your browser. Publication quality in 2 seconds.
+> Opens structures and LAMMPS dump files in a WebGPU-capable browser, with no
+> installation.
+>
+> This directory is a historical copy kept with the Lupine monorepo. The
+> maintained viewer, which deploys <https://lupi.live>, is
+> [`alexwelcing/Lupi`](https://github.com/alexwelcing/Lupi).
 
 ---
 
@@ -24,8 +29,8 @@ corepack enable
 ### Clone & Build
 
 ```bash
-git clone https://github.com/atlas-sim/atlas-view.git
-cd atlas-view
+git clone https://github.com/alexwelcing/lupine.git
+cd lupine/atlas/atlas-view
 
 # Install JS dependencies
 pnpm install
@@ -168,7 +173,7 @@ const temps = thermo.getColumn(0, 'Temp'); // Float64Array
 
 ### `packages/renderer/` — WebGPU Rendering Pipeline
 
-Custom WebGPU pipeline for rendering millions of atoms at interactive rates.
+Custom WebGPU pipeline that draws atoms as impostor spheres with GPU-driven culling.
 
 **Key files:**
 | File | Purpose |
@@ -289,8 +294,6 @@ After the main render pass, Three.js post-processing applies:
 | Compute shaders | ❌ | ✅ (essential for culling) |
 | Indirect drawing | ❌ | ✅ (GPU-driven rendering) |
 | Storage buffers | ❌ | ✅ (flexible data layout) |
-| Performance | ~5M atoms | ~50M atoms (10×) |
-| Fallback | N/A | WebGL2 fallback available |
 
 ### Why React Three Fiber?
 

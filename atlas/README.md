@@ -1,27 +1,30 @@
 # `atlas/` — LUPI viewer and atomistic evidence surfaces
 
-This root holds the LUPI molecular viewer, atomistic simulation helpers,
-gallery datasets, and deployment bundles for the Lupine Science browser
-surfaces. The canonical browser app is `atlas/atlas-view/apps/web/`.
+This root holds a historical copy of the LUPI molecular viewer, atomistic
+simulation helpers and gallery datasets. The production viewer at
+<https://lupi.live> is built and deployed from the standalone
+[`alexwelcing/Lupi`](https://github.com/alexwelcing/Lupi) repository
+(its `.github/workflows/deploy-viewer.yml`); this monorepo no longer deploys
+it (see `.github/workflows/deploy-glim-viewer.yml`).
 
 ## What lives inside
 
 | Directory / File | Purpose |
 | --- | --- |
 | `atlas-view/` | Monorepo for the LUPI WebGPU molecular viewer (React + Rust→WASM). |
-| `atlas-view/apps/web/` | Canonical browser app deployed to <https://lupi.live>. |
+| `atlas-view/apps/web/` | Historical copy of the browser app (lupi.live now deploys from `alexwelcing/Lupi`). |
 | `atlas-view/packages/parsers/wasm/` | Rust WASM parsers for LAMMPS dump/log files. |
 | `atlas-view/packages/renderer/` | Custom WebGPU atom-rendering pipeline. |
-| `atlas-view/functions/` | Firebase Cloud Functions (molecule search, library). |
+| `atlas-view/functions/` | Firebase Cloud Functions (molecule search, library). These and the Firestore rules still deploy from this repo via `.github/workflows/deploy-functions.yml`. |
 | `compute/` | Compute helpers and scripts for generating viewer datasets. |
 | `gallery_datasets/` | Curated example structures shipped with the viewer. |
 | `lammps_src/` | LAMMPS input snippets and helpers used for sample generation. |
 | `nist_ipr/` | NIST interatomic-potentials catalog integration. |
-| `deploy_*.py` | Deployment orchestrators for Cloud Run / Firebase. |
-| `manifesto/` | Design and product manifesto documents. |
+| `deploy_*.py` | Legacy deployment orchestrators for the retired Cloud Run viewer path. |
 
-See [`atlas-view/README.md`](./atlas-view/README.md) for the full LUPI developer
-guide.
+See [`atlas-view/README.md`](./atlas-view/README.md) for the developer guide to
+this copy. Superseded roadmap prototypes and the design manifesto were moved
+to [`archive/atlas-2026-roadmap-prototypes/`](../archive/atlas-2026-roadmap-prototypes/).
 
 ## Install
 
@@ -41,7 +44,8 @@ pnpm test         # Rust + TypeScript tests
 
 ## How it connects to the rest of the repo
 
-- `atlas-view/apps/web/` is the public LUPI viewer at `lupi.live`.
+- The public LUPI viewer at `lupi.live` deploys from `alexwelcing/Lupi`; changes
+  made here do not reach it.
 - `library-site/` links to LUPI views for interactive structures.
 - `data/mlip_benchmarks/` provides fixtures that can be inspected in LUPI.
 - `gcp/mlip-cell-runner/` and `python/lupine_distill/` produce structures and

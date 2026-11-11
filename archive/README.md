@@ -13,6 +13,7 @@ Each subroot below has its own README with details on what it was, where its act
 | `distiller-kb/` | Python distillation orchestration, ODF reports, and agent profiles. | Active ODF contracts moved to `python/lupine_distill/odf/`; the remaining KB is retired but kept for provenance. |
 | `lupine-distill-rust/` | Stale Rust Distill crate and its runtime experiments. | Functionality consolidated into `atlas-distill/`; the Python runtime moved to `python/`. |
 | `lupine-dspy/` | Small DSPy experiment package. | Only referenced by the archived `lupine-distill-rust` bridge and historical docs; retired to the archive. |
+| `atlas-2026-roadmap-prototypes/` | Early viewer/engine roadmap prototypes and the design manifesto from `atlas/`. | Superseded 2026 roadmap prototypes; not current plans. Nothing builds or serves them. |
 | `tools-retired/` | Dead or superseded scripts from `tools/`. | No active callers; kept for provenance. |
 
 If something in this archive is still referenced by active code, update the active code rather than moving it back to the root.
