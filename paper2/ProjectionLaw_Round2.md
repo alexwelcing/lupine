@@ -6,6 +6,17 @@
 *Correspondence: alex@lupinesci.com*  
 *Last revised: 2026-06-29*
 
+> **Status: Working draft (2026-06-29), not peer-reviewed. Correction 2026-11-11.**
+> The leave-one-out 17.84 → 10.36 GPa uses the held-out reference to set how far
+> to correct: an oracle ceiling, not a deployable correction. The best no-target
+> estimator (consensus, 14.41 GPa) harmed 50 of 128 cases. “559 models” are 559
+> model–element tensors with 423 distinct KIM ids. The four-of-seven failures
+> (§4.1, §5) belong to the MatPES factorial and ACWF experiments; in the Round-2
+> benchmark (§4.2) the H1 and H2a kill conditions triggered. Lean 4 checks the
+> arithmetic and stated inequalities behind published numbers; it does not check
+> the physics, the reference data or the pipeline. Current status:
+> lupine-rhizo `docs/conjectures/ledger.md`.
+
 ---
 
 ## Abstract
