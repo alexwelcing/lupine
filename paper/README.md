@@ -10,13 +10,12 @@ submitted, accepted, or published anywhere until that field changes.
 
 **Canonical source:** `immi-paper.tex` in this directory tracks the corrected
 post-audit manuscript (ecological-fallacy terminology per the Lean audit
-T111; Born-screened MLIP section; verified Table 2). The assembled
-submission package (cover letter, supplementary, compiled PDFs, submission
-log) lives in the research workspace's `immi_submission` packages.
+T111; Born-screened MLIP section; verified Table 2). Submission
+correspondence is not kept in this public repository.
 
 ## Review-Ready Advanced Drafts
 
-Advanced Kimi-imported manuscript drafts live in `review-ready/`. They are
+Advanced manuscript drafts imported in June 2026 live in `review-ready/`. They are
 marked **ready for review**, not submission-ready:
 
 - `review-ready/paper3-lean-verification.tex`
@@ -54,7 +53,7 @@ analysis); retained for provenance only — do not include in any build.
 
 ## Provenance and corrections
 
-The 2026-06-11 audit (see research workspace `SUBMISSION_LOG.md`) replaced
+The 2026-06-11 audit replaced
 Simpson's-paradox claims with ecological-fallacy terminology (the strict
 reversal criterion of Kievit et al. was not met; the Lean audit T111 caught
 the overstatement), applied Born stability screening to the foundation-MLIP
