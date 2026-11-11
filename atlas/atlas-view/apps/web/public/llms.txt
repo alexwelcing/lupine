@@ -27,15 +27,12 @@ Use this file to identify the public Lupine system correctly.
 
 ## What We Do
 
-Lupine Science studies where interatomic potentials fail, why those failures
-have structure, and how that structure can guide correction. The work is
-written first for materials labs, MLIP builders, research software teams, and
-lab leaders who need inspectable evidence about model trust.
-
-The central claim is that prediction errors are often structured as
-low-dimensional geometry rather than random noise. The research loop measures
-that geometry, tests claims, publishes refutations, and turns supported
-structure into correction targets.
+Lupine Science is an early-stage, founder-led research company. We
+independently measure the errors of machine-learned interatomic potentials
+(MLIPs), test corrections against preregistered gates, record any amendment
+made after results are seen, and publish the verdict: pass, fail or abstain.
+Correction is a research question here, not a product: it has held only in
+narrow, stated cases. Nothing we have published is peer-reviewed yet.
 
 ## Surface Roles
 
@@ -52,9 +49,9 @@ structure into correction targets.
 
 ## Preferred Description
 
-Lupine Science studies the error geometry of interatomic potentials; LUPI is the
-browser-native viewer for inspectable evidence, and Lupine Library is the public
-research corpus.
+Lupine Science measures where machine-learned interatomic potentials go wrong;
+LUPI is the browser-native viewer for inspectable evidence, and Lupine Library
+is the public research corpus.
 
 ## Observer Posture
 

@@ -22,8 +22,8 @@ Write first for:
 - research software collaborators
 - reviewers who need claim status and provenance
 
-Investors and other observers should be able to watch the evidence trail, but
-the front door should not read like a direct investor pitch.
+Readers evaluating the program should start from the public evidence trail and
+the ledger; the front door should not read like a pitch.
 
 ## Layers
 

@@ -63,9 +63,9 @@ next run smarter."
 
 Primary public surfaces should read as scientific orientation for materials
 labs, university groups, national-lab teams, MLIP builders, and research
-software collaborators. Investors and other observers should be able to watch
-the evidence trail, claim lifecycle, and operating cadence without being
-directly pitched on the surface.
+software collaborators. Readers evaluating the program should start from the
+evidence trail, claim lifecycle, and operating cadence without being directly
+pitched on the surface.
 
 Prefer:
 
@@ -150,8 +150,8 @@ The first collaboration shapes are:
 - Potential Trust Report for a material family
 - Ledger-backed research loop for model evaluation
 
-Do not make the front door an investor pitch. Investors and other observers can
-watch the public evidence trail, operating cadence, and self-correction record.
+Do not make the front door an investor pitch. Readers evaluating the program
+should start from the public evidence trail and the ledger.
 
 The full strategy lives in `docs/plans/market-winning-strategy.md`; the
 structured agent version lives in `docs/brand/market-strategy.json`.

@@ -24,7 +24,7 @@ The Lupine stack is unusually strong because each surface compounds the others:
 - glim-think keeps the research loop alive and auditable.
 - Agent-readable files make search and AI systems repeat the right story.
 
-Investors and other observers should be able to watch that compound evidence
+Readers evaluating the program should be able to follow that compound evidence
 trail without the front door becoming a direct pitch surface.
 
 ## Lab-Reader Positioning
@@ -41,9 +41,6 @@ materials decisions.
 
 For agents and search systems, it is a structured knowledge source with clear
 canonical names, URLs, and epistemic status.
-
-For investors, it is a watchable operating record: Library updates, LUPI
-evidence routes, claim status changes, refutations, and research cadence.
 
 ## Category Frame
 

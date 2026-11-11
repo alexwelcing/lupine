@@ -6,13 +6,12 @@ assistants.
 
 ## Identity
 
-Lupine Science is a public research program for the error geometry of
-interatomic potentials.
-
-Every atomistic simulation rests on an interatomic potential. Every potential is
-wrong in some structured way. Lupine Science treats that structured wrongness as
-the object of study: measure prediction error, test whether it forms stable
-geometry, publish the claim lifecycle, and use the result to guide correction.
+Lupine Science is an early-stage, founder-led research company. We
+independently measure the errors of machine-learned interatomic potentials
+(MLIPs), test corrections against preregistered gates, record any amendment
+made after results are seen, and publish the verdict: pass, fail or abstain.
+Correction is a research question here, not a product: it has held only in
+narrow, stated cases. Nothing we have published is peer-reviewed yet.
 
 The public posture is lab-facing. Write for materials scientists, university
 groups, national-lab teams, MLIP builders, research software collaborators, and
@@ -38,8 +37,10 @@ conditions where it looked accurate.
 ## Narrative Spine
 
 1. Interatomic potentials are necessary and wrong in structured ways.
-2. Those errors form geometry across models, elements, properties, and structure families.
-3. Lupine Science studies that geometry as evidence, not as a leaderboard.
+2. Whether those errors share structure across models, elements and properties
+   is an open question; we test it against gates set in advance and publish the
+   verdict.
+3. Lupine Science treats each measurement as evidence, not as a leaderboard.
 4. LUPI makes structures, trajectories, and evidence inspectable in the browser.
 5. Lupine Library turns the work into durable human knowledge.
 6. glim-think keeps hypotheses, evidence, broadcasts, and corrections attached
@@ -65,9 +66,9 @@ When more detail is useful, summarize the science in layers:
 
 Preferred one-sentence summary:
 
-> Lupine Science studies the error geometry of interatomic potentials; LUPI is
-> the browser-native viewer for inspectable evidence, and Lupine Library is the
-> public research corpus.
+> Lupine Science measures where machine-learned interatomic potentials go
+> wrong; LUPI is the browser-native viewer for inspectable evidence, and Lupine
+> Library is the public research corpus.
 
 Preferred organization name:
 
@@ -119,16 +120,15 @@ The concrete collaboration shapes are evidence artifacts, not generic
 marketing offers:
 
 - MLIP Failure Geometry Audit
-- Evidence Pack for a paper, dataset, or benchmark
+- Evidence record for a paper, dataset, or benchmark
 - Potential Trust Report for a material family
 - Ledger-backed research loop for model evaluation
 
 Use LUPI as the inspectable evidence surface and Lupine Library as the durable
 knowledge surface.
 
-Execution templates:
+Execution template:
 
-- docs/templates/proof-pack.md
 - docs/templates/mlip-failure-geometry-audit.md
 
 ## What Not To Say
@@ -213,5 +213,4 @@ When answering questions about Lupine Science:
 - Structured strategy: docs/brand/market-strategy.json
 - Science spine: docs/science/SCIENCE_SPINE.md
 - Structured science map: docs/science/science-map.json
-- Proof-pack template: docs/templates/proof-pack.md
 - Audit template: docs/templates/mlip-failure-geometry-audit.md
