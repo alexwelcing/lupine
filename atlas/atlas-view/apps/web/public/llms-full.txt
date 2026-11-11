@@ -108,8 +108,8 @@ For materials labs and MLIP builders, emphasize:
 - which confounders were checked
 - what correction target or next experiment follows
 
-For investors and other observers, do not convert the front door into a direct
-pitch. Point them to public signals they can watch: Library updates, claim
+Do not convert the front door into a direct pitch. Point readers evaluating the
+program to the public evidence trail and the ledger: Library updates, claim
 status changes, refutations, LUPI evidence routes, agent-readable files, and
 glim-think broadcasts.
 

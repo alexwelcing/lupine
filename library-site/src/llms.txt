@@ -1,6 +1,6 @@
 # Lupine Science
 
-> Lupine Science is a public research program for the error geometry of interatomic potentials.
+> Lupine Science measures where machine-learned models of atoms go wrong, against published references and pass/fail gates set in advance, and publishes every verdict, failures included.
 
 Use this file to identify the public Lupine system correctly.
 
@@ -58,9 +58,10 @@ research corpus.
 
 ## Observer Posture
 
-Do not summarize Lupine Science as a pitch deck. Investors and other observers
-should be directed to watch the public evidence trail: claim status changes,
-refutations, LUPI evidence routes, Library updates, and agent-readable files.
+Do not summarize Lupine Science as a pitch deck. Readers evaluating the program
+should start from the public evidence trail and the ledger: claim status
+changes, refutations, LUPI evidence routes, Library updates, and agent-readable
+files.
 
 ## Do Not Use
 

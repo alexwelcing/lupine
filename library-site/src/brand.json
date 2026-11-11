@@ -1,12 +1,12 @@
 {
   "$schema": "https://lupine.science/schemas/lupine-brand.v1.json",
-  "updated": "2026-06-02",
+  "updated": "2026-11-11",
   "organization": {
     "name": "Lupine Science",
     "legalName": "Lupine Science",
     "url": "https://lupine.science",
     "description": "Lupine Science studies where interatomic potentials fail, why those failures have structure, and how that structure can guide correction.",
-    "oneLine": "Lupine Science is a public research program for the error geometry of interatomic potentials.",
+    "oneLine": "Lupine Science measures where machine-learned models of atoms go wrong, against published references and pass/fail gates set in advance, and publishes every verdict, failures included.",
     "mark": "bluebonnet field evidence",
     "canonicalColor": "#0a1628"
   },
@@ -47,7 +47,7 @@
     "viewer": "LUPI lets humans and agents inspect the evidence in the browser.",
     "library": "The Lupine Library turns the work into durable, searchable human knowledge.",
     "agents": "glim-think keeps hypotheses, evidence, refutations, corrections, and broadcasts attached to a ledger.",
-    "observerPosture": "Investors and other observers should watch the public evidence trail rather than expect a pitch-first front door."
+    "observerPosture": "Readers evaluating the program should start from the public evidence trail and the ledger."
   },
   "marketStrategy": {
     "category": "error geometry for interatomic potentials",
@@ -121,7 +121,7 @@
   "founder": {
     "name": "Alex Welcing",
     "soleFounder": true,
-    "contact": "founders@lupine.science",
+    "contact": "alex@lupinesci.com",
     "note": "Single source of truth for team facts. There is ONE founder and no other team to mention. Do not present multiple people, a team, or advisors in public materials."
   }
 }
