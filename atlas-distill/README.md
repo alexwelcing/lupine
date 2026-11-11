@@ -178,7 +178,7 @@ atlas-distill/
 | `elastic --c11 --c12 --c44` | Compute FCC elastic properties |
 | `literature <action>` | Literature-based discovery |
 | `scan --x --y <files...>` | Cross-run relationship scanning |
-| `pipeline [--provider]` | Hermes pipeline orchestrator |
+| `pipeline [--provider]` | Multi-step analysis pipeline (legacy; each stage calls an external, provider-backed agent command-line tool) |
 | `formalize` | Export to Lean 4 specification |
 
 ## Meta-analysis
@@ -222,16 +222,11 @@ it is not a Lupine result. Measured results and their status are in the
 
 ## Citation
 
-If you use `atlas-distill` in your research, please cite:
-
-```bibtex
-@unpublished{welcing2026causal,
-  author  = {Welcing, Alexander},
-  title   = {The Causal Geometry of Prediction Errors in Interatomic Potentials: A Hyper-Ribbon Manifold Analysis with Ecological Fallacy Detection},
-  year    = {2026},
-  note    = {Working paper, in preparation}
-}
-```
+No Lupine paper has been peer-reviewed or accepted yet, so there is no paper to
+cite for this tool. If you use `atlas-distill`, cite this repository
+(<https://github.com/alexwelcing/lupine>, `atlas-distill/`) and the commit you
+used. The current working draft that discusses the meta-analysis limits above is
+lupine-rhizo `paper/tms2027-proceedings/manuscript.tex`.
 
 ## License
 
