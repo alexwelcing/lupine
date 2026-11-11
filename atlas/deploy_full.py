@@ -28,7 +28,9 @@ DEPLOY_RESEARCH = os.path.join(DEPLOY_PUBLIC, "research")
 ATLAS_VIEW_DIR = os.path.join(BASE_DIR, "atlas", "atlas-view")
 WEB_DIST = os.path.join(ATLAS_VIEW_DIR, "apps", "web", "dist")
 
-CLOUD_URL = "https://atlas-viewer-350452481649.us-central1.run.app"
+# Legacy Cloud Run viewer path (retired). Set CLOUD_URL to the service URL to
+# verify a deployment; there is deliberately no default.
+CLOUD_URL = os.environ.get("CLOUD_URL", "").rstrip("/")
 
 def section(title):
     print(f"\n{'='*60}")
@@ -396,6 +398,9 @@ def deploy():
 # ────────────────────────────────────────────────────────────
 def verify():
     section("Step 5/5: Verifying Endpoints")
+    if not CLOUD_URL:
+        print("  CLOUD_URL is not set; skipping endpoint verification.")
+        return
     time.sleep(5)
     
     checks = [

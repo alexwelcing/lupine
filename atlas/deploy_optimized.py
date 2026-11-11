@@ -19,7 +19,9 @@ BASE_DIR = r"c:\Users\alexw\Downloads\shed\glim"
 DEPLOY_DIR = os.path.join(BASE_DIR, "atlas", "deploy_bundle")
 DEPLOY_PUBLIC = os.path.join(DEPLOY_DIR, "public")
 DEPLOY_RESEARCH = os.path.join(DEPLOY_PUBLIC, "research")
-CLOUD_URL = "https://atlas-viewer-350452481649.us-central1.run.app"
+# Legacy Cloud Run viewer path (retired). Set CLOUD_URL to the service URL to
+# verify a deployment; there is deliberately no default.
+CLOUD_URL = os.environ.get("CLOUD_URL", "").rstrip("/")
 
 def section(t): print(f"\n{'='*60}\n {t}\n{'='*60}\n")
 
@@ -280,6 +282,9 @@ def deploy_and_verify():
         cwd=DEPLOY_DIR, check=True)
     time.sleep(5)
     
+    if not CLOUD_URL:
+        print("\nCLOUD_URL is not set; skipping endpoint verification.")
+        return False
     print("\nVerifying endpoints...")
     endpoints = [
         ("/", "Landing page"),

@@ -53,7 +53,7 @@ done
 echo "==> Confirming CORS on a sample object"
 sample=$(basename "${FILES[0]}")
 echo "  sample: $sample"
-curl -sS -I -H "Origin: https://atlas-viewer-350452481649.us-central1.run.app" \
+curl -sS -I -H "Origin: https://lupi.live" \
   "https://storage.googleapis.com/shed-489901-atlas-artifacts/$PREFIX/$sample" \
   | grep -iE "access-control-allow-origin|cache-control|content-length" || true
 

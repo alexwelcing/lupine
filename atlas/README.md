@@ -20,7 +20,7 @@ it (see `.github/workflows/deploy-glim-viewer.yml`).
 | `gallery_datasets/` | Curated example structures shipped with the viewer. |
 | `lammps_src/` | LAMMPS input snippets and helpers used for sample generation. |
 | `nist_ipr/` | NIST interatomic-potentials catalog integration. |
-| `deploy_*.py` | Legacy deployment orchestrators for the retired Cloud Run viewer path. |
+| `deploy_*.py` | Legacy deployment orchestrators for the retired Cloud Run viewer path. They read the service URL from `CLOUD_URL` (no default). |
 
 See [`atlas-view/README.md`](./atlas-view/README.md) for the developer guide to
 this copy. Superseded roadmap prototypes and the design manifesto were moved
