@@ -1,6 +1,6 @@
 # atlas-distill
 
-**Mathematical discovery engine for molecular dynamics simulation data.**
+**Rust engine for analysing interatomic-potential prediction errors.**
 
 [![Tests](https://github.com/alexwelcing/lupine/actions/workflows/build-atlas-distill.yml/badge.svg)](https://github.com/alexwelcing/lupine/actions/workflows/build-atlas-distill.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
@@ -11,7 +11,7 @@
 
 - **Manifold Analysis** — PCA/SVD eigenvalue analysis of prediction errors with hyper-ribbon detection
 - **Bootstrap Uncertainty Quantification** — 95% confidence intervals for participation ratios and geometric fits
-- **Meta-Analysis** — Fixed/random-effects meta-analysis with Fisher z-transformation, DerSimonian-Laird τ², and I² heterogeneity
+- **Meta-Analysis** — Standard fixed- and random-effects meta-analysis of correlation coefficients across independent groups (Fisher z, DerSimonian–Laird τ², Q and I²); see [Meta-analysis](#meta-analysis) for scope and known issues
 - **Simpson's Paradox Detection** — Pooled vs. within-group correlation comparison with reversal markers
 - **Multi-Potential Benchmarking** — FCC (8 metals) and BCC (7 metals) elastic constant validation
 - **Model Geometry Evidence** — Residual-SVD packets for MLIP/WBM/arena-scale model dumps, with accuracy gates and effective-rank guards
@@ -181,22 +181,44 @@ atlas-distill/
 | `pipeline [--provider]` | Hermes pipeline orchestrator |
 | `formalize` | Export to Lean 4 specification |
 
-## Key Results
+## Meta-analysis
 
-### FCC Hyper-Ribbon Structure
+`src/meta_analysis.rs` implements standard fixed- and random-effects
+meta-analysis of correlation coefficients across independent groups: each
+group's r is Fisher z-transformed, weighted by inverse variance, pooled, and
+back-transformed; the random-effects model adds a DerSimonian–Laird estimate
+of between-group variance τ² and reports Q, I² and a prediction interval. It
+pools correlations, not error magnitudes such as MAE, and it assumes the
+groups are independent. Rows that share materials or models (for example
+C11, C12 and C44 of the same metal) are not independent, and intervals built
+on such rows are anti-conservative. We withdrew our own earlier Fisher-z
+random-effects intervals built on dependent C11/C12/C44 rows for this reason
+(lupine-rhizo `paper/tms2027-proceedings/manuscript.tex`).
 
-| Potential | PR / 3 | 95% CI | R²_log | Hyper-ribbon? |
-|-----------|--------|--------|--------|---------------|
-| EAM | 1.37 | [1.14, 2.16] | 0.940 | ✅ Yes |
-| LJ | 1.17 | [1.04, 1.51] | 0.991 | ✅ Yes |
-| SW | 1.38 | [1.09, 2.08] | 0.985 | ✅ Yes |
+### Known issues (fix pending)
 
-### BCC Simpson's Paradox
+- **Q and I² in the random-effects output.** `random_effects_meta` estimates
+  τ² from the fixed-effect Q (correct), but `compute_final_result` then
+  recomputes the reported Q, its p-value and I² around the random-effects
+  pooled mean instead of the fixed-effect mean. Because the fixed-effect mean
+  minimises that weighted sum, the reported random-effects Q and I² can only
+  be equal to or larger than the standard values. Use the fixed-effects
+  output (`fixed_effects_meta`) for Q and I² until this is fixed.
+- **Prediction interval quantile.** The random-effects prediction interval
+  uses the normal quantile 1.96 rather than a t quantile with k − 2 degrees
+  of freedom (k = number of groups), so it is too narrow, most noticeably
+  when k is small.
+- The unit tests check ranges and properties, not agreement with a reference
+  implementation.
 
-- **Pooled correlation:** r = −0.435
-- **Within-group correlation:** r = +0.147
-- **Reversal magnitude:** 0.581
-- **Detection:** Complete reversal with ecological fallacy risk
+## Demo commands use hand-typed fixtures
+
+`validate`, `manifold` and `detect-paradox` without an input file run on
+hand-typed fixtures in `src/validation.rs`, which the engine itself labels
+synthetic in its provenance summary. Their output demonstrates the code paths;
+it is not a Lupine result. Measured results and their status are in the
+[program README](../README.md) and the maintained conjecture ledger in
+`alexwelcing/lupine-rhizo` (`docs/conjectures/ledger.md`).
 
 ## Citation
 
@@ -205,7 +227,7 @@ If you use `atlas-distill` in your research, please cite:
 ```bibtex
 @unpublished{welcing2026causal,
   author  = {Welcing, Alexander},
-  title   = {The Causal Geometry of Prediction Errors in Interatomic Potentials: A Hyper-Ribbon Manifold Analysis with Simpson's Paradox Detection},
+  title   = {The Causal Geometry of Prediction Errors in Interatomic Potentials: A Hyper-Ribbon Manifold Analysis with Ecological Fallacy Detection},
   year    = {2026},
   note    = {Working paper, in preparation}
 }
