@@ -30,22 +30,11 @@ SURFACES_STRICT = [
     "gcp/lupine-site-router/public/llms.txt",
     "library-site/src/i18n.js",
     "library-site/src/app.js",
-    "atlas/lupine-vc/deck.html",
-    "atlas/lupine-vc/index.html",
-    "atlas/lupine-vc/one-pager.html",
     "atlas/manifesto/index.html",
     "library-site/src/llms.txt",
     "library-site/src/llms-full.txt",
     "atlas/atlas-view/apps/web/public/llms.txt",
     "atlas/atlas-view/apps/web/public/llms-full.txt",
-    "deck/public/index.html",
-    "deck/public/access.html",
-    "deck/public/one-pager.html",
-    "deck/public/methodology.html",
-    "deck/public/status.html",
-    "deck/public/partials/nav.html",
-    "deck/public/partials/footer.html",
-    "raise/command-center.html",
 ]
 
 # These developer-facing records can use IMMI as a dataset / working name, so

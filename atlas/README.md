@@ -19,7 +19,6 @@ surfaces. The canonical browser app is `atlas/atlas-view/apps/web/`.
 | `nist_ipr/` | NIST interatomic-potentials catalog integration. |
 | `deploy_*.py` | Deployment orchestrators for Cloud Run / Firebase. |
 | `manifesto/` | Design and product manifesto documents. |
-| `lupine-vc/` | Version-control helpers for gallery and sample data. |
 
 See [`atlas-view/README.md`](./atlas-view/README.md) for the full LUPI developer
 guide.
