@@ -108,3 +108,6 @@ archive/kimi-workspace-export/
 
 # Generated Library content export (the maintained corpus export lives in lupine-rhizo)
 exports/library-content/
+
+# Legacy viewer deploy output (production viewer deploys from the standalone LUPI repo)
+atlas/deploy_bundle/public/

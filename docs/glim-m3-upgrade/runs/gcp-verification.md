@@ -3,7 +3,7 @@
 The Cloud-Run sim matrix ([Part 4](../04-cloud-run-sim-tiers.md)) is grounded in
 the real `shed-489901` project, not just the repo's assertions. Every resource the
 driver/policy touches was confirmed live via `gcloud` (read-only) on 2026-06-02
-(account `alexwelcing@gmail.com`; active config project is `endlesse`, so all
+(the active gcloud configuration pointed at a different project, so all
 checks were run with explicit `--project=shed-489901`).
 
 ## Confirmed present
