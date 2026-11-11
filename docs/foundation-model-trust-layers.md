@@ -1,6 +1,6 @@
 # Foundation Materials Models Need Trust Layers, Not Just Bigger Benchmarks
 
-**Status:** proposed / publication-ready library memo
+**Status:** Direction. Describes where this work is aimed. Not a result. "Trust layer" here names a research direction, not a product: correction has held only in narrow, stated cases.
 **Publication date:** 2026-06-20
 **Audience:** materials labs, MLIP builders, and observers evaluating the Lupine evidence trail.
 
