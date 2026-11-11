@@ -18,7 +18,7 @@ the roots below remain the current source/deploy truth.
 | `cloudflare/` | Edge helpers and Cloudflare infrastructure around the control plane. | Keep | Elevate reusable Workers into `glim-think` when they become first-class control-plane routes. |
 | `data/` | Shared benchmark fixtures and evidence payloads. | Keep | Keep data small and cited; large artifacts should live in GCS/R2 with manifests. |
 | `docs/` | Research corpus, plans, runbooks, templates, hypotheses, and decisions. | Keep | Prefer moving archival prose here instead of creating new root folders. |
-| `exports/` | Generated, versioned public-surface bundles published by the science/control-plane repo. | Keep | Keep export manifests reproducible and regenerate from source docs/scripts before public-surface extraction. |
+| `exports/` | Generated public-surface bundles. Not tracked: the stale `library-content/latest` copy was removed on 2026-11-11 and the path is gitignored; the maintained corpus export lives in `lupine-rhizo`. | Generated | Regenerate locally with `npm run content:export` in `library-site/` if needed; do not commit. |
 | `gcp/` | Cloud Run jobs/services used for burst compute and task consumption. | Keep | Keep GCP cold unless the resource ledger justifies burst work. |
 | `glim-think/` | Durable intelligence control plane: agenda, ledger, feed, evals, traces, agents. | Primary | New research workflows should connect here first. |
 | `archive/KIMI_MLIP_UNIVERSAL/` | Legacy theorem/proof bundle and synthetic universality artifacts referenced by Lean comments in `lean-spec/`. | Keep, port incrementally | Archived root; port proof text into `lean-spec/` or `docs/` before removing. |
