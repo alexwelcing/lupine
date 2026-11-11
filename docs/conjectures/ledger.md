@@ -1,3 +1,5 @@
+> **Snapshot, not maintained.** This copy is no longer updated; the maintained ledger is [`lupine-rhizo/docs/conjectures/ledger.md`](https://github.com/alexwelcing/lupine-rhizo/blob/main/docs/conjectures/ledger.md). Use that file for current status.
+
 # Conjectures & Proofs — The Hypothesis Ledger
 
 Every claim Lupine has seriously tested, where it stands, and *why it moved*. This is

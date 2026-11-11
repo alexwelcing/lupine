@@ -1,6 +1,6 @@
 # Agent Operating Rules
 
-This repository preserves the Lupine research program and historical monorepo evidence. Active `glim-think`, engines and PI workflows live in `alexwelcing/lupine-rhizo`; the current Library reader lives in `alexwelcing/lupine-ledger`. See `docs/releases/research-live-2026-10-06.md`. For new system work, use those canonical repositories rather than updating a second runtime here. The historical component rules below still apply when modifying retained code.
+This repository preserves the Lupine research program and historical monorepo evidence. Active `glim-think`, engines and the model review stage live in `alexwelcing/lupine-rhizo`; the current Library reader lives in `alexwelcing/lupine-ledger`. See `docs/releases/research-live-2026-10-06.md`. For new system work, use those canonical repositories rather than updating a second runtime here. The historical component rules below still apply when modifying retained code.
 
 ## Autonomy
 
@@ -143,7 +143,7 @@ without manual viewer setup.
 - **Federated search:** the `lupi.search_molecules` MCP tool fans out across six
   sources (saved views, curated library, gallery, NIST, Meta OMol25, PubChem) and
   returns ranked, loadable hits. OMol25 hits carry **real in-house DFT geometry**
-  served as GCS-hosted `.xyz` (`gs://shed-489901-omol25`), not a formula guess.
+  served as cloud-hosted `.xyz` files, not a formula guess.
 - **Shared library:** signed-in agents can stamp molecules into the public
   `moleculeLibrary` (Firestore) that backs the `library` source.
 - Deploys are push-to-`main`: `atlas/**` → viewer (Cloud Run); `functions/**`,

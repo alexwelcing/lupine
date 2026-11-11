@@ -333,7 +333,7 @@ export const CATALOG = {
     },
     {
       id: 'glossary',
-      source: 'GLOSSARY.md',
+      source: 'docs/GLOSSARY.md',
       title: 'Glossary',
       subtitle: 'Terminology index for materials science, MD, DFT, and MLIPs.',
       category: 'foundations',

@@ -16,7 +16,7 @@ Closes # (if there is one).
   - [ ] [`CHANGELOG.md`](./CHANGELOG.md) for user-visible changes.
   - [ ] [`ROOTS.md`](./ROOTS.md) if I added, removed, or re-tagged a root.
   - [ ] [`docs/decisions/`](./docs/decisions/) if I changed architecture or ownership.
-  - [ ] [`docs/conjectures/ledger.md`](./docs/conjectures/ledger.md) if I changed a claim's status.
+  - [ ] the maintained ledger in `alexwelcing/lupine-rhizo` (`docs/conjectures/ledger.md`) if I changed a claim's status.
 - [ ] I read [`CONTRIBUTING.md`](./CONTRIBUTING.md).
 
 ## Windows notes

@@ -22,7 +22,7 @@ This is a modest ranking result on correlated historical data, not a reduction i
 
 The Library receives explicit, reviewed public summaries. Raw private research outputs, credentials, controller state and model packets remain private. A successfully refreshed feed reports what has been reviewed; it is not a claim that every private operation is visible. Planned, running, completed, failed and blocked work remain distinct, and failed invocations are not relabeled as successes.
 
-The hourly PI supplements Glim Think by choosing and completing one bounded, discriminating step, recording actual evidence and the next test. It checks existing work first and does not create duplicate or catch-up model runs. Reviewed updates flow through Rhizo's public activity contract into Ledger; scientific judgment and deterministic verification remain explicit.
+The model review stage supplements Glim Think by proposing and critiquing one bounded, discriminating step at a time, recording the evidence and the next test. It cannot start experiments, publish or schedule runs. It checks existing work first and does not create duplicate or catch-up model runs. Reviewed updates flow through Rhizo's public activity contract into Ledger; the founder reviews every public summary, and deterministic verification remains explicit.
 
 ## Release verification
 
