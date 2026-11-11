@@ -353,6 +353,5 @@ pnpm build
 
 ## License
 
-Apache 2.0 — Free forever. No Pro tiers. No seat limits.
-
-Part of **ATLAS** — Atomic-scale Theory, Learning, and Simulation.
+MIT — see the repository [`LICENSE`](../../LICENSE). First-party text and data
+are CC BY 4.0; see [`NOTICE.md`](../../NOTICE.md).

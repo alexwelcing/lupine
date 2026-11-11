@@ -235,7 +235,7 @@ If you use `atlas-distill` in your research, please cite:
 
 ## License
 
-MIT License — see [LICENSE](LICENSE) for details.
+MIT — see the repository [LICENSE](../LICENSE). First-party text and data are CC BY 4.0; see [NOTICE.md](../NOTICE.md).
 
 ## Acknowledgments
 

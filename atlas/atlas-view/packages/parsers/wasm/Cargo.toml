@@ -3,7 +3,7 @@ name = "atlas-parsers"
 version = "0.1.0"
 edition = "2021"
 description = "High-performance LAMMPS file parsers compiled to WebAssembly"
-license = "Apache-2.0"
+license = "MIT"
 
 [lib]
 crate-type = ["cdylib", "rlib"]

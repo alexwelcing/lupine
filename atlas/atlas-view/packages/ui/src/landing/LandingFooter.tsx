@@ -157,7 +157,7 @@ export function LandingFooter() {
             &copy; {new Date().getFullYear()} LUPI by Lupine Science. Geometric error analysis for atomistic ML.
           </div>
           <div style={{ fontFamily: 'var(--font-mono, monospace)', fontSize: 10, color: 'rgba(255, 255, 255, 0.4)' }}>
-            Apache 2.0 Licensed
+            MIT Licensed
           </div>
         </div>
       </div>
