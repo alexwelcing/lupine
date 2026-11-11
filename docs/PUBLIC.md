@@ -44,8 +44,8 @@ Added in Phase 2:
 - **Conjectures & Proofs** — one entry per hypothesis, `status`-tagged, with evidence IDs and
   links into `lean-spec/` formal proofs. Generated from the hypothesis records, not
   hand-maintained.
-- **Partnerships** — pilot mappings (e.g. MIIT-67 ↔ Lupine thesis) under a visibility
-  convention: public thesis and methodology; gated commercial terms.
+- **Internal test cases** — MIIT-67 topics mapped to our methods and run as internal
+  test cases (not partner pilots; no organisation is a Lupine partner).
 
 ## Roadmap
 

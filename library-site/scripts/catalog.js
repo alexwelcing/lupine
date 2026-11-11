@@ -292,10 +292,10 @@ export const CATALOG = {
     {
       id: 'partnerships',
       source: 'docs/partnerships.md',
-      title: 'Partnerships',
-      subtitle: 'MIIT-67 pilot mapping and the Lupine thesis — public layer.',
+      title: 'Internal Test Cases Mapped to Public Program Topics',
+      subtitle: 'Internal test cases, not partner pilots. Direction, not a result.',
       category: 'partnerships',
-      tags: ['partnerships', 'miit-67', 'pilots'],
+      tags: ['direction', 'miit-67', 'internal-tests'],
     },
 
     // ── Foundations ─────────────────────────────────────────────────
