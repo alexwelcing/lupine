@@ -500,16 +500,6 @@ export const CATALOG = {
       tags: ['literature-review', 'sloppy', 'simpson', 'fcc'],
     },
 
-    // ── Ecosystem & Funding ────────────────────────────────────────
-    {
-      id: 'funding-landscape',
-      source: 'docs/funding_landscape_report.md',
-      title: 'Federal Funding Landscape (2025–2026)',
-      subtitle: 'NSF DMREF, DOE BES, DARPA SURGE/PRIME, and MGI strategic priorities.',
-      category: 'ecosystem',
-      tags: ['funding', 'policy'],
-    },
-
     // ── Formalization ───────────────────────────────────────────────
     {
       id: 'formal-vision',

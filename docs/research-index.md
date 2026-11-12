@@ -41,8 +41,6 @@ the claims live in [`conjectures/ledger.md`](./conjectures/ledger.md).
   and entropy applied to model selection.
 
 ## Program context
-- [`funding_landscape_report.md`](./funding_landscape_report.md) — federal materials-informatics /
-  UQ funding landscape (2025–2026).
 
 > Note: three `docs/EXTRACTION_*.md` files are one-time content-extraction *process logs* (with
 > dead `/sessions/...` paths) that are still listed in the public catalog
