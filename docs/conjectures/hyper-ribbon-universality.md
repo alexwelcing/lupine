@@ -1,38 +1,54 @@
 # Hyper-Ribbon Universality
 
-**Status: Supported · Proven (Lean)**
+> Mirrored on 2026-11-12 from [`lupine-rhizo/docs/conjectures/hyper-ribbon-universality.md`](https://github.com/alexwelcing/lupine-rhizo/blob/main/docs/conjectures/hyper-ribbon-universality.md), which is the maintained copy. This page previously gave the status "Supported · Proven (Lean)".
 
-## Claim
+**Status: Open — descriptive evidence; universality and correction value unproven**
 
-Prediction-error vectors for elastic constants ($C_{11}$, $C_{12}$, $C_{44}$) across
-hundreds of interatomic potentials do not fill error space. They are compressed onto a
-low-dimensional **hyper-ribbon** manifold — effective dimensionality far below the
-nominal 3 — consistent with the sloppy-model universality class of Brown & Sethna and
-Transtrum & Sethna.
+## Current claim boundary
 
-## Evidence
+Historical analyses report concentrated elastic-error spectra. That is a useful
+observation about selected samples and coordinates, not a proof that all
+interatomic potentials share a low-dimensional model manifold or that their
+errors can be corrected. Keep the three objects and sampling units separate:
+[error-geometry objects and calculation contract](../science/objects.md).
 
-- 559 potentials × 15 benchmark metals (8 FCC, 7 BCC), elastic-constant errors from
-  OpenKIM, cross-referenced against the NIST Interatomic Potentials Repository.
-- Effective (participation-ratio) dimensionality consistently **1.05–1.86 of 3**.
-- The structure is not an elastic-constant artifact — see
-  [the de-myopization result](hyper-ribbon-mlip-transfer.md): it survives when lattice
-  constant $a_0$ is added to the manifold (joint PR 1.05–2.05).
+## Retained evidence and controls
 
-## Formal cross-check
+Earlier summaries reported 559 potentials across 15 benchmark metals and
+participation ratios of 1.05–1.86 for three elastic constants. These are historical
+reported counts and estimates, not a new verification of source identities,
+independent samples or compatible analysis sets.
 
-Lean module `Materials/Theory/HyperRibbonEmpirical`. The
-[Formal Audit](../formal-audit.md) verdict for this claim:
-**"CLAIM PROVEN — EMPIRICALLY GROUNDED."** Originally the theorem was only consistent
-with synthetic data; it is now empirically grounded against the real corpus.
+The [Born-screening review](../born-screening-re-audit.md) freezes the old
+classical-to-MLIP transfer count. Its narrower directional result must retain its
+screened sample and uncertainty limits. The
+[MEAM matched-sample comparison](meam-intrinsic-2d.md) already rejected the strong
+intrinsic-family interpretation. Neither control should be erased or rerun
+merely to renew an apparent positive result.
 
-## Why it matters
+The reported joint elastic/lattice-constant result is also a retained observation.
+Its input identities, normalization and matched sample must be checked before
+claiming that it excludes an observable-selection or scale explanation.
 
-If error is low-dimensional and structured, it is *predictable* and *correctable* —
-which is the entire premise of the program. A high-dimensional unstructured error would
-have killed the thesis.
+## Formal statement
 
-## Next
+`Materials.Theory.HyperRibbonEmpirical.empirical_hyper_ribbon_holds` checks the
+hard-coded Float value `0.3981388474988096 < 0.5`. It does not load observations,
+recompute covariance or prove a physical universality statement. The earlier
+“Proven (Lean)” status overstated its scope; see the
+[formal audit correction](../formal-audit.md). The theorem and its original
+constant remain unchanged.
 
-Extend the manifold to four property families (add $E_\text{coh}$, $B_0$ via the
-Phase-D compute lane) and re-test that the ribbon survives the wider basis.
+## Decision consequence and next test
+
+Do not recommend a potential, forecast transferability or promise a correction
+from low PR alone. Recover the joint-result source contract and perform one
+bounded comparison on the same eligible observations with declared scales and
+sample/dependence controls. Independent observables and held-out task outcomes
+could strengthen the interpretation; disappearance under those controls would
+retire the stronger claim.
+
+A bulk modulus computed from the same cubic elastic constants is algebraically
+derived, not an additional independent property family. Distinguish it from a
+separately measured or equation-of-state-fitted bulk modulus. This plan authorizes
+no new simulation or provider dispatch.

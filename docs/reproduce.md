@@ -26,8 +26,10 @@ cargo run --bin atlas-distill -- validate --full --bcc
 # Manifold analysis only (participation-ratio dimensionality)
 cargo run --bin atlas-distill -- manifold
 
-# Simpson's-paradox detection demo — reproduces the FABRICATED verdict
-cargo run --bin atlas-distill -- detect-paradox --bcc
+# Simpson's-paradox detector on the synthetic BCC fixture: it flags the reversal built
+# into that synthetic data. On the recorded NIST data there is no reversal, so the
+# paradox claim is withdrawn (see docs/formal-audit.md).
+cargo run --bin atlas-distill -- detect-paradox --bcc tests/fixtures/bcc_smoke.csv
 
 # Fixed- and random-effects meta-analysis across elements (writes benchmark_meta.json)
 cargo run --bin atlas-distill -- meta-analyze \
@@ -45,7 +47,7 @@ The Lean 4 specification is the adversary of the prose. The
 
 ```bash
 cd lean-spec
-lake build          # checks every theorem, including noSimpsonsInBccEam
+lake build          # checks every theorem, including simpsonsDetectedEmpirical
 ```
 
 A green `lake build` *is* the audit: if a verdict changed, the build would fail.

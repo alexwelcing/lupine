@@ -15,11 +15,14 @@ open OpenDistillationFactory.Materials.Analysis.Manifold
 /-- The paper claims: "Simpson's paradox detected in BCC elastic constants
     with pooled r = -0.435 vs within-group r = +0.147".
 
-    Formal computation on the EMPIRICAL NIST DATA:
+    Formal computation on the EMPIRICAL NIST DATA (see
+    `Analysis.Causal.simpsonsDetectedEmpirical` and
+    `Analysis.Causal.ecologicalFallacyEmpirical`):
     - simpsonsDetected = false (no strict sign reversal)
-    - ecologicalFallacy = true (reversal magnitude > 0.1)
+    - ecologicalFallacy = false (reversal magnitude < 0.1)
 
-    VERDICT: STRICT REVERSAL IS FABRICATED, but SEVERE ECOLOGICAL FALLACY is present. -/
+    VERDICT: Refuted by formal check. The paradox appeared only in synthetic
+    data. -/
 def simpsonsParadoxVerdict : String :=
   let r := empiricalParadox
   if r.simpsonsDetected then
@@ -27,7 +30,7 @@ def simpsonsParadoxVerdict : String :=
   else if r.ecologicalFallacy then
     "VERDICT: CLAIM EXAGGERATED — No strict sign reversal, but severe ecological fallacy present (reversal mag = " ++ toString r.reversalMagnitude ++ ")"
   else
-    "VERDICT: CLAIM FABRICATED — No reversal and no ecological fallacy"
+    "VERDICT: Refuted by formal check — No reversal and no ecological fallacy"
 
 -- ═══════════════════════════════════════════════════════════════
 -- CLAIM 2: HYPER-RIBBON MANIFOLD DIMENSIONALITY
@@ -94,9 +97,9 @@ def fullAuditReport : String :=
 -- THEOREMS: properties of the audit verdict
 -- ═══════════════════════════════════════════════════════════════
 
-/-- Theorem: The Simpson's paradox verdict contains "FABRICATED". -/
-theorem simpsonVerdictContainsFabricated :
-    simpsonsParadoxVerdict.contains "FABRICATED" = true := by
+/-- Theorem: The Simpson's paradox verdict contains "Refuted by formal check". -/
+theorem simpsonVerdictRefutedByFormalCheck :
+    simpsonsParadoxVerdict.contains "Refuted by formal check" = true := by
   native_decide
 
 /-- Theorem: The hyper-ribbon verdict contains "CONSISTENT". -/

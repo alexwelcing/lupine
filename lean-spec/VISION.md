@@ -8,7 +8,7 @@
 
 Interatomic potential validation is broken:
 
-- **Papers make bold claims on synthetic data.** Our formal audit proved one claim (Simpson's paradox) was fabricated and another (hyper-ribbon dimensionality) was consistent but unvalidated.
+- **Papers make bold claims on synthetic data.** Our formal audit refuted one claim (Simpson's paradox) by formal check — the paradox appeared only in synthetic data — and found another (hyper-ribbon dimensionality) consistent but unvalidated.
 - **NIST maintains 675+ verified potentials** with DOIs and LAMMPS implementations, yet **nobody systematically computes their predictions** against reference data.
 - **The gap between "published" and "verified"** is a chasm. Hand-typed numbers in `validation.rs` have no provenance. The NIST scaffold has 510 rows with `predicted = none`.
 
@@ -22,7 +22,7 @@ Every claim lives in one of two categories:
 
 | Category | Requirement | Example |
 |----------|------------|---------|
-| **Formal** | Theorem + proof in Lean 4 | `noSimpsonsInBccEam` |
+| **Formal** | Theorem + proof in Lean 4 | `simpsonsDetectedEmpirical` |
 | **Computational** | LAMMPS trace with NIST DOI, reproducible run ID | `nistScaffoldAlSample` with filled predictions |
 
 No synthetic data. No hand-typed constants. No unverifiable assertions.

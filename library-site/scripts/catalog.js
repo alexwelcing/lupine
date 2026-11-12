@@ -531,7 +531,7 @@ export const CATALOG = {
       id: 'formal-audit',
       source: 'docs/formal-audit.md',
       title: 'Formal Audit Report',
-      subtitle: 'Split verdict: Simpson\'s paradox fabricated, hyper-ribbon consistent but ungrounded.',
+      subtitle: 'What the Lean statements establish: the Simpson\'s-paradox claim is refuted by formal check; the hyper-ribbon item compares a fixed constant.',
       category: 'formalization',
       tags: ['lean', 'audit', 'verification'],
     },

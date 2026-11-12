@@ -100,7 +100,7 @@ def fullAuditReport : String :=
 ```
 
 The verdict strings are themselves proven:
-- `simpsonVerdictContainsFabricated` — the string contains "FABRICATED"
+- `simpsonVerdictRefutedByFormalCheck` — the string contains "Refuted by formal check"
 - `hyperRibbonVerdictContainsConsistent` — the string contains "CONSISTENT"
 
 If the computed statistics shift, the build fails. The audit cannot drift.
