@@ -11,7 +11,7 @@
 
 - **Manifold Analysis** — PCA/SVD eigenvalue analysis of prediction errors with hyper-ribbon detection
 - **Bootstrap Uncertainty Quantification** — 95% confidence intervals for participation ratios and geometric fits
-- **Meta-Analysis** — Standard fixed- and random-effects meta-analysis of correlation coefficients across independent groups (Fisher z, DerSimonian–Laird τ², Q and I²); see [Meta-analysis](#meta-analysis) for scope and known issues
+- **Meta-Analysis** — Standard fixed- and random-effects meta-analysis of correlation coefficients across independent groups (Fisher z, DerSimonian–Laird τ², Cochran's Q and I², t-based prediction interval); see [Meta-analysis](#meta-analysis) for scope and the 2026-11-12 fix
 - **Simpson's Paradox Detection** — Pooled vs. within-group correlation comparison with reversal markers
 - **Multi-Potential Benchmarking** — FCC (8 metals) and BCC (7 metals) elastic constant validation
 - **Model Geometry Evidence** — Residual-SVD packets for MLIP/WBM/arena-scale model dumps, with accuracy gates and effective-rank guards
@@ -47,8 +47,10 @@ cargo run --bin atlas-distill -- manifold
 # Simpson's paradox demo
 cargo run --bin atlas-distill -- detect-paradox --bcc
 
-# Meta-analysis
-cargo run --bin atlas-distill -- meta-analyze
+# Meta-analysis of per-element correlations (writes benchmark_meta.json)
+cargo run --bin atlas-distill -- meta-analyze \
+  --input benchmarks/nist_populated_all.csv \
+  --output benchmark_meta.json
 
 # Model/reference residual geometry from a tidy benchmark dump
 cargo run --bin atlas-distill -- model-geometry \
@@ -161,7 +163,7 @@ atlas-distill/
 |---------|-------------|
 | `validate [--full] [--bcc]` | Run ensemble operator validation |
 | `manifold [--bcc]` | Analyze error manifold structure |
-| `meta-analyze [--groups]` | Run meta-analysis on correlations |
+| `meta-analyze --input <csv> \| --groups <json> [--output <json>]` | Fixed- and random-effects meta-analysis of per-group correlations |
 | `detect-paradox [--bcc] [--example]` | Detect Simpson's paradox |
 | `benchmark <file> [--manifold] [--meta]` | Load external benchmark database |
 | `model-geometry --input <csv/json> [--pair A:B]` | Distill model-to-model and model-to-reference residual geometry evidence |
@@ -187,29 +189,60 @@ atlas-distill/
 meta-analysis of correlation coefficients across independent groups: each
 group's r is Fisher z-transformed, weighted by inverse variance, pooled, and
 back-transformed; the random-effects model adds a DerSimonian–Laird estimate
-of between-group variance τ² and reports Q, I² and a prediction interval. It
-pools correlations, not error magnitudes such as MAE, and it assumes the
-groups are independent. Rows that share materials or models (for example
+of between-group variance τ² and a t-based prediction interval. Both models
+report Cochran's Q (fixed-effect weights around the fixed-effect mean), its
+p-value and I². It pools correlations, not error magnitudes such as MAE, and
+it assumes the groups are independent. Rows that share materials or models (for example
 C11, C12 and C44 of the same metal) are not independent, and intervals built
 on such rows are anti-conservative. We withdrew our own earlier Fisher-z
 random-effects intervals built on dependent C11/C12/C44 rows for this reason
 (lupine-rhizo `paper/tms2027-proceedings/manuscript.tex`).
 
-### Known issues (fix pending)
+### Known issues (Fixed 2026-11-12)
 
-- **Q and I² in the random-effects output.** `random_effects_meta` estimates
-  τ² from the fixed-effect Q (correct), but `compute_final_result` then
-  recomputes the reported Q, its p-value and I² around the random-effects
-  pooled mean instead of the fixed-effect mean. Because the fixed-effect mean
-  minimises that weighted sum, the reported random-effects Q and I² can only
-  be equal to or larger than the standard values. Use the fixed-effects
-  output (`fixed_effects_meta`) for Q and I² until this is fixed.
-- **Prediction interval quantile.** The random-effects prediction interval
-  uses the normal quantile 1.96 rather than a t quantile with k − 2 degrees
-  of freedom (k = number of groups), so it is too narrow, most noticeably
-  when k is small.
-- The unit tests check ranges and properties, not agreement with a reference
-  implementation.
+- **Q and I² in the random-effects output. Fixed 2026-11-12.**
+  `random_effects_meta` used to recompute the reported Q, its p-value and I²
+  around the random-effects pooled mean instead of the fixed-effect mean,
+  which can only make them equal or larger. Both models now report Cochran's
+  Q with fixed-effect weights around the fixed-effect mean (as metafor's QE
+  does), df = k − 1, its chi-square p-value and I² = max(0, (Q − df)/Q).
+  τ² (DerSimonian–Laird) was already computed from this Q and does not
+  change.
+- **Prediction interval quantile. Fixed 2026-11-12.** The random-effects
+  prediction interval used the normal quantile 1.96. It now uses
+  μ̂_RE ± t_{k−2, 0.975} · sqrt(τ² + SE(μ̂_RE)²) (Higgins, Thompson &
+  Spiegelhalter 2009), back-transformed with tanh. It is undefined (`NaN`,
+  written as JSON `null`) when there are fewer than three groups. The
+  t quantile is implemented in the module (no new dependency).
+- **Q p-value. Fixed 2026-11-12.** The p-value used a Wilson–Hilferty
+  approximation that was off by up to an order of magnitude in the tail
+  (2.5e-10 instead of 2.8e-11 for the demo groups in `meta_analysis.json`)
+  and was written as 0 for very large Q. It now uses the regularized
+  incomplete gamma function. Confidence intervals use z₀.₉₇₅ = 1.959963984540054 rather than
+  1.96; this moves interval ends by about 1e-5.
+- **Reference tests. Fixed 2026-11-12.** The unit tests now compare Q, df,
+  p, I², τ², the pooled estimates, CIs and prediction intervals, to 1e-6,
+  with an independent numpy/scipy implementation
+  (`tests/reference/meta_reference.py`, output committed as
+  `tests/reference/meta_reference.json`). The datasets are: a homogeneous
+  set with Q < df (so τ² = 0), a heterogeneous set, a k = 3 set, a k = 2 set
+  without a prediction interval, and the 15-element elastic-constant panel.
+  The t quantile and chi-square p-value are also checked against scipy.
+  Run `python tests/reference/meta_reference.py --check` (needs numpy and
+  scipy) to confirm that the committed JSON and the values embedded in the
+  Rust tests match a fresh run.
+- **The module was not compiled.** Until 2026-11-12 `src/main.rs` did not
+  declare `mod meta_analysis`, so neither the module nor its unit tests were
+  built or run by `cargo test`. It is now declared and exercised by the
+  `meta-analyze` command.
+
+Published numbers that came from this engine, before and after the fix:
+the 15-element panel's random-effects Q went from 984 to 945, I² from
+98.6% to 98.5%, and the 95% prediction interval from [−0.64, +0.99] to
+[−0.73, +0.99]. The pooled r (0.69), its CI [0.41, 0.85] and τ (0.80) are
+unchanged. `benchmark_meta.json`, `meta_analysis.json` and
+`paper/figures/fig4_forest.{png,pdf}` were regenerated with the fixed
+engine. The dependence caveat above still applies to these intervals.
 
 ## Demo commands use hand-typed fixtures
 
