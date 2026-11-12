@@ -29,8 +29,9 @@ cargo run --bin atlas-distill -- manifold
 # Simpson's-paradox detection demo — reproduces the FABRICATED verdict
 cargo run --bin atlas-distill -- detect-paradox --bcc
 
-# Random-effects meta-analysis across elements
-cargo run --bin atlas-distill -- meta-analysis
+# Fixed- and random-effects meta-analysis across elements (writes benchmark_meta.json)
+cargo run --bin atlas-distill -- meta-analyze \
+  --input benchmarks/nist_populated_all.csv --output benchmark_meta.json
 ```
 
 Outputs are written as JSON next to the binary

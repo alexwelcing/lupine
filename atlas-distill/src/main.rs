@@ -12,6 +12,7 @@ mod fitting;
 mod ingest;
 mod literature;
 mod manifold;
+mod meta_analysis;
 mod mof_adapter;
 mod multi_element;
 mod nist;
@@ -127,6 +128,24 @@ enum Commands {
         /// Use BCC-flavored validation: require pooled vs within-group sign reversal
         #[arg(long)]
         bcc: bool,
+    },
+    /// Fixed- and random-effects meta-analysis of per-group correlations.
+    ///
+    /// Assumes independent groups. Prints both summaries to stderr and writes
+    /// {"fixed_effects", "random_effects"} JSON.
+    MetaAnalyze {
+        /// Benchmark CSV with columns material, reference, predicted: one group
+        /// per material (first-appearance order), r = Pearson(reference,
+        /// predicted); groups with fewer than 4 numeric rows are skipped
+        #[arg(long, conflicts_with = "groups", required_unless_present = "groups")]
+        input: Option<PathBuf>,
+        /// JSON array of {"group_id", "n", "r"} records, or a previous
+        /// meta-analyze output (its fixed_effects.group_results are reused)
+        #[arg(long)]
+        groups: Option<PathBuf>,
+        /// Write the JSON to this file instead of stdout
+        #[arg(long)]
+        output: Option<PathBuf>,
     },
     /// Hypothesis-bound research loop. Downloads a fixture from GCS, runs a
     /// small analysis, and emits a beat back to the worker. Wired to be
@@ -253,6 +272,11 @@ fn main() -> Result<()> {
             dev_mode_bypass,
         ),
         Commands::DetectParadox { data, bcc } => cmd_detect_paradox(&data, bcc),
+        Commands::MetaAnalyze {
+            input,
+            groups,
+            output,
+        } => cmd_meta_analyze(input.as_deref(), groups.as_deref(), output.as_deref()),
         Commands::AutoResearch {
             hypothesis_id,
             fixture_url,
@@ -485,6 +509,130 @@ fn cmd_detect_paradox(data_path: &Path, bcc: bool) -> Result<()> {
     }
 
     Ok(())
+}
+
+fn cmd_meta_analyze(
+    input: Option<&Path>,
+    groups: Option<&Path>,
+    output: Option<&Path>,
+) -> Result<()> {
+    let groups = match (input, groups) {
+        (Some(csv_path), None) => meta_groups_from_benchmark_csv(csv_path)?,
+        (None, Some(json_path)) => meta_groups_from_json(json_path)?,
+        _ => anyhow::bail!("pass exactly one of --input or --groups"),
+    };
+    if groups.len() < 2 {
+        anyhow::bail!(
+            "meta-analysis needs at least two groups with n >= 4, found {}",
+            groups.len()
+        );
+    }
+
+    let fixed = meta_analysis::fixed_effects_meta(&groups);
+    let random = meta_analysis::random_effects_meta(&groups);
+    meta_analysis::print_summary(&fixed);
+    meta_analysis::print_summary(&random);
+
+    let json = serde_json::to_string_pretty(&serde_json::json!({
+        "fixed_effects": fixed,
+        "random_effects": random,
+    }))?;
+    match output {
+        Some(path) => {
+            std::fs::write(path, &json)?;
+            eprintln!("  ✦ Meta-analysis → {}", path.display());
+        }
+        None => println!("{json}"),
+    }
+    Ok(())
+}
+
+/// One group per material: r = Pearson(reference, predicted) over its rows.
+fn meta_groups_from_benchmark_csv(path: &Path) -> Result<Vec<meta_analysis::GroupCorrelation>> {
+    use anyhow::Context as _;
+
+    let mut reader = csv::Reader::from_path(path)
+        .with_context(|| format!("failed to open {}", path.display()))?;
+    let headers = reader.headers()?.clone();
+    let column = |name: &str| {
+        headers
+            .iter()
+            .position(|h| h.trim() == name)
+            .with_context(|| format!("{}: missing column '{name}'", path.display()))
+    };
+    let (i_material, i_reference, i_predicted) = (
+        column("material")?,
+        column("reference")?,
+        column("predicted")?,
+    );
+
+    let mut order: Vec<String> = Vec::new();
+    let mut points: std::collections::HashMap<String, (Vec<f64>, Vec<f64>)> =
+        std::collections::HashMap::new();
+    for record in reader.records() {
+        let record = record?;
+        let parse = |i: usize| record.get(i).and_then(|s| s.trim().parse::<f64>().ok());
+        let (Some(reference), Some(predicted)) = (parse(i_reference), parse(i_predicted)) else {
+            continue;
+        };
+        if !(reference.is_finite() && predicted.is_finite()) {
+            continue;
+        }
+        let material = record.get(i_material).unwrap_or("").trim().to_string();
+        let entry = points.entry(material.clone()).or_insert_with(|| {
+            order.push(material);
+            (Vec::new(), Vec::new())
+        });
+        entry.0.push(reference);
+        entry.1.push(predicted);
+    }
+
+    let mut groups = Vec::new();
+    for material in order {
+        let (xs, ys) = &points[&material];
+        if xs.len() < 4 {
+            eprintln!(
+                "  · skipping {material}: {} rows (need at least 4)",
+                xs.len()
+            );
+            continue;
+        }
+        let r = stats::pearson_r(xs, ys);
+        if !r.is_finite() {
+            eprintln!("  · skipping {material}: correlation undefined");
+            continue;
+        }
+        groups.push(meta_analysis::GroupCorrelation {
+            group_id: material,
+            n: xs.len(),
+            r,
+        });
+    }
+    Ok(groups)
+}
+
+/// Groups from a JSON array of {group_id, n, r}, or from a previous
+/// meta-analyze output (fixed_effects.group_results).
+fn meta_groups_from_json(path: &Path) -> Result<Vec<meta_analysis::GroupCorrelation>> {
+    use anyhow::Context as _;
+
+    let text = std::fs::read_to_string(path)
+        .with_context(|| format!("failed to read {}", path.display()))?;
+    let value: serde_json::Value = serde_json::from_str(&text)?;
+    let list = if value.is_array() {
+        value
+    } else {
+        value
+            .pointer("/fixed_effects/group_results")
+            .cloned()
+            .with_context(|| {
+                format!(
+                    "{}: expected a JSON array of {{group_id, n, r}} or a meta-analyze output",
+                    path.display()
+                )
+            })?
+    };
+    Ok(serde_json::from_value(list)?)
 }
 
 fn load_grouped_csv(path: &Path) -> Result<Vec<causal::GroupedPoint>> {
