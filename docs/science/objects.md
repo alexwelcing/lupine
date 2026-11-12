@@ -16,7 +16,7 @@ The literature foundation is
 | Lives in | model **prediction / data** space | observable space (e.g. C11/C12/C44) | **configuration** space `Ω ⊂ ℝᵐ` |
 | Is | image `y(θ)` of the prediction map as parameters vary; a bounded manifold with a geometric **hierarchy of widths** `Wₙ ~ W₀·Δⁿ` | `PR = (Σλ)²/Σλ²` of the **error covariance** across potentials — a scalar effective-dimension *measurement* | a low-dim core `H` with the error boundary a **codim-1 tube** around it (`dim Γ = m−1`) |
 | Role | the *theory* object: why errors are low-dimensional | the *empirical handle*: how we measure A from data | a distinct, more demanding *rigor* object |
-| Source | Transtrum–Machta–Sethna, PRL 104 060201 (2010); PRE 83 036701 (2011) | participation-ratio defn (Cell Reports Methods 2022); `immi_dim01` §4 | repo-root PDF *"A Conditional Universality Theorem for Error Geometry in MLIPs"* |
+| Source | Transtrum–Machta–Sethna, PRL 104 060201 (2010); PRE 83 036701 (2011) | participation-ratio defn (Cell Reports Methods 2022); `immi_dim01` §4 | archived PDF *"A Conditional Universality Theorem for Error Geometry in MLIPs"* (`archive/reports/`) |
 | In this repo | the framing; `docs/sloppy_models_report.md` | `lupine-distill/src/hypothesis/manifold.rs`; `HyperRibbonEmpirical.lean` | not yet built; `docs/science/keystone-reconciliation.md` |
 | Status | established theory | **standard, correct usage** (B measures A) | **conditional** theorem; assumptions untested |
 
@@ -41,7 +41,7 @@ forming the error covariance, and taking the **participation ratio**
 between 1 and the nominal rank. The IMMI corpus measures `PR ≈ 1.05–1.86` of 3 (a near-1D
 ribbon with a thin secondary direction). This is the **standard, literature-sanctioned way
 to measure the effective dimensionality of A from data** (`immi_dim01` §4). It is computed
-in [`lupine-distill/src/hypothesis/manifold.rs`](../../lupine-distill/src/hypothesis/manifold.rs)
+in [`archive/lupine-distill-rust/src/hypothesis/manifold.rs`](../../archive/lupine-distill-rust/src/hypothesis/manifold.rs)
 and recorded in `lean-spec/.../Theory/HyperRibbonEmpirical.lean`.
 
 > **Caveat (do not skip).** B is a *linear* effective-dimension measure and the elastic
