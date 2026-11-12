@@ -1,6 +1,6 @@
 {
   "$schema": "https://lupine.science/schemas/lupine-brand.v1.json",
-  "updated": "2026-11-11",
+  "updated": "2026-11-12",
   "organization": {
     "name": "Lupine Science",
     "url": "https://lupine.science",
@@ -14,22 +14,22 @@
       "id": "lupine-science",
       "name": "Lupine Science",
       "url": "https://lupine.science",
-      "role": "research program and public start page",
-      "description": "Lab-facing orientation to the scientific question, evidence status, LUPI routes, Library, live lab, and ways to extend the work."
+      "role": "company site and public start page",
+      "description": "What we measure, the results with their scope and status, and the corrections log."
     },
     {
       "id": "lupi",
       "name": "LUPI",
       "url": "https://lupi.live",
-      "role": "browser-native scientific viewer",
-      "description": "WebGPU viewer for atomistic evidence, molecular trajectories, gallery datasets, and publication-quality inspection."
+      "role": "browser viewer",
+      "description": "LUPI (lupi.live) opens structures and LAMMPS dump files in a WebGPU-capable browser with no installation."
     },
     {
       "id": "lupine-library",
       "name": "Lupine Library",
       "url": "https://library.lupine.science",
-      "role": "human knowledge surface",
-      "description": "Mobile-first research reader for reports, notes, evidence, status labels, and the public changelog."
+      "role": "public research record",
+      "description": "Reader for Lupine's public research record: tested claims about interatomic-potential error, with refutations, corrections and the evidence for each."
     },
     {
       "id": "glim-think",
@@ -68,7 +68,6 @@
     "error geometry of interatomic potentials",
     "lab-facing research corpus",
     "inspectable evidence",
-    "MLIP Failure Geometry Audit",
     "agentic research control plane",
     "human knowledge surface"
   ],

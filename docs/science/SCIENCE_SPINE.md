@@ -6,10 +6,12 @@ than only the short brand line.
 
 ## First Principle
 
-Interatomic potentials are necessary and wrong in structured ways. Lupine
-Science studies that structure as evidence: where models fail, why those
-failures have geometry, what confounders survive scrutiny, and which correction
-target follows.
+Interatomic potentials are necessary and wrong in ways worth measuring. Lupine
+Science measures where models fail against published references and gates set
+in advance, tests whether the failures share structure (an open question), checks
+which confounders survive scrutiny, and publishes every verdict. Correction is a
+research question here, not a product: it has held only in narrow, stated
+cases.
 
 ## Intended Reader
 
@@ -29,13 +31,13 @@ the ledger; the front door should not read like a pitch.
 
 | Layer | Question | Evidence Surface |
 | --- | --- | --- |
-| Error geometry | Do prediction errors form stable low-dimensional structure across potentials, elements, properties, and structure families? | IMMI analysis, hyper-ribbon reports, LUPI evidence views |
+| Error geometry | Do prediction errors form stable low-dimensional structure across potentials, elements, properties, and structure families? (Open.) | IMMI analysis, hyper-ribbon reports, LUPI evidence views |
 | Sloppy-model structure | Which stiff and sloppy directions explain model failure? | Sloppy-model reports, Distill policy, participation-ratio analysis |
-| Cross-MLIP transfer | Do foundation MLIPs inherit, rotate, or escape the classical error geometry? | `mlip_immi/`, cross-MLIP alignment payloads, Kimi v7 Cloud Run import, conjecture ledger |
+| Cross-MLIP transfer | Do foundation MLIPs inherit, rotate, or escape the classical error geometry? | `mlip_immi/`, cross-MLIP alignment payloads, the 2026-06-07 cross-MLIP cloud benchmark import, conjecture ledger |
 | Causal and statistical validity | Which trends survive matched samples, bootstrap controls, stratification, and contamination checks? | Refutation notes, Simpson checks, changelog, critique responses |
-| Claim lifecycle | Which hypotheses are proposed, supported, refuted, corrected, or open? | Lupine Library, `CHANGELOG.md`, `docs/conjectures/ledger.md` |
-| Formal specification | Which claims can become proof obligations or theorem-shaped validation? | `lean-spec/`, formal proof ledger, Kimi weak/strong acceleration split, publication templates |
-| Review-ready manuscripts | Which advanced paper drafts are mature enough for human review but not yet submission-ready? | `paper/review-ready/`, Kimi import review ledger, formal proof ledger |
+| Claim lifecycle | Which claims are Supported, Open, Failed, Abstained, Refuted by us, Self-corrected or Withdrawn? | Lupine Library, `CHANGELOG.md`, `docs/conjectures/ledger.md` |
+| Formal specification | Which arithmetic and stated inequalities behind published numbers can Lean 4 check? It does not check the physics, the reference data or the pipeline. | `lean-spec/`, formal proof ledger, the weak/strong acceleration split, publication templates |
+| Review-ready manuscripts | Which advanced paper drafts are mature enough for human review but not yet submission-ready? | `paper/review-ready/`, advanced-paper review ledger, formal proof ledger |
 | Agentic research loop | Can agents propose, test, broadcast, and correct claims without losing provenance? | `glim-think/`, Phoenix traces, evidence campaigns |
 
 ## Use Pattern
@@ -48,12 +50,12 @@ Every serious public claim should include:
 - evidence route
 - claim status
 - confounder checks
-- correction target or next experiment
+- next test, or the correction result with its scope
 - human review and agent provenance
 
-## Observer Pattern
+## Evaluation Pattern
 
-The best way to evaluate Lupine Science is to watch:
+The best way to evaluate Lupine Science is to read:
 
 - Library report updates
 - LUPI evidence routes
