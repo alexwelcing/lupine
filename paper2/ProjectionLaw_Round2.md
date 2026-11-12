@@ -119,7 +119,7 @@ To test the operator at Layer 2 we ran a complete 3×3×3 elastic-constant bench
 
 ![No-target magnitude estimators.](figures/fig7_no_target_estimators.png)
 
-**Figure 3 — No-target magnitude estimators.** Mean C<sub>ij</sub> MAE across all 128 cases for the raw prediction, three deployable no-target estimators, and the oracle ceiling. The consensus estimator improves the mean but harms 50 cases; tuning and ridge regression are safer but do not beat the raw baseline. The gap to the oracle (10.25 GPa) is the remaining deployability problem.
+**Figure 3 — No-target magnitude estimators.** Mean C<sub>ij</sub> MAE across all 128 cases for the raw prediction, three deployable no-target estimators, and the oracle ceiling. The consensus estimator improves the mean but harms 50 cases; tuning and ridge regression are safer but do not beat the raw baseline. The oracle bar (10.25 GPa) uses the same leave-one-element-out split as the estimators: the bias direction is fitted without the held-out element. It is therefore slightly below the 10.36 GPa leave-one-out ceiling in Table 2, where the direction is fitted on the other 63 cases of the same functional. The gap between the estimators and the oracle is the remaining deployability problem.
 
 ![Round-2 raw versus LOO-corrected MAE by model and functional.](figures/fig5_round2_raw_vs_corrected.png)
 
