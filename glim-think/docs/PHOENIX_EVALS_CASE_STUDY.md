@@ -5,7 +5,8 @@
 > turned a black box into a measurable process, and then closed the loop
 > into a **self-improving system** that senses its own quality, diagnoses
 > failure clusters, synthesizes prompt/criteria patches, A/B-tests them
-> against an oracle, and merges the winners on green.
+> against an oracle, and opens a pull request for each winner, which a human
+> reviews and merges.
 > Engineering log of record: [`../OBSERVABILITY.md`](../OBSERVABILITY.md).
 
 ## 1. The system
@@ -88,8 +89,8 @@ self-improving loop: a change is only "good" if a re-measured eval says so.
            │  green                                                     │
            ▼                                                            │
   ┌──────────────────┐   write registry file under src/registry/ ONLY;  │
-  │  AUTO-MERGE       │   commit `evolver:auto …`; safety rails:         │
-  │  ON GREEN         │   path allowlist · EVOLVER_ENABLED kill switch · │
+  │  PR FOR HUMAN     │   commit `evolver:auto …` on a branch, open PR;  │
+  │  REVIEW + MERGE   │   rails: allowlist · EVOLVER_ENABLED switch ·    │
   │                   │   circuit breaker · regression-gate auto-revert  │
   └────────┬─────────┘                                                  │
            │                                                            │
@@ -216,9 +217,10 @@ sustained, non-regressing delta on the targeted cluster *and no regression
 elsewhere*. Otherwise it is rejected and discarded. Using frozen datasets (not
 production spans) is what makes the oracle immune to the sampling-bias trap.
 
-**Auto-merge on green, with hard safety rails.** When the oracle returns
-green the Evolver writes the registry file and commits it. The rails are
-non-negotiable and layered:
+**A pull request for human review, with hard safety rails.** When the oracle
+returns green the Evolver writes the registry file, commits it on a new branch
+and opens a pull request. It never merges: a maintainer reviews and merges the
+pull request. The rails are non-negotiable and layered:
 
 - **Path allowlist** — the Evolver may only write under `src/registry/`.
   Any synthesized change touching application code, telemetry, eval logic, or
@@ -226,7 +228,8 @@ non-negotiable and layered:
   declarative prompt/criteria data.
 - **Kill switch `EVOLVER_ENABLED`** — defaults **OFF**. With it unset the
   Evolver runs in dry-run only: it clusters, synthesizes, and oracle-tests,
-  but never writes or commits. Auto-merge requires an explicit opt-in.
+  but never writes or commits. Opening pull requests requires an explicit
+  opt-in; merging always takes a human.
 - **Circuit breaker** — after a bounded number of adopted patches per window
   (or any oracle/gate error), the Evolver halts and requires manual re-arm.
   Prevents a runaway loop from flooding the registry.
@@ -271,7 +274,7 @@ one reviewable green commit at a time. The git history of `src/registry/`
 | Experiment-window provenance outranking biased samples | **Designed**; sensing/routing primitives live, the provenance tag + ranking land with the experiment-oracle sibling unit |
 | Evolver failure clustering + minimal patch synthesis | **Armed, gated** — sibling unit; runs dry-run by default |
 | A/B oracle adopt/reject over golden datasets | **Armed, gated** — sibling unit |
-| Auto-merge on green | **Armed, OFF by default** — `EVOLVER_ENABLED` must be explicitly set; rails (allowlist, breaker, gate) are prerequisites |
+| Pull request on green (merged by a human) | **Armed, OFF by default** — `EVOLVER_ENABLED` must be explicitly set; rails (allowlist, breaker, gate) are prerequisites; the Evolver never merges (auto-merge removed 2026-11-12) |
 | Regression-gate auto-revert of `evolver:auto` commits | **Armed, gated** — sibling unit |
 
 We do **not** claim the loop has demonstrated a measured end-to-end quality

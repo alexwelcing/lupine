@@ -1,12 +1,14 @@
-name: Glim Think Evolver (self-improving eval loop)
+name: Glim Think prompt A/B proposals (human-merged PRs)
 
-# The Evolver is dangerous-by-design: it diagnoses eval failures, synthesizes
-# a minimal prompt patch, A/B-tests it, and AUTO-MERGES the winner.
+# The Evolver diagnoses eval failures, synthesizes a minimal prompt patch and
+# A/B-tests it. When armed and the candidate wins, it commits the change under
+# glim-think/src/registry/ on a new branch and opens a pull request. It never
+# merges: a maintainer reviews and merges the PR by hand.
 #
 # It is DISARMED by default. `EVOLVER_ENABLED` is sourced from a repository
 # variable (Settings → Variables → Actions → `EVOLVER_ENABLED`). Until that
 # variable is set to a truthy value the job runs in plan-only mode (no
-# writes, no commits, no merges) even on the schedule. Flip the variable to
+# writes, no commits, no pull requests) even on the schedule. Flip the variable to
 # arm it ONLY once the safety rails are proven in plan-only runs.
 
 on:
@@ -31,6 +33,7 @@ on:
 
 jobs:
   evolve:
+    name: Prompt A/B proposal (opens a PR for human review)
     runs-on: ubuntu-latest
     timeout-minutes: 15
     permissions:
@@ -56,7 +59,7 @@ jobs:
         working-directory: glim-think
         run: npx tsx evals/evolver.ts --self-test
 
-      - name: Run Evolver
+      - name: Run Evolver (plan-only unless armed; never merges)
         working-directory: glim-think
         env:
           # KILL SWITCH — default OFF. Sourced from the repo variable; an
@@ -70,7 +73,8 @@ jobs:
           INTERNAL_TASK_TOKEN: ${{ secrets.INTERNAL_TASK_TOKEN }}
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
           WORKER_URL: https://glim-think-v1.aw-ab5.workers.dev
-          # gh CLI auth for branch push + PR create + auto-merge.
+          # gh CLI auth for branch push + PR create. No merge: a human
+          # reviews and merges the PR.
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           git config user.name  "glim-evolver[bot]"

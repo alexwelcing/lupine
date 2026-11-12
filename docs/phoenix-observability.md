@@ -63,7 +63,9 @@ Phoenix is wired; the leverage now is in *using* it:
    non-trivial, falsifiable claim?) to the loop's fitness function — not just latency
    and cost.
 4. **Feed the scorecard into the Evolver's model-selection actuation**, keeping
-   structural change PR-gated and prompt/rubric/criteria change autonomous.
+   every change, prompt/rubric/criteria changes included, behind a pull request
+   that a human reviews and merges (the Evolver opens pull requests and never
+   merges them).
 5. **Regression-gate every Evolver change** against the golden datasets so the loop can
    only ratchet forward.
 
