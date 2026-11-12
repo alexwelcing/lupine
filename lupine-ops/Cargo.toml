@@ -16,22 +16,12 @@ gcp_auth = { version = "0.12", optional = true }
 reqwest = { version = "0.12", features = ["json", "rustls-tls"], default-features = false, optional = true }
 tokio = { version = "1", features = ["macros", "rt-multi-thread", "process", "signal", "fs", "io-util", "time"], optional = true }
 time = { version = "0.3", features = ["formatting", "macros", "parsing"], optional = true }
-chrono = { version = "0.4", default-features = false, features = ["clock"], optional = true }
-
-[target.'cfg(unix)'.dependencies]
-libc = "0.2"
 
 [features]
-default = ["monitor", "kimi-supervisor"]
+default = ["monitor"]
 monitor = ["anyhow", "clap", "gcp_auth", "reqwest", "tokio", "time"]
-kimi-supervisor = ["anyhow", "clap", "gcp_auth", "reqwest", "tokio", "chrono"]
 
 [[bin]]
 name = "monitor_cloud_run"
 path = "src/bin/monitor_cloud_run.rs"
 required-features = ["monitor"]
-
-[[bin]]
-name = "kimi_supervisor"
-path = "src/bin/kimi_supervisor.rs"
-required-features = ["kimi-supervisor"]

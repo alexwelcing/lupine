@@ -8,6 +8,9 @@ reporter binary.
 > (the Rust agents import `lupine_ops::ledger`, `lupine_ops::elastic`,
 > `lupine_ops::statics`, and `lupine_ops::mlip_ops`). Do not archive or
 > move without updating `atlas-distill/Cargo.toml` and the agent imports.
+>
+> The `kimi_supervisor` binary that used to live here (a wrapper for an
+> unattended `kimi --yolo` agent loop) was retired and removed on 2026-11-12.
 
 ## `monitor_cloud_run`
 
@@ -15,8 +18,7 @@ Rust binary that authenticates to GCP, walks Cloud Run services and jobs
 in `--project / --region`, queries Cloud Monitoring for a 24h request
 proxy (true cost requires BigQuery billing export), and flags any service
 exceeding the idle (>10 min on a `CONDITION_SUCCEEDED` revision) or cost
-thresholds. Replaces the never-shipped `monitor_cloud_run.py` referenced
-in `docs/handoff/04_autonomous_handoff_protocol.md`.
+thresholds. Replaces a planned `monitor_cloud_run.py` that was never shipped.
 
 ### Auth
 
