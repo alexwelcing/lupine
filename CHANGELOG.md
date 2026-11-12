@@ -1,5 +1,12 @@
 # Changelog & Progress
 
+> **This changelog covers the monorepo through 2026-06-19.** Later work is in
+> [lupine-rhizo](https://github.com/alexwelcing/lupine-rhizo/blob/main/CHANGELOG.md)
+> and the field notes on [lupine.science](https://lupine.science). Public
+> headlines we have since retired, with the date and reason, are listed in the
+> [corrections log](https://lupine.science/corrections/). Entries below are kept
+> as written; some claims in them are no longer supported.
+
 A working log of what changed in the Lupine research program — not just *what* we did, but
 **why**, what the **results** were, and the **suggested next steps** to extract more value.
 This is meant to be read: it is the narrative spine of the corpus, and it is published on

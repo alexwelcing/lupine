@@ -1,14 +1,20 @@
 # Lean Spec
 
-`lean-spec/` holds the machine-checked theorems behind the materials-science
-claims in the Lupine Science repo. It is the formal evidence plane: every
-serious claim about error geometry, regime gates, or promotion eventually
-touches a theorem proven here.
+`lean-spec/` machine-checks selected mathematical and arithmetic statements
+behind the research claims, for example the participation-ratio gauge and
+threshold comparisons over committed values. Lean 4 checks the arithmetic and
+stated inequalities behind published numbers; it does not check the physics,
+the reference data or the pipeline. A green build means those statements
+follow from their stated inputs.
 
 ## Current state
 
-- Current declaration and `sorry` totals are maintained in the reviewed
-  machine inventory at `../data/lean-inventory.json`; never hand-type them here.
+- Counts are generated, never typed. This directory has no generated count of
+  its own: `../data/lean-inventory.json` is a dated inventory of the
+  lupine-rhizo Lean corpus (see its `counted_at` and `source` fields), used by
+  the Library build. The maintained inventory is lupine-rhizo
+  `lean-spec/theorem-count.json`. Counts typed into older documents in this
+  repo are dated snapshots.
 - The build is locked by `#guard` contracts in `Materials/Vision.lean`.
 - Epistemic gaps are documented as structures/comments, not as axioms.
 
@@ -54,7 +60,7 @@ regression.
 cd lean-spec
 lake build
 
-# Count theorems (sanity check; authoritative count is in AGENTS.md)
+# Count theorems (local sanity check only; do not copy the number into docs)
 git grep -c "^\s*theorem " OpenDistillationFactory/Materials/
 ```
 

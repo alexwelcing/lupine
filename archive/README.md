@@ -16,5 +16,7 @@ Each subroot below has its own README with details on what it was, where its act
 | `lupine-site-router/` | The old nginx Cloud Run start page for `lupine.science`, with its `llms.txt`. | Superseded: lupine.science deploys from `alexwelcing/lupine-science` (Cloudflare Pages). Its copy uses retired wording; the deploy workflow is a manual-only guard. |
 | `tools-retired/` | Dead or superseded scripts from `tools/`. | No active callers; kept for provenance. |
 | `2026-06-cross-mlip-experiments/` | June 2026 MatPES 4×2 results report, analysis scripts and result JSONs, restored from a removed working folder. | Only committed copy of numbers quoted in `paper2/`; cited by `lean-spec` and the replication-kit preregistration. Superseded by the replication kit and the hypothesis ledger. |
+| `ROOTS-cleanup-log-2026-06.md` | The June 2026 removal tables and cleanup log from `ROOTS.md`. | Superseded by the current `ROOTS.md`; kept for provenance. |
+| `reports/` | AI-assisted background and literature reports (PDF/DOCX) from early-to-mid 2026, moved from `docs/` on 2026-11-12. | Historical reading, not results or plans. |
 
 If something in this archive is still referenced by active code, update the active code rather than moving it back to the root.
