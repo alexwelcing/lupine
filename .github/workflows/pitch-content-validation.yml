@@ -1,37 +1,16 @@
 name: Pitch content validation
 
-# Guard public-facing materials against recurring false paper-status and team claims.
+# Guard public-facing materials against recurring false paper-status and team claims,
+# and every tracked text file against confidentiality labels, funding-status lines,
+# partner claims, tailnet hosts, local agent paths and personal Gmail addresses.
 
 on:
+  # The guard also scans every tracked text file for blocked strings, so it
+  # runs on every push to main and every pull request, not only on the
+  # public-surface paths.
   push:
     branches: [main]
-    paths:
-      - 'brand.config.json'
-      - 'docs/brand/**'
-      - 'library-site/**'
-      - 'atlas/atlas-view/apps/web/public/llms*.txt'
-      - 'atlas/atlas-view/apps/web/public/brand.json'
-      - 'README.md'
-      - 'CHANGELOG.md'
-      - 'docs/research_evolution_2026_05_05.md'
-      - 'paper/README.md'
-      - 'atlas-distill/README.md'
-      - 'tools/validate_pitch_claims.py'
-      - '.github/workflows/pitch-content-validation.yml'
   pull_request:
-    paths:
-      - 'brand.config.json'
-      - 'docs/brand/**'
-      - 'library-site/**'
-      - 'atlas/atlas-view/apps/web/public/llms*.txt'
-      - 'atlas/atlas-view/apps/web/public/brand.json'
-      - 'README.md'
-      - 'CHANGELOG.md'
-      - 'docs/research_evolution_2026_05_05.md'
-      - 'paper/README.md'
-      - 'atlas-distill/README.md'
-      - 'tools/validate_pitch_claims.py'
-      - '.github/workflows/pitch-content-validation.yml'
 
 jobs:
   validate-pitch-claims:
@@ -43,3 +22,5 @@ jobs:
           python-version: '3.12'
       - name: Validate pitch claims
         run: python tools/validate_pitch_claims.py
+      - name: Test the guard
+        run: python -m unittest tools/test_validate_pitch_claims.py

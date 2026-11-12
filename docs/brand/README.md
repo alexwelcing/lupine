@@ -33,4 +33,8 @@ python tools/validate_pitch_claims.py
 The sync script republishes `llms.txt`, `llms-full.txt` and `brand.json` into
 the public static roots (`library-site/src/` and
 `atlas/atlas-view/apps/web/public/`); the validator fails if those copies
-drift or if a public surface carries a false paper-status or team claim.
+drift, if a public surface carries a false paper-status or team claim, or if
+any tracked text file carries a blocked string (confidentiality labels,
+funding-status lines, partner claims, tailnet hosts, local agent paths,
+personal Gmail addresses). Third-party, archive-banner and guard files are
+exempt only through its explicit `LEAK_ALLOWLIST`.
