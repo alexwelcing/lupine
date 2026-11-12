@@ -10,3 +10,6 @@ atlas-distill/lammps_runs/** linguist-vendored
 atlas-distill/potentials/** linguist-vendored
 # Retired surfaces kept for provenance.
 archive/** linguist-vendored
+
+# PDFs are binary: never diff, merge or convert their line endings.
+*.pdf binary
