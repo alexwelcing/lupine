@@ -686,10 +686,11 @@ $128$ cases for the raw prediction, three deployable no-target estimators, and
 the oracle ceiling. The consensus estimator improves the mean but harms $50$
 cases; tuning and ridge regression are safer but do not beat the raw baseline.
 The oracle bar ($10.25$~GPa) uses the same leave-one-element-out split as the
-estimators: the bias direction is fitted without the held-out element. It is
-therefore slightly below the $10.36$~GPa leave-one-out ceiling in
-Table~\ref{tab:round2_op}, where the direction is fitted on the other $63$
-cases of the same functional. The gap between the estimators and the oracle is
+estimators: the bias direction is fitted without the held-out element.
+Table~\ref{tab:round2_op} reports the leave-one-out version of the same
+ceiling ($10.36$~GPa), where the direction is fitted on the other $63$ cases
+of the same functional; the two splits differ by about $0.1$~GPa. The gap
+between the estimators and the oracle is
 the remaining deployability problem.}
 \label{fig:no_target}
 \end{figure}
