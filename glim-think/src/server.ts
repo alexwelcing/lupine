@@ -1326,7 +1326,7 @@ ${narrative}
             h2_bcc_fcc: {
               claim: "BCC metals show strong ref-pred correlations (r>0.7); FCC metals show weak correlations (r<0.4)",
               status: "confirmed",
-              evidence: "I² = 98.6%, subgroup Q = 537.7 (p < 0.001)",
+              evidence: "I² = 98.5%, subgroup Q = 537.7 (p < 0.001)",
               causal_mechanism: "Directional d-orbital bonding in BCC creates constrained prediction landscape",
             },
             h3_ecological_fallacy: {

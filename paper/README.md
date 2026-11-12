@@ -60,6 +60,18 @@ the overstatement), applied Born stability screening to the foundation-MLIP
 section, and corrected Table 2. Any copy of this paper that uses the
 Simpson's-paradox title is superseded.
 
+Corrected 2026-11-12: the `atlas-distill` meta-analysis engine computed the
+random-effects Q and I² around the random-effects mean and built the
+prediction interval with the normal quantile (see `atlas-distill/README.md`,
+"Known issues"). With the fixed engine, the random-effects row of the
+meta-analysis table and the text report Q = 945 and I² = 98.5% (were 984 and
+98.6%) and a 95% prediction interval of [−0.73, +0.99] (was [−0.64, +0.99]),
+using a t quantile with k − 2 = 13 degrees of freedom. The pooled r (0.69),
+its CI [0.41, 0.85] and τ (0.80) are unchanged. `figures/fig4_forest.{png,pdf}`
+was regenerated. The compiled PDFs (`immi-paper.pdf`, `immi-paper-latest.pdf`,
+`immi-paper-local.pdf` and `library-site/src/immi_paper.pdf`) predate this
+correction and still show the old values until they are rebuilt.
+
 ## Citation
 
 ```bibtex

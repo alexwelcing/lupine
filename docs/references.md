@@ -115,7 +115,7 @@ infrastructure and reference data.
   performance correctly.
 - **Higgins et al. (2003)** — *Measuring inconsistency in meta-analyses (I²).* BMJ 327,
   557. [doi](https://doi.org/10.1136/bmj.327.7414.557)
-  — The heterogeneity statistic; our corpus shows extreme I² ≈ 98.6 %, which is *why*
+  — The heterogeneity statistic; our corpus shows extreme I² ≈ 98.5 %, which is *why*
   random-effects is mandatory.
 - **Hedges & Olkin (1985)**, **Borenstein et al. (2009, 2010)** — standard references
   for fixed- vs random-effects models.
