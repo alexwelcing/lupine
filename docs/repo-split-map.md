@@ -1,6 +1,11 @@
 # Lupine Repo Split Architecture Map
 
-**Status:** planning map
+**Status:** historical planning map. Update 2026-11-12: the split has
+happened. lupi.live deploys from `alexwelcing/Lupi`, lupine.science from
+`alexwelcing/lupine-science`, and the Library reader is
+`alexwelcing/lupine-ledger`. The legacy `atlas/deploy_full.py`,
+`atlas/deploy_optimized.py` and `atlas/deploy_slim.py` were removed from this
+repo on 2026-11-12; mentions of them below are historical.
 
 **Date:** 2026-06-17
 
