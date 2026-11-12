@@ -4,6 +4,24 @@ Self-contained replication of the pre-registered functional-vs-architecture
 experiment (prereg committed at `dffbe595`, results at `63f6e59c`) and the
 formal theory it instantiates.
 
+> **Status update, 2026-11-11 — read before citing claim 1.** This kit
+> reproduces the original 2×4 MatPES result exactly as computed. The
+> preregistered follow-up did **not** reproduce it. On the Round-2 3×3×3
+> benchmark (16 cubic metals, 0 K DFT targets), the H1 and H2a kill conditions
+> triggered: the 3d/4d functional-clustering effect was −0.14 (same-architecture
+> pairs aligned more closely than same-functional pairs), permutation p = 0.13.
+> H2b missed its cosine threshold (0.53 against 0.8), and H4's conformal coverage
+> was 86.7% against a 90% target. Sources:
+> [TMS proceedings manuscript](https://github.com/alexwelcing/lupine-rhizo/blob/main/paper/tms2027-proceedings/manuscript.tex)
+> and [ProjectionLaw_Round2.md §4.2](../../paper2/ProjectionLaw_Round2.md).
+> The two tests also used different references: this kit compares against
+> experimental single-crystal constants (`references.py`); Round 2 used 0 K DFT
+> targets. The four MatPES models share one training set and QET is a
+> TensorNet-family variant, so they are not four independent architectures.
+> We no longer present the "Projection Law" as a law, and the corollary that one
+> correction vector repairs every model is retired. Current status of every
+> claim: [conjecture ledger](https://github.com/alexwelcing/lupine-rhizo/blob/main/docs/conjectures/ledger.md).
+
 **Claims under test**
 
 1. Foundation-MLIP elastic-constant error geometry organizes by **training
@@ -54,9 +72,10 @@ float32; minor BLAS variation is far below tolerance).
   8× window range). See `harness.py` (frozen copy; no external imports).
 - References: experimental single-crystal elastic constants (Simmons & Wang
   1971 lineage), `references.py`, identical to the table used for the
-  classical 559-potential analysis.
+  classical elastic analysis (559 model–element tensors, 423 distinct KIM ids).
 - Born screen applied identically to every model: C11>0, C44>0, C11>|C12|.
-- Models: matgl-distributed MatPES 2025.2 checkpoints, four architectures
-  (M3GNet, TensorNet, CHGNet, QET) × two functionals (PBE, r2SCAN), plus
+- Models: matgl-distributed MatPES 2025.2 checkpoints, four model labels
+  (M3GNet, TensorNet, CHGNet, QET; QET is a TensorNet-family variant and all
+  four share one training set) × two functionals (PBE, r2SCAN), plus
   the original MPtrj/OMat anchors (MACE-MP-0-small, CHGNet, Orb-v3) whose
   raw outputs are committed under `data/anchors/`.
