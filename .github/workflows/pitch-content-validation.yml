@@ -1,8 +1,9 @@
 name: Pitch content validation
 
 # Guard public-facing materials against recurring false paper-status and team claims,
-# and every tracked text file against confidentiality labels, funding-status lines,
-# partner claims, tailnet hosts, local agent paths and personal Gmail addresses.
+# and every tracked text, PDF and Office file against confidentiality labels,
+# funding-status lines, partner claims, tailnet hosts, local agent paths and
+# personal Gmail addresses. pypdf extracts PDF page text for the scan.
 
 on:
   # The guard also scans every tracked text file for blocked strings, so it
@@ -20,7 +21,9 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+      - name: Install PDF text extractor
+        run: python -m pip install pypdf==6.17.0
       - name: Validate pitch claims
-        run: python tools/validate_pitch_claims.py
+        run: python tools/validate_pitch_claims.py --require-pdf-text
       - name: Test the guard
         run: python -m unittest tools/test_validate_pitch_claims.py
