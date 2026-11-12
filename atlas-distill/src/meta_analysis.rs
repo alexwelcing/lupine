@@ -22,7 +22,10 @@
 //! Scope: this pools correlations, not error magnitudes such as MAE, and it
 //! assumes the groups are independent. Rows that share materials or models
 //! (for example C11, C12 and C44 of the same metal) are not independent, and
-//! intervals built on such rows are anti-conservative. Groups need n ≥ 4.
+//! intervals built on such rows are anti-conservative. Groups need n ≥ 4
+//! ([`MIN_GROUP_N`]): with n ≤ 3 the sampling variance 1/(n − 3) is undefined,
+//! so both estimators leave such groups out entirely. They do not count toward
+//! k, df, I², the prediction interval, `n_groups` or `total_n`.
 //!
 //! The unit tests compare every reported statistic, to 1e-6, with an
 //! independent numpy/scipy implementation in
@@ -40,6 +43,9 @@ use serde::{Deserialize, Serialize};
 
 /// Two-sided 95% critical value of the standard normal distribution, Φ⁻¹(0.975).
 pub const Z_975: f64 = 1.959_963_984_540_054;
+
+/// Smallest group size with a finite Fisher-z sampling variance, 1/(n − 3).
+pub const MIN_GROUP_N: usize = 4;
 
 /// A single group's correlation data.
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -109,10 +115,22 @@ struct Heterogeneity {
     i_squared: f64,
 }
 
+/// Groups with n ≥ [`MIN_GROUP_N`]. Smaller groups would get zero weight but
+/// still inflate k, df, I² and the prediction interval, so they are dropped.
+fn usable_groups(groups: &[GroupCorrelation]) -> Vec<GroupCorrelation> {
+    groups
+        .iter()
+        .filter(|g| g.n >= MIN_GROUP_N)
+        .cloned()
+        .collect()
+}
+
 /// Fixed-effects meta-analysis of correlations.
 ///
-/// Assumes all groups estimate the same underlying true effect.
+/// Assumes all groups estimate the same underlying true effect. Groups with
+/// n < [`MIN_GROUP_N`] are left out (see the module docs).
 pub fn fixed_effects_meta(groups: &[GroupCorrelation]) -> MetaAnalysisResult {
+    let groups = &usable_groups(groups);
     if groups.is_empty() {
         return empty_result();
     }
@@ -135,8 +153,10 @@ pub fn fixed_effects_meta(groups: &[GroupCorrelation]) -> MetaAnalysisResult {
 /// Allows the true effect to vary across groups. Q, its p-value and I² are
 /// computed with fixed-effect weights around the fixed-effect mean, exactly as
 /// in [`fixed_effects_meta`]; only τ², the pooled estimate, its CI and the
-/// prediction interval differ between the two models.
+/// prediction interval differ between the two models. Groups with
+/// n < [`MIN_GROUP_N`] are left out (see the module docs).
 pub fn random_effects_meta(groups: &[GroupCorrelation]) -> MetaAnalysisResult {
+    let groups = &usable_groups(groups);
     if groups.is_empty() {
         return empty_result();
     }
@@ -803,6 +823,43 @@ mod tests {
         // Large Q with small df → small p-value
         let p = chi_square_pvalue(20.0, 2);
         assert!(p < 0.01, "p should be small for extreme Q, got {}", p);
+    }
+
+    #[test]
+    fn test_groups_below_min_n_are_left_out() {
+        // n = 3 has no finite sampling variance. It must not count toward
+        // k, df, I² or the t_{k-2} prediction interval.
+        let g = |id: &str, n: usize, r: f64| GroupCorrelation {
+            group_id: id.to_string(),
+            n,
+            r,
+        };
+        let with_small = vec![g("A", 3, 0.5), g("B", 40, 0.6), g("C", 50, 0.7)];
+        let without = vec![g("B", 40, 0.6), g("C", 50, 0.7)];
+        for (a, b) in [
+            (
+                fixed_effects_meta(&with_small),
+                fixed_effects_meta(&without),
+            ),
+            (
+                random_effects_meta(&with_small),
+                random_effects_meta(&without),
+            ),
+        ] {
+            assert_eq!(a.n_groups, 2);
+            assert_eq!(a.total_n, 90);
+            assert_eq!(a.q_df, 1);
+            assert_eq!(a.group_results.len(), 2);
+            assert_eq!(a.pooled_z, b.pooled_z);
+            assert_eq!(a.q_statistic, b.q_statistic);
+            assert_eq!(a.i_squared, b.i_squared);
+            assert_eq!(a.tau_squared, b.tau_squared);
+        }
+        // k = 2 usable groups: the random-effects prediction interval is undefined.
+        let random = random_effects_meta(&with_small);
+        assert!(random.pred_interval_lower.is_nan() && random.pred_interval_upper.is_nan());
+        // Only groups below the minimum: nothing to pool.
+        assert_eq!(fixed_effects_meta(&[g("A", 3, 0.5)]).n_groups, 0);
     }
 
     #[test]

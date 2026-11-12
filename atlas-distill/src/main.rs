@@ -140,7 +140,8 @@ enum Commands {
         #[arg(long, conflicts_with = "groups", required_unless_present = "groups")]
         input: Option<PathBuf>,
         /// JSON array of {"group_id", "n", "r"} records, or a previous
-        /// meta-analyze output (its fixed_effects.group_results are reused)
+        /// meta-analyze output (its fixed_effects.group_results are reused);
+        /// every group needs n >= 4
         #[arg(long)]
         groups: Option<PathBuf>,
         /// Write the JSON to this file instead of stdout
@@ -632,7 +633,17 @@ fn meta_groups_from_json(path: &Path) -> Result<Vec<meta_analysis::GroupCorrelat
                 )
             })?
     };
-    Ok(serde_json::from_value(list)?)
+    let groups: Vec<meta_analysis::GroupCorrelation> = serde_json::from_value(list)?;
+    if let Some(g) = groups.iter().find(|g| g.n < meta_analysis::MIN_GROUP_N) {
+        anyhow::bail!(
+            "{}: group {} has n = {} (need n >= {})",
+            path.display(),
+            g.group_id,
+            g.n,
+            meta_analysis::MIN_GROUP_N
+        );
+    }
+    Ok(groups)
 }
 
 fn load_grouped_csv(path: &Path) -> Result<Vec<causal::GroupedPoint>> {
