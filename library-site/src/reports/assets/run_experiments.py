@@ -1,6 +1,6 @@
 """
 Lupine Hyper-Ribbon — Round-2 computational experiments.
-Runs the experiments from the KIMI research brief that are executable on this
+Runs the experiments from an AI-drafted research brief that are executable on this
 host (Python + numpy + the shipped framework + the shipped data drop).
 
 Exp 2 (Orb-v3 relativistic toggle) and Exp 4 (Au nanocluster gen + DFT) require

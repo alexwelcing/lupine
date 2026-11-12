@@ -1,7 +1,7 @@
 {
   "name": "Lupine Library",
   "short_name": "Lupine Lib",
-  "description": "Research notes, evidence, and MLIP field reports from Lupine Science.",
+  "description": "Lupine's public research record: tested claims about interatomic-potential error, with refutations, corrections and the evidence for each.",
   "start_url": "/?v=__VERSION__",
   "display": "standalone",
   "orientation": "portrait",

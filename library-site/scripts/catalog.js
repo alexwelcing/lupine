@@ -38,8 +38,8 @@ export const CATALOG = {
     },
     {
       id: 'partnerships',
-      label: { en: 'Partnerships', zh: '合作' },
-      blurb: { en: 'Pilots and alignment — public thesis and methodology; commercial terms gated.', zh: '试点与对齐 — 公开论点与方法；商业条款受限。' },
+      label: { en: 'Internal test cases', zh: '内部测试案例' },
+      blurb: { en: 'Internal test cases mapped to program topics. Direction, not a result.', zh: '与项目主题对应的内部测试案例。方向，而非结果。' },
     },
     {
       id: 'foundations',
@@ -327,7 +327,7 @@ export const CATALOG = {
       id: 'data-provenance',
       source: 'docs/data-provenance.md',
       title: 'Data & Provenance',
-      subtitle: 'Where every number comes from: OpenKIM, NIST IPR, 559 potentials, the integrity gates.',
+      subtitle: 'Where every number comes from: OpenKIM, NIST IPR, the retained model–element tensors, and the integrity gates.',
       category: 'foundations',
       tags: ['provenance', 'data', 'trust'],
     },
@@ -515,7 +515,7 @@ export const CATALOG = {
       id: 'formal-vision',
       source: 'docs/formal-vision.md',
       title: 'The Open Distillation Factory — Executable Vision',
-      subtitle: `Current status: ${LEAN_INVENTORY.count} machine-inventoried Lean theorem/lemma declarations, zero active sorry, and a build-locking epistemic contract.`,
+      subtitle: `Lean 4 checks the arithmetic and stated inequalities behind published numbers; it does not check the physics, the reference data or the pipeline. Generated inventory: ${LEAN_INVENTORY.count} declarations, zero active sorry (counted ${LEAN_INVENTORY.counted_at}).`,
       category: 'formalization',
       tags: ['lean', 'formal-spec', 'vision'],
     },
