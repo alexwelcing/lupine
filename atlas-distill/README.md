@@ -198,7 +198,11 @@ on such rows are anti-conservative. We withdrew our own earlier Fisher-z
 random-effects intervals built on dependent C11/C12/C44 rows for this reason
 (lupine-rhizo `paper/tms2027-proceedings/manuscript.tex`).
 
-### Known issues (Fixed 2026-11-12)
+`meta-analyze --input` builds one group per material and skips, with a line
+on stderr, any material with fewer than 4 numeric rows or with constant
+reference or predicted values (zero variance, so r is undefined).
+
+### Known issues (Fixed 2026-11-12 and 2026-11-13)
 
 - **Q and I² in the random-effects output. Fixed 2026-11-12.**
   `random_effects_meta` used to recompute the reported Q, its p-value and I²
@@ -235,8 +239,17 @@ random-effects intervals built on dependent C11/C12/C44 rows for this reason
   declare `mod meta_analysis`, so neither the module nor its unit tests were
   built or run by `cargo test`. It is now declared and exercised by the
   `meta-analyze` command.
+- **Constant-valued groups in `meta-analyze --input`. Fixed 2026-11-13.**
+  A material with 4 or more rows whose reference or predicted values are all
+  equal has no defined correlation, but `stats::pearson_r` returns 0.0 on a
+  zero denominator, so such a group entered the pool as r = 0 with weight
+  n − 3 and pulled the pooled correlation toward zero. It is now skipped
+  ("skipping <material>: reference values are constant …" on stderr), like
+  a group with n < 4. `benchmarks/nist_populated_all.csv` has no such group:
+  re-running `meta-analyze` on it reproduces `benchmark_meta.json` byte for
+  byte, so no published number changes.
 
-Published numbers that came from this engine, before and after the fix:
+Published numbers that came from this engine, before and after the 2026-11-12 fixes:
 the 15-element panel's random-effects Q went from 984 to 945, I² from
 98.6% to 98.5%, and the 95% prediction interval from [−0.64, +0.99] to
 [−0.73, +0.99]. The pooled r (0.69), its CI [0.41, 0.85] and τ (0.80) are
