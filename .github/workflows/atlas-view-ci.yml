@@ -100,7 +100,8 @@ jobs:
   # harness is mostly DOM/store assertions, but we don't gate merges on a
   # known-fragile path. Screenshots are uploaded for inspection.
   gallery-e2e:
-    runs-on: ubuntu-latest
+    # Pinned: Playwright 1.59.1 cannot install chromium deps on ubuntu-latest (26.04).
+    runs-on: ubuntu-24.04
     needs: build-test
     continue-on-error: true
     defaults:
