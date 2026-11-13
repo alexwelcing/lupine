@@ -12,11 +12,9 @@ name: Deploy Glim Eval Cloud Run Job
 # workflow stays as a manual (workflow_dispatch) escape hatch.
 
 on:
-  push:
-    branches: [main]
-    paths:
-      - 'glim-think/evals/**'
-      - '.github/workflows/deploy-glim-eval.yml'
+  # Manual only (2026-11-13): lupine-rhizo is the maintained source for this
+  # service. A push here must not redeploy this repository's historical copy
+  # over production.
   workflow_dispatch:
 
 jobs:
