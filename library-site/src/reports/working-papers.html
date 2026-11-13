@@ -4,7 +4,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 <title>Working Papers — Lupine Science</title>
-<meta name="description" content="The Projection Law and The Causal Geometry of Prediction Errors — working papers with figures, replication kit, and machine-checked theory. Web and print editions." />
+<meta name="description" content="Working drafts from June 2026 (The Projection Law; Forty Years of Interatomic Potentials, archived), with a dated status note on what later results changed." />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" />
 <style>
@@ -50,6 +50,10 @@
   figcaption { font-size: 13.5px; color: #3a3e52; padding: 10px 4px 10px; line-height: 1.55; font-family: var(--sans); }
   figcaption b { color: #16181f; }
 
+  .status-box { margin: 36px 0 8px; padding: 18px 22px 20px; border: 1px solid rgba(232,180,90,0.5); border-radius: 12px; background: var(--panel); font-size: 15px; }
+  .status-box h3 { margin-top: 0; color: #e8b45a; }
+  .status-box ul { padding-left: 20px; margin: 10px 0; }
+  .status-box li { margin-top: 7px; }
   .colophon { padding: 48px 0 80px; font-size: 14.5px; color: var(--ink-soft); }
   .colophon code { font-family: var(--mono); font-size: 12.5px; background: var(--panel); border: 1px solid var(--hair); border-radius: 4px; padding: 1px 6px; }
   .printnote { font-family: var(--mono); font-size: 12px; color: var(--ink-soft); margin-top: 10px; }
@@ -73,16 +77,30 @@
 <div class="wrap">
 
 <header class="hero">
-  <div class="eyebrow"><span class="badge">Working papers</span> Lupine Science · Error-Geometry Program · June 2026</div>
-  <h1>Two papers, one law, every number traceable.</h1>
-  <p class="deck">The empirical discovery and the law it revealed — distributed as working papers with a public replication kit, three pre-registrations, and a machine-checked theory core. Failures reported as failures.</p>
+  <div class="eyebrow"><span class="badge">Working drafts</span> Lupine Science · June 2026 · status note 11 November 2026</div>
+  <h1>Working drafts, every number traceable.</h1>
+  <p class="deck">A proposed law about model-ensemble errors and an archived earlier draft — with a public replication kit, three pre-registrations and Lean-checked arithmetic. Failures reported as failures; later corrections are listed below.</p>
   <div class="byline">
     <span><b>Alex Welcing</b> · Lupine Science</span>
-    <span>status: working papers, in preparation</span>
-    <span>{{LEAN_DECLARATION_COUNT}} machine-inventoried Lean declarations · 0 active sorry · build-locked</span>
+    <span>status: Working draft · not peer-reviewed</span>
+    <span>Lean-checked arithmetic</span>
   </div>
   <p class="printnote">This page is the web edition; use your browser's Print for a clean paper copy, or download the typeset PDFs below.</p>
 </header>
+
+<section class="status-box" id="status">
+  <h3>Status and corrections · 11 November 2026</h3>
+  <p>These are working drafts from June 2026, kept as written so the record stays inspectable; they are not for citation. No Lupine paper has been peer-reviewed or accepted yet. Read them with these later results:</p>
+  <ul>
+    <li><b>Elastic correction.</b> On 16 elemental cubic metals with four MatPES MLIPs (128 cases; r2SCAN targets approximate), one bias direction per functional transfers out of sample. When the held-out reference sets how far to correct, MAE falls from 17.84 to 10.36 GPa: a ceiling, not a deployable correction. A correction that works without seeing the answer is still open, and derived moduli are uncertified. The earlier in-sample figures with “zero no-harm violations” are not a usable correction.</li>
+    <li><b>Functional clustering.</b> The p = 0.029 result was not reproduced by the preregistered Round-2 follow-up against DFT targets: the H1 and H2a kill conditions triggered (effect −0.14, permutation p = 0.13); H2b’s cosine was 0.53 against 0.8; conformal coverage was 86.7% against 90%. <a href="/#/read/conjecture-ledger">Hypothesis Ledger</a>.</li>
+    <li><b>Round 4.</b> In four preregistered campaigns in July 2026 (Round 4), no gate passed: three failed and one abstained. <a href="https://lupine.science/articles/four-gates-three-honest-failures-one-live-experiment/">Round 4 results</a>.</li>
+    <li><b>Hyper-ribbon.</b> The universal reading is no longer supported; the claim is Open and descriptive. “559 potentials” are 559 model–element tensors with 423 distinct KIM ids, and the historical counts are not re-verified. <a href="/#/read/conjecture-ledger">Hypothesis Ledger</a>.</li>
+    <li><b>Self-corrections.</b> The BCC/FCC “causal shield” was 1.5% data contamination, and a d-band signal was a sample-size confounder.</li>
+    <li><b>Lean.</b> Lean 4 checks the arithmetic and stated inequalities behind published numbers; it does not check the physics, the reference data or the pipeline.</li>
+  </ul>
+  <p>Retired headlines and the reasons are listed in the <a href="https://lupine.science/corrections/">corrections log</a>.</p>
+</section>
 
 <!-- ════════════════ PAPER 2 — THE LAW ════════════════ -->
 <section class="paper" id="projection-law">
@@ -105,10 +123,9 @@
   <div class="kr">
     <div><b>p = 0.029</b>Foundation-model errors cluster by training functional, not architecture (S = +0.317 vs −0.093; exact permutation over all 70 labelings).</div>
     <div><b>p = 0.017</b>DFT-implementation errors cluster by pseudopotential table, not simulation code (S = +0.526 vs +0.265); four independent codes sharing one table align at 0.70–0.87.</div>
-    <div><b>69% out-of-sample</b>A correction direction fitted with the corrected model held out removes a median 69% of squared elastic error (154 leave-one-model-out trials).</div>
     <div><b>4 of 7 failed</b>Registered predictions that missed their thresholds, reported as failures — including the clustering effect-size component itself.</div>
   </div>
-  <p><strong>Certification boundary:</strong> the corrected elastic-error aggregate above is an empirical/oracle diagnostic and is <strong>uncertified</strong> as a correction license. Every included C11/C12/C44 target would need an independent valid scalar license; no derived modulus or composite inherits a license without a separate vector-valued theorem for the exact map.</p>
+  <p><strong>Certification boundary:</strong> corrected elastic-error aggregates from this program are empirical/oracle diagnostics and are <strong>uncertified</strong> as a correction clearance. Every included C11/C12/C44 target would need its own valid scalar clearance; no derived modulus or composite inherits one without a separate vector-valued theorem for the exact map.</p>
 
   <figure>
     <img src="assets/papers/fig1_law_and_stack.png" alt="The projection law schematic and the three-layer constraint-vs-implementation bars" />
@@ -130,23 +147,23 @@
 
 <!-- ════════════════ PAPER 1 — THE INSTANCE ════════════════ -->
 <section class="paper" id="causal-geometry">
-  <div class="papertag">Paper · The discovery substrate</div>
+  <div class="papertag">Archived · superseded working draft</div>
   <h2>Forty Years of Interatomic Potentials, One Error Geometry</h2>
-  <p class="sub">Hyper-Ribbon Universality and Why Pooled Benchmarks Mislead · Working paper · June 2026</p>
+  <p class="sub">Hyper-Ribbon Universality and Why Pooled Benchmarks Mislead · Working draft · June 2026 · archived 2026-11-11</p>
+  <div class="status-box">
+    <p><b>Archived 11 November 2026.</b> Kept for the record; not for citation. The draft's central claim, a universal low-dimensional error geometry across “559 potentials”, is no longer supported: the 559 are model–element tensors with 423 distinct KIM ids, the historical counts are not re-verified, low participation ratios are partly rank-limited, and the hyper-ribbon claim is Open and descriptive. The crystal-structure (BCC/FCC) pattern it mentions was 1.5% data contamination. The draft’s <i>I</i>² and random-effects intervals were computed on dependent C<sub>11</sub>/C<sub>12</sub>/C<sub>44</sub> rows of the same tensors; they are anti-conservative and no longer reported as inference. Current status: <a href="/#/read/conjecture-ledger">Hypothesis Ledger</a>.</p>
+  </div>
 
   <div class="actions">
     <a class="btn btn-primary" href="https://storage.googleapis.com/shed-489901-replication/papers/forty-years-one-geometry-working-paper-v2026-06-11b.pdf">Typeset PDF ↓</a>
     <a class="btn" href="https://storage.googleapis.com/shed-489901-replication/error-geometry/v1-10c18ace/index.html">Replication kit →</a>
   </div>
 
-  <h3>Abstract</h3>
-  <p class="abstract">Prediction errors are not noise. Across 559 interatomic potentials and forty years of development — pair potentials through embedded-atom methods to modern functional forms — elastic-constant errors universally occupy low-dimensional hyper-ribbon manifolds (effective dimensionality 1.0–2.3 out of 3, median 1.09), and the geometry has not moved while accuracy improved: the sloppy-model universality class, observed for the first time in <i>cross-model error space</i> rather than single-model parameter space. The methodological consequence is sharp: between-element heterogeneity is extreme (<i>I</i>² = 98.6%), pooled benchmarks misstate model accuracy (within-family correlation 0.95 vs 0.82 pooled), and the paper demonstrates the repair — stratified evaluation with random-effects meta-analysis. The paper also audits itself: an apparent element-level electronic-structure signal is traced to a fitting-depth confounder, and a Born-screened extension to three foundation MLIPs (with mechanical-stability failures reported, not hidden) provides the proof-of-concept the companion law paper develops. Crystal-structure-dependent correlation patterns are reported among the empirical findings.</p>
+  <h3>Abstract (June 2026, superseded)</h3>
+  <p class="abstract">Prediction errors are not noise. Across 559 interatomic potentials and forty years of development — pair potentials through embedded-atom methods to modern functional forms — elastic-constant errors universally occupy low-dimensional hyper-ribbon manifolds (effective dimensionality 1.0–2.3 out of 3, median 1.09), and the geometry has not moved while accuracy improved: the sloppy-model universality class, observed for the first time in <i>cross-model error space</i> rather than single-model parameter space. The methodological consequence is sharp: between-element heterogeneity is extreme (<i>I</i>² = 98.5%), pooled benchmarks misstate model accuracy (within-family correlation 0.95 vs 0.82 pooled), and the paper demonstrates the repair — stratified evaluation with random-effects meta-analysis. The paper also audits itself: an apparent element-level electronic-structure signal is traced to a fitting-depth confounder, and a Born-screened extension to three foundation MLIPs (with mechanical-stability failures reported, not hidden) provides the proof-of-concept the companion law paper develops. Crystal-structure-dependent correlation patterns are reported among the empirical findings.</p>
 
-  <h3>Key results</h3>
+  <h3>What the draft disclosed</h3>
   <div class="kr">
-    <div><b>40 years, one geometry</b>559 potentials spanning four decades of functional-form evolution; accuracy improved, the error geometry never moved. You cannot fit your way off a constraint surface.</div>
-    <div><b>I² = 98.6%</b>Between-element heterogeneity that makes pooled leaderboards statistically meaningless; random-effects meta-analysis is mandatory.</div>
-    <div><b>r = 0.95 vs 0.82</b>Within-family vs pooled correlation — pooled scores hide real family-level accuracy; stratified evaluation recovers it.</div>
     <div><b>Self-auditing</b>The paper's own apparent d-band signal is dissolved into a sample-size confounder; 7 of 45 foundation-model tensors fail Born screening and are excluded, not ignored.</div>
   </div>
 
@@ -167,7 +184,7 @@
 <!-- ════════════════ COLOPHON ════════════════ -->
 <section class="colophon" id="provenance">
   <h3>Provenance &amp; verification</h3>
-  <p>Both papers are <b>working papers, in preparation</b> — not yet submitted to any venue. Every headline statistic is verifiable from committed raw data: the <a href="https://storage.googleapis.com/shed-489901-replication/error-geometry/v1-10c18ace/index.html">replication kit</a> (commit-versioned, public; archived on Zenodo at <a href="https://doi.org/10.5281/zenodo.20787874">10.5281/zenodo.20787874</a>) runs Tier&nbsp;1 verification with NumPy alone in seconds (<code>python tier1_analyze.py</code>) and re-derives the raw elastic constants from public model checkpoints in Tier&nbsp;2. Pre-registrations were committed before execution (<code>dffbe595</code>, <code>ebf39e33</code>); the round-2 registration with symmetric kill conditions is included. The theory core — normal-cone consensus theorem, participation-ratio gauge, ribbon/consensus decoupling, affine decomposition, smooth non-convex local normal cone, and finite-sample concentration — is machine-checked within the program's {{LEAN_DECLARATION_COUNT}}-declaration Lean&nbsp;4 corpus (zero active <code>sorry</code>, zero new axioms, build locked) and builds from the <a href="https://github.com/alexwelcing/lupine">open repository</a>. An <a href="/#/read/academic-review-projection-law">academic review</a> (2026-06-16) lists strengths and six MUST-FIX gates, and a follow-up <a href="/#/read/adversarial-review-projection-law">adversarial review</a> verified the first-pass fixes and caught additional wording/placeholder issues; both are addressed in the current PDFs.</p>
+  <p>Both are <b>working drafts</b>, not submitted to any venue and not peer-reviewed; the Forty Years draft is archived. Every headline statistic is verifiable from committed raw data: the <a href="https://storage.googleapis.com/shed-489901-replication/error-geometry/v1-10c18ace/index.html">replication kit</a> (commit-versioned, public; archived on Zenodo at <a href="https://doi.org/10.5281/zenodo.20787874">10.5281/zenodo.20787874</a>) runs Tier&nbsp;1 verification with NumPy alone in seconds (<code>python tier1_analyze.py</code>) and re-derives the raw elastic constants from public model checkpoints in Tier&nbsp;2. Pre-registrations were committed before execution (<code>dffbe595</code>, <code>ebf39e33</code>); the round-2 registration with symmetric kill conditions is included. The theory core — normal-cone consensus theorem, participation-ratio gauge, ribbon/consensus decoupling, affine decomposition, smooth non-convex local normal cone, and finite-sample concentration — is checked in Lean&nbsp;4 (zero active <code>sorry</code>, zero new axioms, build locked) and builds from the <a href="https://github.com/alexwelcing/lupine">open repository</a>. Lean&nbsp;4 checks that these statements follow from their hypotheses; it does not check the physics, the reference data or the pipeline, and it does not show that real potentials satisfy the hypotheses. An <a href="/#/read/academic-review-projection-law">academic review</a> (2026-06-16) lists strengths and six MUST-FIX gates, and a follow-up <a href="/#/read/adversarial-review-projection-law">adversarial review</a> verified the first-pass fixes and caught additional wording/placeholder issues; both are addressed in the current PDFs.</p>
 </section>
 
 </div>

@@ -1,6 +1,11 @@
 # Lupine Repo Split Architecture Map
 
-**Status:** planning map
+**Status:** historical planning map. Update 2026-11-12: the split has
+happened. lupi.live deploys from `alexwelcing/Lupi`, lupine.science from
+`alexwelcing/lupine-science`, and the Library reader is
+`alexwelcing/lupine-ledger`. The legacy `atlas/deploy_full.py`,
+`atlas/deploy_optimized.py` and `atlas/deploy_slim.py` were removed from this
+repo on 2026-11-12; mentions of them below are historical.
 
 **Date:** 2026-06-17
 
@@ -31,7 +36,7 @@ Detailed extraction packets live in [`docs/splits/`](./splits/):
 
 | Target repo | Product URL | Current source paths | Owns | Must not own |
 | --- | --- | --- | --- | --- |
-| `lupine.science` | `https://lupine.science` | `gcp/lupine-site-router/`, selected generated brand/agent files | Public start page, `robots.txt`, `sitemap.xml`, `llms.txt`, lightweight live status widget, canonical links to Library/LUPI/source | Full research corpus, viewer app, private deck, heavy experiment code |
+| `lupine.science` | `https://lupine.science` | Extracted to `alexwelcing/lupine-science`; the old copy is archived at `archive/lupine-site-router/` | Public start page, `robots.txt`, `sitemap.xml`, `llms.txt`, lightweight live status widget, canonical links to Library/LUPI/source | Full research corpus, viewer app, private deck, heavy experiment code |
 | `lupi.live` | `https://lupi.live` | `atlas/atlas-view/`, `atlas/deploy_slim.py` viewer bundle path, viewer-specific Firebase files | WebGPU viewer, saved views, API-key auth, MCP/agent viewer control, federated molecule search, gallery/trajectory UX, viewer CI and deploy | Library reader, general science docs, Distill/Lean engines, unrelated Atlas research-site output |
 | `library.lupine.site` | `https://library.lupine.site` | `library-site/`, generated library content export from the science repo | Mobile/PWA reader, shelves, search, offline cache, public library deploy, rendered research corpus | Source-of-truth claims, proofs, raw experiment runners, viewer runtime |
 | science/control-plane repo | no single public site | current repo after public surfaces leave: `glim-think/`, `lean-spec/`, `atlas-distill/`, `python/`, `gcp/mlip-cell-runner/`, `gcp/tasks-consumer/`, `cloudflare/`, `tools/`, `mlip_immi/`, `data/`, `docs/`, `paper/` | Durable agenda, ledger, formal proofs, Rust/Python Distill runtime, MLIP benchmarks, Phoenix traces, cloud/local compute, source research docs, exported contracts/artifacts | Product-specific static sites after extraction |
@@ -67,7 +72,7 @@ science repo first, then consume that export from the public repo.
 
 | Surface | Current workflow | Current deploy unit | Notes for split |
 | --- | --- | --- | --- |
-| `lupine.science` | `.github/workflows/deploy-lupine-site-router.yml` | Cloud Run service from `gcp/lupine-site-router/` | Static nginx service. Good first extraction candidate. |
+| `lupine.science` | `alexwelcing/lupine-science` CI | Cloudflare Pages from that repo's `public/` | Extracted. `.github/workflows/deploy-lupine-site-router.yml` here is a manual-only retired guard; the old copy is archived at `archive/lupine-site-router/`. |
 | Library | `.github/workflows/deploy-library-site.yml` | Cloud Build using `library-site/cloudbuild.yaml` and `.gcloudignore-library` | Build reads selected repo markdown directly. Needs a generated content bundle before extraction is clean. |
 | LUPI viewer | `.github/workflows/deploy-glim-viewer.yml` | Cloud Run service from `atlas/deploy_bundle` | `atlas/deploy_slim.py` currently builds both a research-doc bundle and the web viewer. Split those before extraction. |
 | Firebase viewer support | `.github/workflows/deploy-functions.yml`, `atlas/atlas-view/firebase.json`, `firestore.rules` | Cloud Functions + Firestore rules | Must move with `lupi.live` unless functions are promoted to a shared platform repo. |
@@ -78,6 +83,9 @@ science repo first, then consume that export from the public repo.
 ## Repo Contents By Destination
 
 ### `lupine.science`
+
+Done: extracted to `alexwelcing/lupine-science`; the old paths below were
+archived to `archive/lupine-site-router/` on 2026-11-11.
 
 Move or recreate:
 
@@ -179,7 +187,7 @@ Add:
 
 Remove after proof:
 
-- `gcp/lupine-site-router/`
+- `gcp/lupine-site-router/` (archived 2026-11-11)
 - `library-site/`
 - viewer-specific `atlas/atlas-view/` files once `lupi.live` owns them
 - public-surface deploy workflows that have moved to the new repos

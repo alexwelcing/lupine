@@ -6,6 +6,17 @@
 *Correspondence: alex@lupinesci.com*  
 *Last revised: 2026-06-29*
 
+> **Status: Working draft (2026-06-29), not peer-reviewed. Correction 2026-11-11.**
+> The leave-one-out 17.84 → 10.36 GPa uses the held-out reference to set how far
+> to correct: an oracle ceiling, not a deployable correction. The best no-target
+> estimator (consensus, 14.41 GPa) harmed 50 of 128 cases. “559 models” are 559
+> model–element tensors with 423 distinct KIM ids. The four-of-seven failures
+> (§4.1, §5) belong to the MatPES factorial and ACWF experiments; in the Round-2
+> benchmark (§4.2) the H1 and H2a kill conditions triggered. Lean 4 checks the
+> arithmetic and stated inequalities behind published numbers; it does not check
+> the physics, the reference data or the pipeline. Current status:
+> lupine-rhizo `docs/conjectures/ledger.md`.
+
 ---
 
 ## Abstract
@@ -108,7 +119,7 @@ To test the operator at Layer 2 we ran a complete 3×3×3 elastic-constant bench
 
 ![No-target magnitude estimators.](figures/fig7_no_target_estimators.png)
 
-**Figure 3 — No-target magnitude estimators.** Mean C<sub>ij</sub> MAE across all 128 cases for the raw prediction, three deployable no-target estimators, and the oracle ceiling. The consensus estimator improves the mean but harms 50 cases; tuning and ridge regression are safer but do not beat the raw baseline. The gap to the oracle (10.25 GPa) is the remaining deployability problem.
+**Figure 3 — No-target magnitude estimators.** Mean C<sub>ij</sub> MAE across all 128 cases for the raw prediction, three deployable no-target estimators, and the oracle ceiling. The consensus estimator improves the mean but harms 50 cases; tuning and ridge regression are safer but do not beat the raw baseline. The oracle bar (10.25 GPa) uses the same leave-one-element-out split as the estimators: the bias direction is fitted without the held-out element. Table 2 reports the leave-one-out version of the same ceiling (10.36 GPa), where the direction is fitted on the other 63 cases of the same functional; the two splits differ by about 0.1 GPa. The gap between the estimators and the oracle is the remaining deployability problem.
 
 ![Round-2 raw versus LOO-corrected MAE by model and functional.](figures/fig5_round2_raw_vs_corrected.png)
 

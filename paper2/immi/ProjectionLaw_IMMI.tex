@@ -24,7 +24,7 @@
 \newcommand{\inn}[2]{\langle #1, #2 \rangle}
 
 \title{\bfseries The Projection Law: Model-Ensemble Errors Point at Their Binding Constraint}
-\author{Alex Welcing\\ \small Lupine Science, Union City, NJ\\ \small \texttt{alexwelcing@gmail.com}\\ \small ORCID: \href{https://orcid.org/0009-0002-1602-8545}{0009-0002-1602-8545}}
+\author{Alex Welcing\\ \small Lupine Science, Union City, NJ\\ \small \texttt{alex@lupinesci.com}\\ \small ORCID: \href{https://orcid.org/0009-0002-1602-8545}{0009-0002-1602-8545}}
 \date{June 29, 2026}
 
 \begin{document}
@@ -685,7 +685,13 @@ binding problem (Fig.~\ref{fig:no_target}).
 $128$ cases for the raw prediction, three deployable no-target estimators, and
 the oracle ceiling. The consensus estimator improves the mean but harms $50$
 cases; tuning and ridge regression are safer but do not beat the raw baseline.
-The gap to the oracle ($10.25$~GPa) is the remaining deployability problem.}
+The oracle bar ($10.25$~GPa) uses the same leave-one-element-out split as the
+estimators: the bias direction is fitted without the held-out element.
+Table~\ref{tab:round2_op} reports the leave-one-out version of the same
+ceiling ($10.36$~GPa), where the direction is fitted on the other $63$ cases
+of the same functional; the two splits differ by about $0.1$~GPa. The gap
+between the estimators and the oracle is
+the remaining deployability problem.}
 \label{fig:no_target}
 \end{figure}
 

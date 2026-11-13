@@ -12,6 +12,7 @@ mod fitting;
 mod ingest;
 mod literature;
 mod manifold;
+mod meta_analysis;
 mod mof_adapter;
 mod multi_element;
 mod nist;
@@ -127,6 +128,26 @@ enum Commands {
         /// Use BCC-flavored validation: require pooled vs within-group sign reversal
         #[arg(long)]
         bcc: bool,
+    },
+    /// Fixed- and random-effects meta-analysis of per-group correlations.
+    ///
+    /// Assumes independent groups. Prints both summaries to stderr and writes
+    /// {"fixed_effects", "random_effects"} JSON.
+    MetaAnalyze {
+        /// Benchmark CSV with columns material, reference, predicted: one group
+        /// per material (first-appearance order), r = Pearson(reference,
+        /// predicted); groups with fewer than 4 numeric rows, or with constant
+        /// reference or predicted values, are skipped
+        #[arg(long, conflicts_with = "groups", required_unless_present = "groups")]
+        input: Option<PathBuf>,
+        /// JSON array of {"group_id", "n", "r"} records, or a previous
+        /// meta-analyze output (its fixed_effects.group_results are reused);
+        /// every group needs n >= 4
+        #[arg(long)]
+        groups: Option<PathBuf>,
+        /// Write the JSON to this file instead of stdout
+        #[arg(long)]
+        output: Option<PathBuf>,
     },
     /// Hypothesis-bound research loop. Downloads a fixture from GCS, runs a
     /// small analysis, and emits a beat back to the worker. Wired to be
@@ -253,6 +274,11 @@ fn main() -> Result<()> {
             dev_mode_bypass,
         ),
         Commands::DetectParadox { data, bcc } => cmd_detect_paradox(&data, bcc),
+        Commands::MetaAnalyze {
+            input,
+            groups,
+            output,
+        } => cmd_meta_analyze(input.as_deref(), groups.as_deref(), output.as_deref()),
         Commands::AutoResearch {
             hypothesis_id,
             fixture_url,
@@ -485,6 +511,168 @@ fn cmd_detect_paradox(data_path: &Path, bcc: bool) -> Result<()> {
     }
 
     Ok(())
+}
+
+fn cmd_meta_analyze(
+    input: Option<&Path>,
+    groups: Option<&Path>,
+    output: Option<&Path>,
+) -> Result<()> {
+    let groups = match (input, groups) {
+        (Some(csv_path), None) => meta_groups_from_benchmark_csv(csv_path)?,
+        (None, Some(json_path)) => meta_groups_from_json(json_path)?,
+        _ => anyhow::bail!("pass exactly one of --input or --groups"),
+    };
+    if groups.len() < 2 {
+        anyhow::bail!(
+            "meta-analysis needs at least two groups with n >= 4, found {}",
+            groups.len()
+        );
+    }
+
+    let fixed = meta_analysis::fixed_effects_meta(&groups);
+    let random = meta_analysis::random_effects_meta(&groups);
+    meta_analysis::print_summary(&fixed);
+    meta_analysis::print_summary(&random);
+
+    let json = serde_json::to_string_pretty(&serde_json::json!({
+        "fixed_effects": fixed,
+        "random_effects": random,
+    }))?;
+    match output {
+        Some(path) => {
+            std::fs::write(path, &json)?;
+            eprintln!("  ✦ Meta-analysis → {}", path.display());
+        }
+        None => println!("{json}"),
+    }
+    Ok(())
+}
+
+/// One group per material: r = Pearson(reference, predicted) over its rows.
+fn meta_groups_from_benchmark_csv(path: &Path) -> Result<Vec<meta_analysis::GroupCorrelation>> {
+    use anyhow::Context as _;
+
+    let reader = csv::Reader::from_path(path)
+        .with_context(|| format!("failed to open {}", path.display()))?;
+    meta_groups_from_benchmark_reader(reader, &path.display().to_string())
+}
+
+/// Groups from benchmark CSV rows (see [`meta_groups_from_benchmark_csv`]).
+///
+/// A material is skipped when it has fewer than 4 numeric rows, or when its
+/// reference or predicted values are all equal: with zero variance in either
+/// series the correlation is undefined (`stats::pearson_r` would return 0.0),
+/// and such a group would otherwise enter the pool as r = 0 with weight n − 3.
+fn meta_groups_from_benchmark_reader<R: std::io::Read>(
+    mut reader: csv::Reader<R>,
+    source: &str,
+) -> Result<Vec<meta_analysis::GroupCorrelation>> {
+    use anyhow::Context as _;
+
+    let headers = reader.headers()?.clone();
+    let column = |name: &str| {
+        headers
+            .iter()
+            .position(|h| h.trim() == name)
+            .with_context(|| format!("{source}: missing column '{name}'"))
+    };
+    let (i_material, i_reference, i_predicted) = (
+        column("material")?,
+        column("reference")?,
+        column("predicted")?,
+    );
+
+    let mut order: Vec<String> = Vec::new();
+    let mut points: std::collections::HashMap<String, (Vec<f64>, Vec<f64>)> =
+        std::collections::HashMap::new();
+    for record in reader.records() {
+        let record = record?;
+        let parse = |i: usize| record.get(i).and_then(|s| s.trim().parse::<f64>().ok());
+        let (Some(reference), Some(predicted)) = (parse(i_reference), parse(i_predicted)) else {
+            continue;
+        };
+        if !(reference.is_finite() && predicted.is_finite()) {
+            continue;
+        }
+        let material = record.get(i_material).unwrap_or("").trim().to_string();
+        let entry = points.entry(material.clone()).or_insert_with(|| {
+            order.push(material);
+            (Vec::new(), Vec::new())
+        });
+        entry.0.push(reference);
+        entry.1.push(predicted);
+    }
+
+    let mut groups = Vec::new();
+    for material in order {
+        let (xs, ys) = &points[&material];
+        if xs.len() < 4 {
+            eprintln!(
+                "  · skipping {material}: {} rows (need at least 4)",
+                xs.len()
+            );
+            continue;
+        }
+        let constant = |v: &[f64]| v.iter().all(|&x| x == v[0]);
+        let constant_series = match (constant(xs), constant(ys)) {
+            (true, true) => Some("reference and predicted values are"),
+            (true, false) => Some("reference values are"),
+            (false, true) => Some("predicted values are"),
+            (false, false) => None,
+        };
+        if let Some(which) = constant_series {
+            eprintln!(
+                "  · skipping {material}: {which} constant (zero variance, correlation undefined)"
+            );
+            continue;
+        }
+        let r = stats::pearson_r(xs, ys);
+        if !r.is_finite() {
+            eprintln!("  · skipping {material}: correlation undefined");
+            continue;
+        }
+        groups.push(meta_analysis::GroupCorrelation {
+            group_id: material,
+            n: xs.len(),
+            r,
+        });
+    }
+    Ok(groups)
+}
+
+/// Groups from a JSON array of {group_id, n, r}, or from a previous
+/// meta-analyze output (fixed_effects.group_results).
+fn meta_groups_from_json(path: &Path) -> Result<Vec<meta_analysis::GroupCorrelation>> {
+    use anyhow::Context as _;
+
+    let text = std::fs::read_to_string(path)
+        .with_context(|| format!("failed to read {}", path.display()))?;
+    let value: serde_json::Value = serde_json::from_str(&text)?;
+    let list = if value.is_array() {
+        value
+    } else {
+        value
+            .pointer("/fixed_effects/group_results")
+            .cloned()
+            .with_context(|| {
+                format!(
+                    "{}: expected a JSON array of {{group_id, n, r}} or a meta-analyze output",
+                    path.display()
+                )
+            })?
+    };
+    let groups: Vec<meta_analysis::GroupCorrelation> = serde_json::from_value(list)?;
+    if let Some(g) = groups.iter().find(|g| g.n < meta_analysis::MIN_GROUP_N) {
+        anyhow::bail!(
+            "{}: group {} has n = {} (need n >= {})",
+            path.display(),
+            g.group_id,
+            g.n,
+            meta_analysis::MIN_GROUP_N
+        );
+    }
+    Ok(groups)
 }
 
 fn load_grouped_csv(path: &Path) -> Result<Vec<causal::GroupedPoint>> {
@@ -895,5 +1083,62 @@ fn cmd_literature(action: LitAction) -> Result<()> {
 
             Ok(())
         }
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn meta_csv_skips_groups_with_constant_reference_or_predicted() {
+        // Flat has a constant reference, FlatPred a constant prediction and
+        // Both has both; all three have n >= 4. Short has n = 3.
+        let csv_text = "\
+material,reference,predicted
+Lin,1.0,1.1
+Lin,2.0,2.3
+Lin,3.0,2.9
+Lin,4.0,4.2
+Lin,5.0,4.8
+Flat,0.1,1.0
+Flat,0.1,2.0
+Flat,0.1,3.0
+Flat,0.1,5.0
+Flat,0.1,4.0
+Flat,0.1,6.0
+Anti,1.0,5.0
+Anti,2.0,3.9
+Anti,3.0,3.2
+Anti,4.0,1.8
+FlatPred,1.0,7.0
+FlatPred,2.0,7.0
+FlatPred,3.0,7.0
+FlatPred,4.0,7.0
+Both,2.0,3.0
+Both,2.0,3.0
+Both,2.0,3.0
+Both,2.0,3.0
+Short,1.0,1.0
+Short,2.0,2.5
+Short,3.0,2.0
+";
+        // Without the explicit check the constant group would be accepted:
+        // pearson_r gives a finite value (0 up to rounding), not NaN.
+        let flat_r = stats::pearson_r(&[0.1; 6], &[1.0, 2.0, 3.0, 5.0, 4.0, 6.0]);
+        assert!(flat_r.is_finite() && flat_r.abs() < 1e-12, "{flat_r}");
+
+        let reader = csv::Reader::from_reader(csv_text.as_bytes());
+        let groups = meta_groups_from_benchmark_reader(reader, "inline").unwrap();
+        let ids: Vec<&str> = groups.iter().map(|g| g.group_id.as_str()).collect();
+        assert_eq!(ids, ["Lin", "Anti"]);
+        assert_eq!(groups[0].n, 5);
+        assert_eq!(groups[1].n, 4);
+        assert!(groups[0].r > 0.9 && groups[1].r < -0.9);
+
+        // The pool counts only the two usable groups.
+        let fixed = meta_analysis::fixed_effects_meta(&groups);
+        assert_eq!(fixed.n_groups, 2);
+        assert_eq!(fixed.total_n, 9);
     }
 }

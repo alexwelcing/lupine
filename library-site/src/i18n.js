@@ -7,8 +7,8 @@ export const SUPPORTED_LANGS = ['en', 'zh'];
 const STRINGS = {
   en: {
     'brand.title': 'Lupine Library',
-    'meta.title': 'Lupine Library — Lupine Science Research',
-    'meta.description': 'Mobile-first reader for Lupine Science research: UQ, benchmarking, MLIPs, and computational materials theory.',
+    'meta.title': 'Lupine Library — Evidence before claim.',
+    'meta.description': 'Lupine Science measures where machine-learned models of atoms go wrong, against published references and pass/fail gates set in advance, and publishes every verdict, failures included.',
 
     'home.loading': 'Loading library…',
     'home.hero': 'Lupine Science <em>Library</em>',
@@ -58,8 +58,8 @@ const STRINGS = {
 
   zh: {
     'brand.title': 'Lupine 图书馆',
-    'meta.title': 'Lupine 图书馆 — Lupine Science 研究',
-    'meta.description': '面向移动端的 Lupine Science 研究阅读器：不确定性量化、基准测试、MLIP 和计算材料理论。',
+    'meta.title': 'Lupine 图书馆 — 先有证据，再下结论。',
+    'meta.description': 'Lupine Science 对照已发表的参考值和预先设定的通过/未通过门槛，测量机器学习原子模型在哪里出错，并公布每一个结论，包括失败。',
 
     'home.loading': '正在加载图书馆…',
     'home.hero': 'Lupine Science <em>研究</em>图书馆',

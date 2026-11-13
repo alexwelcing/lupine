@@ -13,8 +13,6 @@ wasm-out/
 .DS_Store
 *.data
 *.dump
-!atlas/atlas-view/apps/web/public/generated/lupine-wiki/*.data
-!atlas/atlas-view/apps/web/public/generated/lupine-wiki/*.lammpstrj
 .wrangler/
 **/.wrangler/
 
@@ -90,12 +88,9 @@ archive/distiller-kb/agents/profiles/.archive/
 atlas-distill/*.json
 .vscode/
 
-# Tools data
-tools/hermes-hive/data/
 
 # Large binary files & media
 *.lammpstrj
-!atlas/atlas-view/apps/web/public/generated/lupine-wiki/*.lammpstrj
 *.mp4
 *.z64
 *.tar.zst
@@ -110,3 +105,9 @@ tools/hermes-hive/data/
 .sisyphus/
 lupi-studio-pr/
 archive/kimi-workspace-export/
+
+# Generated Library content export (the maintained corpus export lives in lupine-rhizo)
+exports/library-content/
+
+# Legacy viewer deploy output (production viewer deploys from the standalone LUPI repo)
+atlas/deploy_bundle/public/

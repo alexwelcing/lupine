@@ -1,0 +1,308 @@
+{
+  "method": "Identical to cross_mlip_alignment.json but with Born stability filter (C11>0, C44>0, C11>|C12|) applied to MLIP predictions before cosine computation, matching the filter used for classical potentials.",
+  "excluded": [
+    {
+      "element": "Al",
+      "model": "orb",
+      "reason": "C44=-1.0<=0"
+    },
+    {
+      "element": "Cr",
+      "model": "chgnet",
+      "reason": "C44=-5.3<=0"
+    },
+    {
+      "element": "Fe",
+      "model": "chgnet",
+      "reason": "C11=98.6<=|C12|=105.3"
+    },
+    {
+      "element": "Nb",
+      "model": "orb",
+      "reason": "C44=-16.7<=0"
+    },
+    {
+      "element": "Pb",
+      "model": "orb",
+      "reason": "C11=25.7<=|C12|=31.9"
+    },
+    {
+      "element": "Pt",
+      "model": "orb",
+      "reason": "C11=194.1<=|C12|=246.8"
+    },
+    {
+      "element": "V",
+      "model": "mace",
+      "reason": "C44=-13.9<=0"
+    }
+  ],
+  "spearman_rho_classical_vs_mlip": 0.2642857142857143,
+  "spearman_p": 0.34117375799008204,
+  "per_element": [
+    {
+      "element": "Ag",
+      "classical_mean_cosine": 0.9061,
+      "n_models_surviving": 3,
+      "models_surviving": [
+        "chgnet",
+        "mace",
+        "orb"
+      ],
+      "pairwise_cosines": {
+        "chgnet-mace": 0.9985836834223656,
+        "chgnet-orb": 0.9291642553159721,
+        "mace-orb": 0.9218804561375279
+      },
+      "mlip_mean_cosine": 0.9498761316252885,
+      "mlip_min_cosine": 0.9218804561375279,
+      "mlip_max_cosine": 0.9985836834223656,
+      "unfiltered_mean_cosine": 0.9498761316252885
+    },
+    {
+      "element": "Al",
+      "classical_mean_cosine": 0.4535,
+      "n_models_surviving": 2,
+      "models_surviving": [
+        "chgnet",
+        "mace"
+      ],
+      "pairwise_cosines": {
+        "chgnet-mace": 0.6533278279137426
+      },
+      "mlip_mean_cosine": 0.6533278279137426,
+      "mlip_min_cosine": 0.6533278279137426,
+      "mlip_max_cosine": 0.6533278279137426,
+      "unfiltered_mean_cosine": 0.8054132600450012
+    },
+    {
+      "element": "Au",
+      "classical_mean_cosine": 0.948,
+      "n_models_surviving": 3,
+      "models_surviving": [
+        "chgnet",
+        "mace",
+        "orb"
+      ],
+      "pairwise_cosines": {
+        "chgnet-mace": 0.9889002025573563,
+        "chgnet-orb": 0.9709212322472414,
+        "mace-orb": 0.9922108842369353
+      },
+      "mlip_mean_cosine": 0.9840107730138442,
+      "mlip_min_cosine": 0.9709212322472414,
+      "mlip_max_cosine": 0.9922108842369353,
+      "unfiltered_mean_cosine": 0.9840107730138442
+    },
+    {
+      "element": "Cr",
+      "classical_mean_cosine": 0.9039,
+      "n_models_surviving": 2,
+      "models_surviving": [
+        "mace",
+        "orb"
+      ],
+      "pairwise_cosines": {
+        "mace-orb": -0.7506985769203579
+      },
+      "mlip_mean_cosine": -0.7506985769203579,
+      "mlip_min_cosine": -0.7506985769203579,
+      "mlip_max_cosine": -0.7506985769203579,
+      "unfiltered_mean_cosine": -0.19986600940687807
+    },
+    {
+      "element": "Cu",
+      "classical_mean_cosine": 0.7963,
+      "n_models_surviving": 3,
+      "models_surviving": [
+        "chgnet",
+        "mace",
+        "orb"
+      ],
+      "pairwise_cosines": {
+        "chgnet-mace": 0.6241422244072129,
+        "chgnet-orb": 0.425709799442223,
+        "mace-orb": 0.9641924765263784
+      },
+      "mlip_mean_cosine": 0.6713481667919381,
+      "mlip_min_cosine": 0.425709799442223,
+      "mlip_max_cosine": 0.9641924765263784,
+      "unfiltered_mean_cosine": 0.6713481667919381
+    },
+    {
+      "element": "Fe",
+      "classical_mean_cosine": 0.6182,
+      "n_models_surviving": 2,
+      "models_surviving": [
+        "mace",
+        "orb"
+      ],
+      "pairwise_cosines": {
+        "mace-orb": 0.8036030577574934
+      },
+      "mlip_mean_cosine": 0.8036030577574934,
+      "mlip_min_cosine": 0.8036030577574934,
+      "mlip_max_cosine": 0.8036030577574934,
+      "unfiltered_mean_cosine": 0.7469840783291257
+    },
+    {
+      "element": "Mo",
+      "classical_mean_cosine": 0.7753,
+      "n_models_surviving": 3,
+      "models_surviving": [
+        "chgnet",
+        "mace",
+        "orb"
+      ],
+      "pairwise_cosines": {
+        "chgnet-mace": 0.9133268874711885,
+        "chgnet-orb": -0.1314019911739598,
+        "mace-orb": 0.256981698191033
+      },
+      "mlip_mean_cosine": 0.34630219816275387,
+      "mlip_min_cosine": -0.1314019911739598,
+      "mlip_max_cosine": 0.9133268874711885,
+      "unfiltered_mean_cosine": 0.3463021981627539
+    },
+    {
+      "element": "Nb",
+      "classical_mean_cosine": 0.9757,
+      "n_models_surviving": 2,
+      "models_surviving": [
+        "chgnet",
+        "mace"
+      ],
+      "pairwise_cosines": {
+        "chgnet-mace": -0.39780111194874646
+      },
+      "mlip_mean_cosine": -0.39780111194874646,
+      "mlip_min_cosine": -0.39780111194874646,
+      "mlip_max_cosine": -0.39780111194874646,
+      "unfiltered_mean_cosine": 0.02196099973045107
+    },
+    {
+      "element": "Ni",
+      "classical_mean_cosine": 0.689,
+      "n_models_surviving": 3,
+      "models_surviving": [
+        "chgnet",
+        "mace",
+        "orb"
+      ],
+      "pairwise_cosines": {
+        "chgnet-mace": 0.36246637866962667,
+        "chgnet-orb": 0.18895986556017885,
+        "mace-orb": 0.5784684420697731
+      },
+      "mlip_mean_cosine": 0.37663156209985954,
+      "mlip_min_cosine": 0.18895986556017885,
+      "mlip_max_cosine": 0.5784684420697731,
+      "unfiltered_mean_cosine": 0.3766315620998595
+    },
+    {
+      "element": "Pb",
+      "classical_mean_cosine": 0.8853,
+      "n_models_surviving": 2,
+      "models_surviving": [
+        "chgnet",
+        "mace"
+      ],
+      "pairwise_cosines": {
+        "chgnet-mace": 0.8605078063543089
+      },
+      "mlip_mean_cosine": 0.8605078063543089,
+      "mlip_min_cosine": 0.8605078063543089,
+      "mlip_max_cosine": 0.8605078063543089,
+      "unfiltered_mean_cosine": 0.5602761425733479
+    },
+    {
+      "element": "Pd",
+      "classical_mean_cosine": 0.184,
+      "n_models_surviving": 3,
+      "models_surviving": [
+        "chgnet",
+        "mace",
+        "orb"
+      ],
+      "pairwise_cosines": {
+        "chgnet-mace": 0.782521851220615,
+        "chgnet-orb": 0.5404341459800243,
+        "mace-orb": 0.9199626226867719
+      },
+      "mlip_mean_cosine": 0.7476395399624703,
+      "mlip_min_cosine": 0.5404341459800243,
+      "mlip_max_cosine": 0.9199626226867719,
+      "unfiltered_mean_cosine": 0.7476395399624703
+    },
+    {
+      "element": "Pt",
+      "classical_mean_cosine": 0.8532,
+      "n_models_surviving": 2,
+      "models_surviving": [
+        "chgnet",
+        "mace"
+      ],
+      "pairwise_cosines": {
+        "chgnet-mace": 0.9896717230916118
+      },
+      "mlip_mean_cosine": 0.9896717230916118,
+      "mlip_min_cosine": 0.9896717230916118,
+      "mlip_max_cosine": 0.9896717230916118,
+      "unfiltered_mean_cosine": 0.9341034008401646
+    },
+    {
+      "element": "Ta",
+      "classical_mean_cosine": 0.9902,
+      "n_models_surviving": 3,
+      "models_surviving": [
+        "chgnet",
+        "mace",
+        "orb"
+      ],
+      "pairwise_cosines": {
+        "chgnet-mace": 0.9884882371549651,
+        "chgnet-orb": 0.9789785592045741,
+        "mace-orb": 0.9381992629423221
+      },
+      "mlip_mean_cosine": 0.9685553531006205,
+      "mlip_min_cosine": 0.9381992629423221,
+      "mlip_max_cosine": 0.9884882371549651,
+      "unfiltered_mean_cosine": 0.9685553531006205
+    },
+    {
+      "element": "V",
+      "classical_mean_cosine": 0.7436,
+      "n_models_surviving": 2,
+      "models_surviving": [
+        "chgnet",
+        "orb"
+      ],
+      "pairwise_cosines": {
+        "chgnet-orb": -0.8770283741434464
+      },
+      "mlip_mean_cosine": -0.8770283741434464,
+      "mlip_min_cosine": -0.8770283741434464,
+      "mlip_max_cosine": -0.8770283741434464,
+      "unfiltered_mean_cosine": -0.2485436122324898
+    },
+    {
+      "element": "W",
+      "classical_mean_cosine": 0.5874,
+      "n_models_surviving": 3,
+      "models_surviving": [
+        "chgnet",
+        "mace",
+        "orb"
+      ],
+      "pairwise_cosines": {
+        "chgnet-mace": 0.9461340980888435,
+        "chgnet-orb": 0.382531735499457,
+        "mace-orb": 0.166702136844373
+      },
+      "mlip_mean_cosine": 0.4984559901442245,
+      "mlip_min_cosine": 0.166702136844373,
+      "mlip_max_cosine": 0.9461340980888435,
+      "unfiltered_mean_cosine": 0.4984559901442245
+    }
+  ]
+}

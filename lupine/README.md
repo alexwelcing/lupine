@@ -1,3 +1,5 @@
+> **Historical draft (June 2026), superseded.** This page describes a "universal correction operator" with "DFT-accurate" predictions that could replace model ensembles. Later preregistered tests did not support that: the elastic correction is an oracle ceiling, not a deployable correction, and Round 4 found no passing correction (see the repository README, "Results, with scope", and https://lupine.science/corrections/). Kept unchanged below as a record.
+
 # Lupine: The Universal Correction Operator for Atomistic Simulation
 
 **Stop running 5-model ensembles. Stop running expensive DFT corrections. Run one MLIP, apply the Projection Law, and get DFT-accurate, rigorously calibrated predictions at zero computational overhead.**

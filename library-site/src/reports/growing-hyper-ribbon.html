@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="robots" content="noindex" />
 <title>Growing the Hyper-Ribbon · Part 1 — Lupine Science</title>
 <meta name="description" content="A mathematical framework for conditional manifold extension, escape detection, and the Lupine regulator." />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -35,6 +36,7 @@
 
 <div class="wrap">
 
+<aside class="archive-note" role="note" style="position:relative;z-index:70;max-width:880px;margin:84px auto 8px;padding:14px 18px;border:1px solid #e8b45a;border-radius:10px;background:#1a1610;color:#f1e6cf;font:15px/1.55 Georgia,serif"><b>Archived 11 November 2026 · superseded.</b> This report series (May–June 2026) was written around the hyper-ribbon universality conjecture. That reading is no longer supported: the hyper-ribbon claim is Open and descriptive, “559 potentials” are 559 model–element tensors with 423 distinct KIM ids, and low participation ratios are partly rank-limited. Kept for the record; not for citation. Current status: <a style="color:#f5d48a" href="/#/read/conjecture-ledger">Hypothesis Ledger</a> · <a style="color:#f5d48a" href="https://lupine.science/corrections/">corrections log</a>.</aside>
 <header class="hero">
   <canvas id="ribbonBg" aria-hidden="true"></canvas>
   <div class="eyebrow"><span class="partbadge">Part 1 of 2</span> Hyper-Ribbon Program · Conjecture-grade</div>
@@ -266,7 +268,7 @@ Effective PR:       PR(M_c) = (Σ λ_i)² / Σ λ_i²   (on active subspace)</co
   <p>The Au escape achieves <strong>confirmed</strong> status after two independent MLIPs. Ag's hypothesized escape is <strong>refuted</strong> — CHGNet pulls it back onto the ribbon, proving the escape is Au-specific. Fe's high PR is <strong>persistent</strong> across all three MLIPs, suggesting a genuinely different error structure (likely magnetism-related) rather than a model-specific artifact.</p>
   <div class="update">
     <span class="tag">▲ Updated in Round 2</span>
-    Orb-v3 is no longer pending. The validated framework shows all three MLIPs
+    Orb-v3 is no longer pending. The Round-2 tests show all three MLIPs
     <strong>agree on Au’s error direction</strong> (pairwise cosine 0.97–0.99; Au’s
     mean cross-MLIP alignment <strong>0.984 — the highest of all 15 elements</strong>).
     The Au “escape” is therefore a <strong>cross-<em>paradigm</em></strong> effect
@@ -416,7 +418,7 @@ def participation_ratio {n : Nat} (eigenvalues : Vector Float n) : Float :=
   <nav class="seriesnav" aria-label="Series navigation">
     <a class="next" href="/reports/growing-hyper-ribbon-part-2.html">
       <div class="lbl">Part 2 of 2 →</div>
-      <div class="ttl">Round 2: From Conjecture to Validated Framework</div>
+      <div class="ttl">Round 2: From Conjecture to First Tests</div>
     </a>
   </nav>
 </main>

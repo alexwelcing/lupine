@@ -43,7 +43,7 @@
 \begin{abstract}
 \noindent\textbf{Purpose:} Classical force fields for metals exhibit structured, low-dimensional prediction errors that can be understood through the convergence of sloppy model theory, causal inference, and meta-analytic methodology.
 \textbf{Methods:} We analyzed elastic constant prediction errors ($C_{11}$, $C_{12}$, $C_{44}$) for 15 benchmark metals (8 FCC, 7 BCC) across 559 interatomic potentials spanning 13 pair\_style families, using principal component analysis, bootstrap uncertainty quantification, random-effects meta-analysis, and aggregation-bias detection. All predictions were obtained from the OpenKIM repository and cross-referenced against the NIST Interatomic Potentials Repository.
-\textbf{Results:} Prediction errors universally occupy hyper-ribbon manifolds with effective dimensionality $1.0$--$2.3$ out of 3 (median $1.09$), consistent with the sloppy model universality class. An empirical extension to three foundation machine-learning interatomic potentials (MACE-MP-0, CHGNet, Orb-v3) shows that foundation-model errors are likewise directionally structured: distinct architectures commit strongly aligned errors for several elements (pairwise cosine similarity $\geq 0.95$ for Au, Pt, Ta, Ag), while 7 of 45 element--model elastic tensors fail Born stability screening and the classical cross-style alignment pattern does not transfer across paradigms (Spearman $\rho = 0.26$, $p = 0.34$). A striking crystal-structure dichotomy emerges: all 7 BCC metals show reference--prediction correlations $r>0.70$ (mean $r=0.89$), while 7 of 8 FCC metals show $r<0.40$ (mean $r=0.16$). Meta-analysis across 15 elements ($N=1{,}677$) reveals extreme heterogeneity ($I^2=98.6\%$, $\tau=0.80$), with a 95\% prediction interval spanning $[-0.64, +0.99]$. A direct test of cross-style PC1 alignment finds that the apparent per-element dichotomy is more consistent with a sample-size confounder (Spearman $\rho(n_{\text{pairs}}, \overline{\cos}) = -0.50$, $p = 0.060$) than with $d$-band fullness, with a suggestive residual d-band signal emerging only in exploratory analysis that controls for fitting depth ($\rho = +0.52$, $p = 0.087$, $n=12$); this classical-family-specific dichotomy does not transfer across modeling paradigms.
+\textbf{Results:} Prediction errors universally occupy hyper-ribbon manifolds with effective dimensionality $1.0$--$2.3$ out of 3 (median $1.09$), consistent with the sloppy model universality class. An empirical extension to three foundation machine-learning interatomic potentials (MACE-MP-0, CHGNet, Orb-v3) shows that foundation-model errors are likewise directionally structured: distinct architectures commit strongly aligned errors for several elements (pairwise cosine similarity $\geq 0.95$ for Au, Pt, Ta, Ag), while 7 of 45 element--model elastic tensors fail Born stability screening and the classical cross-style alignment pattern does not transfer across paradigms (Spearman $\rho = 0.26$, $p = 0.34$). A striking crystal-structure dichotomy emerges: all 7 BCC metals show reference--prediction correlations $r>0.70$ (mean $r=0.89$), while 7 of 8 FCC metals show $r<0.40$ (mean $r=0.16$). Meta-analysis across 15 elements ($N=1{,}677$) reveals extreme heterogeneity ($I^2=98.5\%$, $\tau=0.80$), with a 95\% prediction interval spanning $[-0.73, +0.99]$. A direct test of cross-style PC1 alignment finds that the apparent per-element dichotomy is more consistent with a sample-size confounder (Spearman $\rho(n_{\text{pairs}}, \overline{\cos}) = -0.50$, $p = 0.060$) than with $d$-band fullness, with a suggestive residual d-band signal emerging only in exploratory analysis that controls for fitting depth ($\rho = +0.52$, $p = 0.087$, $n=12$); this classical-family-specific dichotomy does not transfer across modeling paradigms.
 \textbf{Conclusions:} Prediction errors are not unstructured noise but occupy strictly bounded, low-dimensional manifolds whose geometry is element- and crystal-structure-dependent. Pooled cross-element benchmarking misstates model accuracy --- the aggregation bias known in statistics as the ecological fallacy; correct analysis requires stratified, family-resolved evaluation and random-effects meta-analysis. All methods are implemented in the open-source \texttt{atlas-distill} engine.
 \end{abstract}
 
@@ -65,7 +65,7 @@ Second, \textit{aggregation bias} warns that correlations computed across hetero
 
 Third, \textit{meta-analysis} provides rigorous methods for combining correlations across heterogeneous groups, including Fisher z-transformation, DerSimonian-Laird random-effects estimation, and heterogeneity statistics ($Q$, $I^2$, $\tau^2$)\cite{hedges1985,borenstein2009,borenstein2010,dersimonian1986,higgins2003}.
 
-Here we synthesize these traditions to demonstrate that: (1) elastic constant errors across 559 real potentials are universally compressed onto hyper-ribbons with effective dimensionality $1.0$--$2.3$ out of 3 (median $1.09$); (2) a crystal-structure-dependent dichotomy governs error correlations, with BCC metals showing near-perfect agreement ($r>0.70$) while FCC metals show near-zero correlation ($r<0.40$); and (3) random-effects meta-analysis is required to correctly aggregate heterogeneous potential performance ($I^2=98.6\%$). Geometrically, the set of all prediction errors for a given model forms a smooth submanifold $\mathcal{M}(M)$ in the space of observable errors---a structure we term the \textit{error manifold}. All analyses are implemented in \texttt{atlas-distill}, an open-source Rust engine for mathematical discovery in molecular dynamics data. The theoretical framework and formal proof appear in companion papers\cite{welcing2026projection,welcing2026formal}.
+Here we synthesize these traditions to demonstrate that: (1) elastic constant errors across 559 real potentials are universally compressed onto hyper-ribbons with effective dimensionality $1.0$--$2.3$ out of 3 (median $1.09$); (2) a crystal-structure-dependent dichotomy governs error correlations, with BCC metals showing near-perfect agreement ($r>0.70$) while FCC metals show near-zero correlation ($r<0.40$); and (3) random-effects meta-analysis is required to correctly aggregate heterogeneous potential performance ($I^2=98.5\%$). Geometrically, the set of all prediction errors for a given model forms a smooth submanifold $\mathcal{M}(M)$ in the space of observable errors---a structure we term the \textit{error manifold}. All analyses are implemented in \texttt{atlas-distill}, an open-source Rust engine for mathematical discovery in molecular dynamics data. The theoretical framework and formal proof appear in companion papers\cite{welcing2026projection,welcing2026formal}.
 
 \section{Theory}
 
@@ -202,18 +202,18 @@ This dichotomy implies that BCC elastic response---dominated by directional $d$-
 
 \subsection{Meta-analysis of potential correlations}
 
-Random-effects meta-analysis across all 15 elements reveals extreme heterogeneity (Table~\ref{tab:meta}). The fixed-effects model yields a pooled correlation of $r = 0.60$ (95\% CI: $0.57$--$0.63$), while the random-effects model gives $r = 0.69$ (95\% CI: $0.41$--$0.85$) with a wide prediction interval ($-0.64$ to $+0.99$).
+Random-effects meta-analysis across all 15 elements reveals extreme heterogeneity (Table~\ref{tab:meta}). The fixed-effects model yields a pooled correlation of $r = 0.60$ (95\% CI: $0.57$--$0.63$), while the random-effects model gives $r = 0.69$ (95\% CI: $0.41$--$0.85$) with a wide prediction interval ($-0.73$ to $+0.99$).
 
 \begin{table}[htbp]
 \centering
-\caption{Meta-analysis results: fixed vs. random effects (15 elements, $N = 1{,}677$).}
+\caption{Meta-analysis results: fixed vs. random effects (15 elements, $N = 1{,}677$). $Q$ and $I^2$ use fixed-effect weights around the fixed-effect mean in both rows; the random-effects prediction interval uses a $t$ quantile with $k-2=13$ degrees of freedom. Corrected 2026-11-12: earlier versions reported $Q = 984$, $I^2 = 98.6\%$ and a prediction interval of $[-0.64, +0.99]$ for the random-effects row, from an engine error.}
 \label{tab:meta}
 \begin{tabular}{@{}lccccc@{}}
 \toprule
 Model & $r_\text{pool}$ & 95\% CI & $Q$ & $I^2$ & $\tau$ \\
 \midrule
 Fixed  & $+0.60$ & $[0.57, 0.63]$ & 945 & 98.5\% & $0.00$ \\
-Random & $+0.69$ & $[0.41, 0.85]$ & 984 & 98.6\% & $0.80$ \\
+Random & $+0.69$ & $[0.41, 0.85]$ & 945 & 98.5\% & $0.80$ \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -223,7 +223,7 @@ The forest plot (Fig.~\ref{fig:forest}) illustrates how individual metal correla
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=\columnwidth]{figures/fig4_forest.png}
-\caption{Meta-analysis forest plot. Individual elements colored by crystal structure (red = BCC, blue = FCC). Fixed- and random-effects summaries shown as diamonds. $I^2 = 98.6\%$ mandates random-effects interpretation.}
+\caption{Meta-analysis forest plot. Individual elements colored by crystal structure (red = BCC, blue = FCC). Fixed- and random-effects summaries shown as diamonds. $I^2 = 98.5\%$ mandates random-effects interpretation.}
 \label{fig:forest}
 \end{figure}
 
@@ -331,7 +331,7 @@ Our results establish four principal claims about interatomic potential predicti
 
 The natural mechanistic extension of this finding---that closed-shell d-band fullness might predict tighter cross-style PC1 alignment within elements, just as crystal structure predicts inter-property correlation---is not supported on the full sample (\S\ref{sec:dband}; $\rho = -0.018$, $p = 0.95$). The strongest per-element predictor of cross-style alignment is instead the number of pair\_style families fitted to each element ($\rho(n_{\text{pairs}}, \overline{\cos}) = -0.50$, $p = 0.060$), and a suggestive d-band signal recovers only on an exploratory $n_{\text{pairs}} \geq 3$ subset ($\rho = +0.52$, $p = 0.087$). This is a suppression effect within our own analysis: outlier elements with $n_{\text{pairs}} = 1$ act in opposite directions and zero the full-sample correlation. The methodological implication for benchmarking is that fitting depth must be controlled---or down-weighted---before claiming any element-intrinsic property from cross-style PC analysis.
 
-\textbf{Third, meta-analysis must use random-effects models.} The $I^2 = 98.6\%$ indicates that virtually all variance is between-element rather than within-element. The 95\% prediction interval from the random-effects model spans $[-0.64, +0.99]$, meaning that a new element could show \textit{any} correlation behavior. Fixed-effects models, which assume a single true effect, produce misleadingly narrow intervals ($[0.57, 0.63]$ vs.\ $[0.41, 0.85]$).
+\textbf{Third, meta-analysis must use random-effects models.} The $I^2 = 98.5\%$ indicates that virtually all variance is between-element rather than within-element. The 95\% prediction interval from the random-effects model spans $[-0.73, +0.99]$, meaning that a new element could show \textit{any} correlation behavior. Fixed-effects models, which assume a single true effect, produce misleadingly narrow intervals ($[0.57, 0.63]$ vs.\ $[0.41, 0.85]$).
 
 \textbf{Fourth, pair-style families show high internal consistency.} When stratified by potential family, within-group correlations average $r = 0.95$ versus a pooled $r = 0.82$---aggregation bias that obscures real family-level accuracy. This has practical implications: benchmarking a MEAM potential against EAM results is statistically inappropriate.
 

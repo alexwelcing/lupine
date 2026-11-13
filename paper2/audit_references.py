@@ -23,7 +23,7 @@ sys.stdout.reconfigure(errors="replace")
 
 ROOT = Path(__file__).parent.resolve()
 BIB_PATHS = [ROOT / "references.bib", ROOT / "immi" / "references.bib"]
-USER_AGENT = "LupineScience-P2-Audit/1.0 (mailto:alexwelcing@gmail.com)"
+USER_AGENT = "LupineScience-P2-Audit/1.0 (mailto:alex@lupinesci.com)"
 
 
 def parse_bib(path: Path) -> list[dict]:
@@ -98,7 +98,7 @@ def crossref_doi(title: str, author: str, year: str) -> tuple[str | None, str | 
     url = "https://api.crossref.org/works?" + urllib.parse.urlencode({
         "query.bibliographic": query,
         "rows": "3",
-        "mailto": "alexwelcing@gmail.com",
+        "mailto": "alex@lupinesci.com",
     })
     req = urllib.request.Request(url, headers={"User-Agent": USER_AGENT})
     try:

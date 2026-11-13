@@ -87,10 +87,10 @@ The second command does not exist yet; this packet names the desired contract.
 
 Only remove these after the destination repos are live and verified:
 
-- `gcp/lupine-site-router/`
+- `gcp/lupine-site-router/` (archived 2026-11-11 to `archive/lupine-site-router/`)
 - `library-site/`
 - `atlas/atlas-view/` viewer-owned files
-- `.github/workflows/deploy-lupine-site-router.yml`
+- `.github/workflows/deploy-lupine-site-router.yml` (now a manual-only retired guard)
 - `.github/workflows/deploy-library-site.yml`
 - `.github/workflows/deploy-glim-viewer.yml`
 - `.github/workflows/deploy-functions.yml` if all viewer functions moved

@@ -1,10 +1,34 @@
 # Theory ↔ Experiment Contract
 
-Every empirical statistic in this kit instantiates a machine-checked theorem.
-The Lean sources live in `lean-spec/OpenDistillationFactory/Materials/Theory/`
-(`lake build` in `lean-spec/`; zero `sorry`, zero new axioms). Nothing below
-depends on trusting any experiment; the experiments only measure where the
-theorems' hypotheses hold.
+> **Scope, 2026-11-11 — read first.** The Lean theorems below are statements
+> about idealized model families (best approximation onto subspaces, convex sets
+> and smooth families, and a bias-plus-noise covariance model). Lean 4 checks
+> that these statements follow from their hypotheses; it does not check the
+> physics, the reference data or the pipeline, and it does not show that real
+> potentials satisfy the hypotheses. The "Empirical face" column records the
+> observations that motivated each theorem. Several are now retired or narrowed:
+> - "559 classical potentials" counts 559 model–element tensors (423 distinct KIM
+>   ids); they are not independent potentials.
+> - "40 years" of conservation, PR inversion to a "≈98% / 93% systematic
+>   fraction", and "provably ribbon-confined" mature families are retired as
+>   empirical claims; low PR in the classical groups is partly rank-limited.
+> - The foundation-MLIP layer failed its preregistered Round-2 test (H1/H2a
+>   kills triggered at −0.14, p = 0.13; H2b cosine 0.53 against 0.8; H4 coverage
+>   86.7% against 90%), and classical alignment does not predict MLIP alignment
+>   (Spearman ρ = 0.26, p = 0.34).
+> - We no longer call the conservation–rotation statement a law, and the
+>   corollary that one correction vector repairs every model is retired.
+>
+> Sources: [TMS proceedings manuscript](https://github.com/alexwelcing/lupine-rhizo/blob/main/paper/tms2027-proceedings/manuscript.tex),
+> [claim freeze](https://github.com/alexwelcing/lupine-rhizo/blob/main/docs/plans/2026-09-09-tms-manuscript-sprint.md),
+> [conjecture ledger](https://github.com/alexwelcing/lupine-rhizo/blob/main/docs/conjectures/ledger.md).
+
+Each statistic in this kit is paired with the Lean theorem whose idealized
+setting it was meant to probe. The Lean sources live in
+`lean-spec/OpenDistillationFactory/Materials/Theory/` (`lake build` in
+`lean-spec/`; zero `sorry`, zero new axioms). The theorems do not depend on any
+experiment; whether real ensembles meet their hypotheses is an empirical
+question that the experiments test, and several tests have come back negative.
 
 ## The projection law (`ProjectionLaw.lean`)
 

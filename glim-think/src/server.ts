@@ -1318,21 +1318,20 @@ ${narrative}
           research_mode: "causal-geometry",
           hypotheses: {
             h1_hyperribbon: {
-              claim: "Prediction errors universally occupy hyper-ribbon manifolds (PR/d < 0.9)",
-              status: "confirmed_classical",
-              evidence: "559 potentials, 15 elements, 100% pass geometric-sequence test",
+              claim: "Prediction errors occupy hyper-ribbon manifolds (PR/d < 0.9)",
+              status: "open",
+              evidence: "559 model–element tensors (423 KIM ids); descriptive, see lupine-rhizo docs/conjectures/ledger.md (Hyper-ribbon universality)",
               next_step: "Validate on MLIPs (MACE-MP-0, CHGNet, M3GNet)",
             },
             h2_bcc_fcc: {
               claim: "BCC metals show strong ref-pred correlations (r>0.7); FCC metals show weak correlations (r<0.4)",
-              status: "confirmed",
-              evidence: "I² = 98.6%, subgroup Q = 537.7 (p < 0.001)",
-              causal_mechanism: "Directional d-orbital bonding in BCC creates constrained prediction landscape",
+              status: "self_corrected",
+              evidence: "r 0.90 vs 0.04 was 1.5% data contamination; see lupine-rhizo docs/conjectures/ledger.md (BCC/FCC causal shield)",
             },
             h3_ecological_fallacy: {
               claim: "Aggregating across elements obscures true accuracy",
-              status: "confirmed",
-              evidence: "Pooled r=0.82 vs within-group r=0.95; true Simpson's paradox with sign reversal demonstrated",
+              status: "open",
+              evidence: "Pooled r=0.82 vs within-group mean r=0.95 across pair_style families; no strict sign reversal in the empirical NIST data (Lean simpsonsDetectedEmpirical; Simpson's-paradox verdict: Refuted by formal check)",
             },
             h4_mlip_invariance: {
               claim: "Modern MLIPs share the same error manifold as classical potentials",
@@ -1347,9 +1346,8 @@ ${narrative}
             completed_experiments: (completedCount.results[0] as any)?.n || 0,
           },
           critique_response: {
-            strengthened_classifier: "FPR reduced 5x (90% → 17%) via geometric-sequence test",
-            causal_identification: "Pearl back-door criterion satisfied; stratification by CS blocks confounding",
-            simpsons_paradox: "True sign reversal demonstrated computationally",
+            strengthened_classifier: "Geometric-sequence test added to the hyper-ribbon classifier",
+            causal_identification: "The causal-graph (back-door) argument is a stated conjecture (MetaScience.lean), not a proof",
             public_data: "Full pipeline integrated; benchmarks regenerate from OpenKIM on deploy",
           },
         }, {

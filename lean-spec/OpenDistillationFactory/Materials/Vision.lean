@@ -124,7 +124,7 @@ def nistCount := nistScaffoldAlSample.length
 #check syntheticBccFailsNistIntegrity
 
 /- T42–T47: Audit theorems -/
-#check simpsonVerdictContainsFabricated
+#check simpsonVerdictRefutedByFormalCheck
 #check hyperRibbonVerdictContainsConsistent
 #check auditReportNonEmpty
 

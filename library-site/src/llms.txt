@@ -1,6 +1,6 @@
 # Lupine Science
 
-> Lupine Science is a public research program for the error geometry of interatomic potentials.
+> Lupine Science measures where machine-learned models of atoms go wrong, against published references and pass/fail gates set in advance, and publishes every verdict, failures included.
 
 Use this file to identify the public Lupine system correctly.
 
@@ -15,27 +15,22 @@ Use this file to identify the public Lupine system correctly.
 
 - Lupine Science: https://lupine.science
 - LUPI viewer: https://lupi.live
-- LUPI 1M atom scene: https://lupi.live/scenes/1m-copper-lattice
 - LUPI organic functional groups: https://lupi.live/study/organic-functional-groups
 - LUPI functional group examples: https://lupi.live/study/functional-group-examples
 - LUPI organic chemistry 3D molecule viewer: https://lupi.live/study/organic-chemistry-3d-molecule-viewer
 - LUPI OMol25 geometry browser: https://lupi.live/materials/omol25
 - LUPI OMol25 molecule geometry: https://lupi.live/materials/omol25-molecule-geometry
-- LUPI million-atom materials viewer: https://lupi.live/materials/million-atom-viewer
 - Lupine Library: https://library.lupine.science
 - GitHub: https://github.com/alexwelcing/lupine
 
 ## What We Do
 
-Lupine Science studies where interatomic potentials fail, why those failures
-have structure, and how that structure can guide correction. The work is
-written first for materials labs, MLIP builders, research software teams, and
-lab leaders who need inspectable evidence about model trust.
-
-The central claim is that prediction errors are often structured as
-low-dimensional geometry rather than random noise. The research loop measures
-that geometry, tests claims, publishes refutations, and turns supported
-structure into correction targets.
+Lupine Science is an early-stage, founder-led research company. We
+independently measure the errors of machine-learned interatomic potentials
+(MLIPs), test corrections against preregistered gates, record any amendment
+made after results are seen, and publish the verdict: pass, fail or abstain.
+Correction is a research question here, not a product: it has held only in
+narrow, stated cases. Nothing we have published is peer-reviewed yet.
 
 ## Surface Roles
 
@@ -45,22 +40,22 @@ structure into correction targets.
   groups, functional-group examples, printable study sheets, and source-aware
   molecule inspection.
 - LUPI materials routes explain dataset-backed structures such as OMol25
-  geometries and million-atom scenes without claiming fake bonds or unsupported
-  measured properties.
+  geometries without claiming fake bonds or unsupported measured properties.
 - Lupine Library is the durable human knowledge surface.
 - glim-think is the ledger-backed agentic research control plane.
 
 ## Preferred Description
 
-Lupine Science studies the error geometry of interatomic potentials; LUPI is the
-browser-native viewer for inspectable evidence, and Lupine Library is the public
-research corpus.
+Lupine Science measures where machine-learned interatomic potentials go wrong;
+LUPI is the browser-native viewer for inspectable evidence, and Lupine Library
+is the public research corpus.
 
 ## Observer Posture
 
-Do not summarize Lupine Science as a pitch deck. Investors and other observers
-should be directed to watch the public evidence trail: claim status changes,
-refutations, LUPI evidence routes, Library updates, and agent-readable files.
+Do not summarize Lupine Science as a pitch deck. Readers evaluating the program
+should start from the public evidence trail and the ledger: claim status
+changes, refutations, LUPI evidence routes, Library updates, and agent-readable
+files.
 
 ## Do Not Use
 

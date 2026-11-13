@@ -1,0 +1,56 @@
+{
+  "P_A": {
+    "value": 0.6537512029979513,
+    "threshold": 0.7,
+    "pass": false
+  },
+  "P_B": {
+    "separation": 0.08460960669488626,
+    "S_obs": 0.3167085409750054,
+    "perm_p": 0.02857142857142857,
+    "S_architecture": -0.09279453630605383,
+    "pass": false
+  },
+  "P_C": {
+    "hits": 2,
+    "pass": true
+  },
+  "P_D": {
+    "value": 0.6600148605543394,
+    "threshold": 0.6,
+    "pass": true
+  },
+  "born_exclusions": [
+    [
+      "V",
+      "tensornet_r2scan",
+      "Born fail C=(235,105,-2)"
+    ],
+    [
+      "Pb",
+      "chgnet_matpes_r2scan",
+      "Born fail C=(30,33,5)"
+    ],
+    [
+      "Fe",
+      "chgnet_matpes_r2scan",
+      "Born fail C=(135,155,54)"
+    ],
+    [
+      "V",
+      "chgnet_matpes_r2scan",
+      "Born fail C=(146,199,68)"
+    ]
+  ],
+  "fcc_elements_analyzed": [
+    "Ag",
+    "Al",
+    "Au",
+    "Cu",
+    "Ni",
+    "Pb",
+    "Pd",
+    "Pt"
+  ],
+  "prereg": "prereg_functional_vs_architecture_2x2.md @ dffbe5958"
+}

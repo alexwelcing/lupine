@@ -38,8 +38,8 @@ export const CATALOG = {
     },
     {
       id: 'partnerships',
-      label: { en: 'Partnerships', zh: '合作' },
-      blurb: { en: 'Pilots and alignment — public thesis and methodology; commercial terms gated.', zh: '试点与对齐 — 公开论点与方法；商业条款受限。' },
+      label: { en: 'Internal test cases', zh: '内部测试案例' },
+      blurb: { en: 'Internal test cases mapped to program topics. Direction, not a result.', zh: '与项目主题对应的内部测试案例。方向，而非结果。' },
     },
     {
       id: 'foundations',
@@ -292,10 +292,10 @@ export const CATALOG = {
     {
       id: 'partnerships',
       source: 'docs/partnerships.md',
-      title: 'Partnerships',
-      subtitle: 'MIIT-67 pilot mapping and the Lupine thesis — public layer.',
+      title: 'Internal Test Cases Mapped to Public Program Topics',
+      subtitle: 'Internal test cases, not partner pilots. Direction, not a result.',
       category: 'partnerships',
-      tags: ['partnerships', 'miit-67', 'pilots'],
+      tags: ['direction', 'miit-67', 'internal-tests'],
     },
 
     // ── Foundations ─────────────────────────────────────────────────
@@ -316,14 +316,6 @@ export const CATALOG = {
       tags: ['navigation', 'reference'],
     },
     {
-      id: 'internal-science-program',
-      source: 'docs/internal-science-program.md',
-      title: 'Internal Science Program',
-      subtitle: 'The research agenda: what we are trying to learn and how the loop pursues it.',
-      category: 'foundations',
-      tags: ['program', 'agenda', 'vision'],
-    },
-    {
       id: 'methodology',
       source: 'docs/methodology.md',
       title: 'Methodology — How We Know, and How We Catch Ourselves',
@@ -335,13 +327,13 @@ export const CATALOG = {
       id: 'data-provenance',
       source: 'docs/data-provenance.md',
       title: 'Data & Provenance',
-      subtitle: 'Where every number comes from: OpenKIM, NIST IPR, 559 potentials, the integrity gates.',
+      subtitle: 'Where every number comes from: OpenKIM, NIST IPR, the retained model–element tensors, and the integrity gates.',
       category: 'foundations',
       tags: ['provenance', 'data', 'trust'],
     },
     {
       id: 'glossary',
-      source: 'GLOSSARY.md',
+      source: 'docs/GLOSSARY.md',
       title: 'Glossary',
       subtitle: 'Terminology index for materials science, MD, DFT, and MLIPs.',
       category: 'foundations',
@@ -351,7 +343,7 @@ export const CATALOG = {
       id: 'readme',
       source: 'README.md',
       title: 'Lupine — Project README',
-      subtitle: 'The error-geometry program: what is established vs. conjectured, and where to start.',
+      subtitle: 'What this monorepo holds, its status, and where to start.',
       category: 'foundations',
       tags: ['overview'],
     },
@@ -508,22 +500,12 @@ export const CATALOG = {
       tags: ['literature-review', 'sloppy', 'simpson', 'fcc'],
     },
 
-    // ── Ecosystem & Funding ────────────────────────────────────────
-    {
-      id: 'funding-landscape',
-      source: 'docs/funding_landscape_report.md',
-      title: 'Federal Funding Landscape (2025–2026)',
-      subtitle: 'NSF DMREF, DOE BES, DARPA SURGE/PRIME, and MGI strategic priorities.',
-      category: 'ecosystem',
-      tags: ['funding', 'policy'],
-    },
-
     // ── Formalization ───────────────────────────────────────────────
     {
       id: 'formal-vision',
       source: 'docs/formal-vision.md',
       title: 'The Open Distillation Factory — Executable Vision',
-      subtitle: `Current status: ${LEAN_INVENTORY.count} machine-inventoried Lean theorem/lemma declarations, zero active sorry, and a build-locking epistemic contract.`,
+      subtitle: `Lean 4 checks the arithmetic and stated inequalities behind published numbers; it does not check the physics, the reference data or the pipeline. Generated inventory: ${LEAN_INVENTORY.count} declarations, zero active sorry (counted ${LEAN_INVENTORY.counted_at}).`,
       category: 'formalization',
       tags: ['lean', 'formal-spec', 'vision'],
     },
@@ -539,7 +521,7 @@ export const CATALOG = {
       id: 'formal-audit',
       source: 'docs/formal-audit.md',
       title: 'Formal Audit Report',
-      subtitle: 'Split verdict: Simpson\'s paradox fabricated, hyper-ribbon consistent but ungrounded.',
+      subtitle: 'What the Lean statements establish: the Simpson\'s-paradox claim is refuted by formal check; the hyper-ribbon item compares a fixed constant.',
       category: 'formalization',
       tags: ['lean', 'audit', 'verification'],
     },
@@ -573,15 +555,6 @@ export const CATALOG = {
     },
 
     // ── Meta ────────────────────────────────────────────────────────
-    {
-      id: 'lupine-wiki',
-      source: 'docs/lupine-wiki.md',
-      title: 'Lupine Wiki — Knowledge Graph for Materials Research',
-      subtitle: 'The living sphere-grid map of the Lupine ecosystem: scan, query, render, and export to LUPI.',
-      category: 'meta',
-      tags: ['wiki', 'knowledge-graph', 'lupine', 'hermes', 'lupi'],
-      featured: true,
-    },
     {
       id: 'operating-system',
       source: 'docs/operating-system.md',

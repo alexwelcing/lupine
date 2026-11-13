@@ -24,8 +24,13 @@ Use `python/lupine_distill/odf/` for any new ODF or promotion-gate work.
 ## What remains here
 
 * KB schema, seed principles, and extract/ingest/export/graph pipelines.
-* Historical agent profiles and docs (`docs/ODF_ORIGIN.md`, `docs/ARCHITECTURE.md`, etc.).
+* Historical docs (`docs/ODF_ORIGIN.md`, `docs/ARCHITECTURE.md`, etc.).
 * Old tests and ODF artifacts kept for provenance.
+
+Removed 2026-11-11 (still in git history): the agent profile/role
+configurations under `agents/` and two raw agent-session transcripts
+(`runs/distill/mathlib_analysis_v2.txt`, `runs/corpus/literature_search_v2.txt`)
+that `runs/loop/release_manifest_v2.json` still lists.
 
 ## Active references
 

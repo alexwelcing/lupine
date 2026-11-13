@@ -2,7 +2,7 @@
 
 **Technical Assessment & Implementation Roadmap**
 
-Lupine Implementer Team | May 2026
+Lupine Science | May 2026
 
 ---
 
@@ -1636,4 +1636,4 @@ The ATLAS-strengthened universality theorem becomes a **peer-reviewable formal p
 
 ---
 
-*Document generated for Lupine Implementer Team. Copy-paste relevant sections into implementation tickets, sprint planning docs, or team wiki.*
+*Document generated for Lupine Science (May 2026); historical planning record.*

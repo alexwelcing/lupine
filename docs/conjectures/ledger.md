@@ -1,3 +1,5 @@
+> **Snapshot, not maintained.** This copy is no longer updated; the maintained ledger is [`lupine-rhizo/docs/conjectures/ledger.md`](https://github.com/alexwelcing/lupine-rhizo/blob/main/docs/conjectures/ledger.md). Use that file for current status.
+
 # Conjectures & Proofs — The Hypothesis Ledger
 
 Every claim Lupine has seriously tested, where it stands, and *why it moved*. This is
@@ -18,7 +20,7 @@ Each hypothesis is its own entry with a lifecycle **status**. The status legend:
 
 | Hypothesis | Status | One-line resolution |
 |------------|--------|---------------------|
-| Hyper-ribbon universality (classical potentials) | Supported · Proven | Error vectors occupy a low-dimensional manifold; Lean-grounded. |
+| Hyper-ribbon universality (classical potentials) | **Open** | Descriptive only; universality and correction value unproven. The Lean item compares a hard-coded constant (0.398 < 0.5): Lean-checked arithmetic, not evidence. Corrected 2026-11-12: this row previously read "Supported · Proven". → [page](hyper-ribbon-universality.md) |
 | Hyper-ribbon transfers classical → MLIP | Under re-audit (2026-06-11) | Prior evidence: 14/15 on-ribbon under MACE/CHGNet/Orb-v3. Born screening (replication/error-geometry) excludes 7/45 foundation-model tensors (incl. CHGNet-Fe, MACE-V, Orb Al/Nb/Pb/Pt); per-element counts must be recomputed on screened inputs. Directional structure independently confirmed at n=8–11 models (rank-1 share 0.56–0.94). |
 | Projected hyper-ribbon release | Open | New Lean-first release lane: prove projected-ribbon gates, then require replay plus cloud evidence before promotion. |
 | Cross-MLIP orthogonal error modes | Supported | MACE and CHGNet have orthogonal error directions on Ag/Nb/Pd. |
@@ -27,7 +29,7 @@ Each hypothesis is its own entry with a lifecycle **status**. The status legend:
 | D-band controls error correlation | **Refuted by us** | Sample-size confounder (full-sample ρ = −0.02). |
 | MEAM is intrinsically 2-D | **Refuted by us** | Matched-n bootstrap: MEAM overlaps Tersoff. |
 | BCC/FCC "causal shield" | **Self-corrected** | The dramatic r 0.90 vs 0.04 was 1.5 % data contamination. |
-| Simpson's paradox in BCC elastic constants | **Refuted by us · Lean** | `noSimpsonsInBccEam`: the causal graph has no bypass. |
+| Simpson's paradox in BCC elastic constants | **Withdrawn** | The paradox was demonstrated on a synthetic example (`generate_simpsons_example` in `atlas-distill/src/causal.rs`). On the recorded NIST data, pooled and within-element correlations do not reverse sign (`simpsonsDetectedEmpirical` in `Materials/Analysis/Causal.lean`; Lean-checked arithmetic). The causal-graph argument (`MetaScience.lean`) is a stated conjecture, not a proof. Corrected 2026-11-12: this row previously cited `noSimpsonsInBccEam`, which does not exist. |
 
 ## 2026-06-07 Kimi MLIP Import
 

@@ -6,13 +6,16 @@ templates, and generated research notes pointed at the same story.
 
 ## Core Identity
 
-Lupine Science is a public research program for the error geometry of
-interatomic potentials.
+Lupine Science measures where machine-learned models of atoms go wrong,
+against published references and pass/fail gates set in advance, and publishes
+every verdict, failures included.
 
-Every atomistic simulation depends on a potential. Every potential is wrong,
-but not randomly wrong. Lupine Science treats that structured wrongness as the
-object of study: measure it, test it, publish it, correct it, and make the
-claim lifecycle visible.
+Lupine Science is an early-stage, founder-led research company. We
+independently measure the errors of machine-learned interatomic potentials
+(MLIPs), test corrections against preregistered gates, record any amendment
+made after results are seen, and publish the verdict: pass, fail or abstain.
+Correction is a research question here, not a product: it has held only in
+narrow, stated cases. Nothing we have published is peer-reviewed yet.
 
 The first reader is a serious materials-science reader: a university PI,
 national-lab lead, MLIP builder, research software collaborator, or lab director
@@ -21,11 +24,13 @@ where it looked accurate.
 
 ## Narrative Spine
 
-1. Interatomic potentials fail in structured ways.
-2. Those failures form geometry across models, elements, properties, and
-   structure families.
-3. Lupine Science studies that geometry as scientific evidence, not as a
-   generic leaderboard.
+1. Interatomic potentials are necessary and wrong in ways worth measuring.
+2. A pooled MLIP error can hide where a model fails; we stratify (functional,
+   pair_style, element) before trusting a leaderboard number. Whether errors
+   share structure across models, elements and properties is an open question
+   we test against gates set in advance.
+3. Lupine Science treats each measurement as evidence, not as a leaderboard
+   entry, and publishes the verdict whether it passes, fails or abstains.
 4. LUPI makes the evidence inspectable in the browser.
 5. The Lupine Library turns the work into durable human knowledge.
 6. glim-think keeps the agentic research loop attached to claims, evidence,
@@ -37,12 +42,12 @@ Use this taxonomy when a surface needs to show the full scientific program:
 
 | Layer | Question |
 | --- | --- |
-| Error geometry | Do prediction errors form stable low-dimensional structure? |
+| Error geometry | Do prediction errors form stable low-dimensional structure? (Open: tested, not established.) |
 | Sloppy-model structure | Which stiff and sloppy directions explain model failure? |
 | Cross-MLIP transfer | Do foundation MLIPs inherit, rotate, or escape the classical error geometry? |
 | Causal and statistical validity | Which trends survive matched samples, bootstrap controls, and confounder checks? |
-| Claim lifecycle | Which hypotheses are proposed, supported, refuted, corrected, or open? |
-| Formal specification | Which claims can be moved toward proof obligations or theorem-shaped validation? |
+| Claim lifecycle | Which claims are Supported, Open, Failed, Abstained, Refuted by us, Self-corrected or Withdrawn? |
+| Formal specification | Which arithmetic and stated inequalities behind published numbers can Lean 4 check? (It does not check the physics, the reference data or the pipeline.) |
 | Agentic research loop | How do agents extend the evidence without losing provenance? |
 
 ## Surface Roles
@@ -63,9 +68,9 @@ next run smarter."
 
 Primary public surfaces should read as scientific orientation for materials
 labs, university groups, national-lab teams, MLIP builders, and research
-software collaborators. Investors and other observers should be able to watch
-the evidence trail, claim lifecycle, and operating cadence without being
-directly pitched on the surface.
+software collaborators. Readers evaluating the program should start from the
+evidence trail, claim lifecycle, and operating cadence without being directly
+pitched on the surface.
 
 Prefer:
 
@@ -73,7 +78,8 @@ Prefer:
 - "field evidence"
 - "science spine"
 - "claim lifecycle"
-- "supported, refuted, corrected, open"
+- the ledger's statuses: Supported, Open, Failed, Abstained, Refuted by us,
+  Self-corrected, Withdrawn
 - "human knowledge surface"
 - "agentic research control plane"
 - "inspectable evidence"
@@ -86,23 +92,28 @@ Avoid:
 - retired viewer domains
 - "atom-logo" framing
 - unsupported claims that the science is settled
+- "publishes corrections" or "correction layer" as a product: correction is a
+  research question, and it has held only in narrow, stated cases
+- "proof pack" (say "evidence record") and "certificate" for a physical result
 
 ## One-Sentence Forms
 
 General:
 
-> Lupine Science studies where interatomic potentials fail, why those failures
-> have structure, and how that structure can guide correction.
+> Lupine Science measures where machine-learned models of atoms go wrong,
+> against published references and pass/fail gates set in advance, and
+> publishes every verdict, failures included.
 
 Lab reader:
 
-> Lupine Science is a lab-facing research corpus for atomistic model trust:
-> error geometry, claim lifecycle, inspectable evidence, and correction targets.
+> Lupine Science is a lab-facing research record on MLIP error: measurements
+> against published references, gates set in advance, a claim lifecycle and
+> inspectable evidence.
 
-Observer:
+Evaluator:
 
-> Lupine Science is best evaluated by watching its evidence trail: Library
-> updates, LUPI evidence routes, claim status changes, and public corrections.
+> Lupine Science is best evaluated from its evidence trail: the hypothesis
+> ledger, Library reports, LUPI evidence routes and the corrections log.
 
 For LUPI:
 
@@ -140,18 +151,19 @@ geometry for interatomic potentials.
 
 Lupine Science should orient readers around the trust question:
 
-> What does this model get wrong, is the wrongness structured enough to correct,
-> and can the evidence be inspected?
+> What does this model get wrong, against which references, and can the
+> evidence be inspected?
 
-The first collaboration shapes are:
+We are open to working with labs and model builders on work of these shapes.
+None of them is an offered product today:
 
-- MLIP Failure Geometry Audit
-- Evidence Pack for a paper, dataset, or benchmark
-- Potential Trust Report for a material family
-- Ledger-backed research loop for model evaluation
+- an independent error audit of an MLIP on a material family, with pass/fail
+  gates set in advance
+- an evidence record for a paper, dataset, or benchmark
+- a ledger-backed evaluation loop for a model
 
-Do not make the front door an investor pitch. Investors and other observers can
-watch the public evidence trail, operating cadence, and self-correction record.
+Do not make the front door an investor pitch. Readers evaluating the program
+should start from the public evidence trail and the ledger.
 
 The full strategy lives in `docs/plans/market-winning-strategy.md`; the
 structured agent version lives in `docs/brand/market-strategy.json`.

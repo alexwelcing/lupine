@@ -4,6 +4,8 @@
 **Tool:** Lean 4 (`v4.30.0-rc1`) with Mathlib  
 **Method:** Formal specification + executable verification via `#eval` and `#guard`
 
+**Corrected 2026-11-12.** Earlier versions of this report called the Simpson's-paradox claim "fabricated"; the verdict is now worded "Refuted by formal check". They also cited a Lean theorem named `noSimpsonsInBccEam`, which does not exist in the Lean sources; the check that exists is `simpsonsDetectedEmpirical` in `Materials/Analysis/Causal.lean`.
+
 ---
 
 ## Executive Summary
@@ -17,7 +19,7 @@ This formal audit embeds the exact synthetic datasets from `atlas-distill/src/va
 
 | Claim | Verdict | Evidence |
 |-------|---------|----------|
-| Simpson's paradox | **FABRICATED** | Formal computation shows no reversal; all correlations negative |
+| Simpson's paradox | **Refuted by formal check** | Formal computation shows no reversal; all correlations negative |
 | Hyper-ribbon dim | **CONSISTENT** | PR values 1.17–1.34 match claimed range |
 | NIST validation | **ABSENT** | 510 NIST rows have `predicted = none` |
 
@@ -54,14 +56,14 @@ reversalMagnitude = 0.134749
 
 ### Verdict
 
-**CLAIM IS FABRICATED.**
+**Refuted by formal check.**
 
 - The paper claims pooled r = -0.435; Lean computes **-0.846**.
 - The paper claims within-group r = +0.147; Lean computes **-0.980**.
 - Not a single group shows a positive correlation. Every metal's reference-vs-error correlation is strongly negative.
 - `simpsonsDetected` is formally `false`.
 
-**Lean theorem:** `noSimpsonsInBccEam` proves `syntheticBccEamParadox.simpsonsDetected = false`.
+**Lean theorem:** `simpsonsDetectedEmpirical` in `Materials/Analysis/Causal.lean` proves `empiricalParadox.simpsonsDetected = false` on the recorded NIST data (a `native_decide` computation). The paradox appeared only in synthetic data (`generate_simpsons_example` in `atlas-distill/src/causal.rs`).
 
 ---
 
@@ -98,7 +100,7 @@ All PR values fall within or near the claimed 1.2–1.4 range. The PR/n < 0.5 cr
 ```
 ┌─────────────────────────────────────────────────────────────┐
 │  PAPER CLAIMS                                               │
-│  ├─ Simpson's paradox  →  NO EVIDENCE (fabricated)         │
+│  ├─ Simpson's paradox  →  REFUTED BY FORMAL CHECK          │
 │  ├─ Hyper-ribbon dim   →  SYNTHETIC-ONLY (consistent)      │
 │  └─ NIST validation    →  NOT PERFORMED (blank scaffold)   │
 ├─────────────────────────────────────────────────────────────┤

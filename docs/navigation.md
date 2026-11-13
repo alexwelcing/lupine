@@ -9,12 +9,14 @@ For the narrative front door, read [`README.md`](../README.md). This file is the
 
 ---
 
-## The claim, in one sentence
+## What we do, in one sentence
 
-Interatomic potentials are necessary and wrong in *structured* ways: across
-hundreds of potentials their prediction errors collapse onto a low-dimensional
-("hyper-ribbon") structure, and that structure — if it is real and stable — tells
-you where a model fails and what correction would matter.
+Lupine Science measures where machine-learned models of atoms go wrong, against
+published references and pass/fail gates set in advance, and publishes every
+verdict, failures included. The earlier "hyper-ribbon" reading (errors of many
+potentials collapsing onto one low-dimensional structure) is now **Open** and
+descriptive only; see the maintained
+[hypothesis ledger](https://github.com/alexwelcing/lupine-rhizo/blob/main/docs/conjectures/ledger.md).
 
 ## The 60-second path to the real info
 
@@ -24,16 +26,19 @@ Read in this order. Each row is the canonical source for that layer.
 |---|---|---|
 | 0 | [`docs/ONBOARDING.md`](./ONBOARDING.md) | **New contributor? Start here.** Research-scientist vs software-engineer tracks, install steps, and common pitfalls. |
 | 0.5 | [`docs/ARCHITECTURE.md`](./ARCHITECTURE.md) | how the repo's roots connect into a closed scientific loop |
-| 1 | [`README.md`](../README.md) → "Science Spine" | the 7-layer program and why it matters |
-| 2 | [`archive/swarm_preprint_review/research/immi_dim01_sloppy_theory.md`](../archive/swarm_preprint_review/research/immi_dim01_sloppy_theory.md) | **the literature foundation** — sloppy models, the hyper-ribbon, 25+ primary sources (Transtrum, Waterfall, Frederiksen, Kurniawan…). Start here for the theory. |
+| 1 | [`README.md`](../README.md) → "What is here" and "Results, with scope" | what this repo holds and what our results do and do not show |
+| 2 | [`docs/methodology.md`](./methodology.md) | how claims are tested |
 | 3 | [`lit-review.md`](../lit-review.md) | the assembled review: sloppy theory + Simpson's-paradox/permutation methodology + benchmarking |
-| 4 | [`docs/data-provenance.md`](./data-provenance.md) | **where every number comes from** — OpenKIM elastic constants vs NIST, 559 potentials × 15 metals, LAMMPS for Phase-D |
-| 5 | [`docs/methodology.md`](./methodology.md) · [`docs/conjectures/ledger.md`](./conjectures/ledger.md) | how claims are tested; the live **claim ledger** (supported / refuted / open) |
-| 6 | [`paper/immi-paper.tex`](../paper/immi-paper.tex) | the IMMI manuscript (the actual paper) |
-| 7 | [`CHANGELOG.md`](../CHANGELOG.md) | what changed and what was learned/corrected, newest first |
+| 4 | [`docs/data-provenance.md`](./data-provenance.md) | **where every number comes from** — OpenKIM elastic constants vs NIST, 559 model–element tensors (423 distinct KIM ids) × 15 metals, LAMMPS for Phase-D |
+| 5 | [hypothesis ledger (lupine-rhizo)](https://github.com/alexwelcing/lupine-rhizo/blob/main/docs/conjectures/ledger.md) · [`docs/conjectures/ledger.md`](./conjectures/ledger.md) | the maintained **claim ledger** (supported / open / failed / refuted / self-corrected); the copy here is a snapshot |
+| 6 | [`paper/immi-paper.tex`](../paper/immi-paper.tex) | the IMMI manuscript (working draft, not peer-reviewed) |
+| 7 | [`CHANGELOG.md`](../CHANGELOG.md) · [corrections log](https://lupine.science/corrections/) | monorepo history through 2026-06-19; retired public headlines with dates and reasons |
 | 8 | [`lean-spec/`](../lean-spec/) · [`docs/formal-proof-ledger.md`](./formal-proof-ledger.md) | the formal-specification layer |
 
-Deeper theory reports: [`docs/sloppy_models_report.md`](./sloppy_models_report.md),
+Deeper theory reports: the archived literature foundation
+[`immi_dim01_sloppy_theory.md`](../archive/swarm_preprint_review/research/immi_dim01_sloppy_theory.md)
+(sloppy models and the hyper-ribbon, with primary sources),
+[`docs/sloppy_models_report.md`](./sloppy_models_report.md),
 [`docs/tda_error_landscapes_report.md`](./tda_error_landscapes_report.md),
 [`docs/phonon_benchmarking_report.md`](./phonon_benchmarking_report.md).
 
@@ -52,25 +57,25 @@ included). Keep them straight:
 |---|---|---|---|
 | **A. The sloppy model manifold** (the actual *hyper-ribbon*) | data / prediction space | image `y(θ)` of the prediction map as parameters vary; a bounded manifold with a geometric hierarchy of widths `Wₙ ~ W₀·Δⁿ` | Transtrum–Machta–Sethna 2010/2011 — see `immi_dim01` §2 |
 | **B. The empirical effective-dimensionality** | observable space (e.g. C11/C12/C44) | participation ratio `PR = (Σλ)²/Σλ²` of the **error covariance** across potentials (PR ≈ 1.05–1.86 of 3 → near-1D ribbon). This is how you *measure* A from data — **not** a separate manifold. | `immi_dim01` §4; `archive/lupine-distill-rust/src/hypothesis/manifold.rs` |
-| **C. The configuration-space error core** | configuration space `Ω ⊂ ℝᵐ` | a low-dim core `H` with the error boundary a codim-1 tube around it; a *distinct, more demanding* object with a **conditional** universality theorem | the root PDF *"A Conditional Universality Theorem for Error Geometry in MLIPs"* |
+| **C. The configuration-space error core** | configuration space `Ω ⊂ ℝᵐ` | a low-dim core `H` with the error boundary a codim-1 tube around it; a *distinct, more demanding* object with a **conditional** universality theorem | the archived PDF [*"A Conditional Universality Theorem for Error Geometry in MLIPs"*](../archive/reports/A%20Conditional%20Universality%20Theorem%20for%20Error%20Geometry%20in%20Machine-Learning%20Interatomic%20Potentials.pdf) |
 
 A and B are the established program (B measures A; standard sloppy-model usage). C
 is a separate, rigor-first reframing whose theorem is **conditional** on nonstandard
 assumptions (notably "A6", that different models share spatial error modes). Bridging
 B→C is *not* automatic — it needs A6, which had never been tested.
 
-## Claim status (live)
+## Claim status
 
-The honest record is [`docs/conjectures/ledger.md`](./conjectures/ledger.md) and
-[`CHANGELOG.md`](../CHANGELOG.md). Snapshot from the README: **supported** —
-classical hyper-ribbon universality and early de-myopization beyond elastic
-constants; **open / under re-audit** — per-element classical→MLIP transfer counts
-after Born screening, Au escape, Fe magnetic failure mode, predicting `E_coh`/`B0`;
-**refuted by us** — d-band (sample size), MEAM anomaly (matched-n bootstrap),
-BCC/FCC shield (data contamination).
+The maintained record is the
+[hypothesis ledger in lupine-rhizo](https://github.com/alexwelcing/lupine-rhizo/blob/main/docs/conjectures/ledger.md);
+[`docs/conjectures/ledger.md`](./conjectures/ledger.md) here is a snapshot. In
+brief: **open** — hyper-ribbon universality (descriptive only), classical→MLIP
+transfer after Born screening, Au escape, Fe magnetic failure mode; **refuted by
+us** — d-band (sample size), MEAM anomaly (matched-n bootstrap);
+**self-corrected** — BCC/FCC shield (data contamination).
 Per-conjecture detail: [`docs/conjectures/`](./conjectures/).
 
-## This session's additions (MiniMax-M3 upgrade + the live campaign) — and their status
+## 2026-06-02 additions (MiniMax-M3 upgrade and the live campaign) and their status
 
 Engineering and exploration added 2026-06-02. **Read the status column before
 trusting any of it.**
@@ -90,11 +95,13 @@ trusting any of it.**
 - [`docs/GLOSSARY.md`](./GLOSSARY.md) — shared vocabulary
 - [`docs/FAQ.md`](./FAQ.md) — common questions
 - [`ROOTS.md`](../ROOTS.md) — authoritative root-ownership ledger
-[`archive/`](../archive/) holds retired surfaces (currently `lupine-start/`).
-`glim-think/` is the control plane; `atlas-distill/` the Rust engine; `python/`
-the active Python Distill packages; `mlip_immi/` the real-data lane; `lean-spec/`
-the formal layer; `paper/` the manuscript; `library-site/` the public site;
-`atlas/atlas-view/` the LUPI viewer app. Retired roots live in `archive/`.
+[`archive/`](../archive/) holds retired surfaces (see its README).
+`atlas-distill/` is the Rust engine; `python/` the Python Distill packages;
+`mlip_immi/` the real-data lane; `lean-spec/` the formal layer; `paper/` and
+`paper2/` the working-draft manuscripts. `glim-think/`, `library-site/` and
+`atlas/atlas-view/` are historical copies: active research is in lupine-rhizo,
+the Library deploys from lupine-ledger and the LUPI viewer from
+`alexwelcing/Lupi`.
 
 For the machinery (control plane, distill engine, MLIP campaigns, cloud compute,
 the M3 upgrade), see the **engineering index**:

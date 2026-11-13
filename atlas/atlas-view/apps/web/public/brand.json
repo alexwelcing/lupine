@@ -1,12 +1,11 @@
 {
   "$schema": "https://lupine.science/schemas/lupine-brand.v1.json",
-  "updated": "2026-06-02",
+  "updated": "2026-11-12",
   "organization": {
     "name": "Lupine Science",
-    "legalName": "Lupine Science",
     "url": "https://lupine.science",
-    "description": "Lupine Science studies where interatomic potentials fail, why those failures have structure, and how that structure can guide correction.",
-    "oneLine": "Lupine Science is a public research program for the error geometry of interatomic potentials.",
+    "description": "Lupine Science is an early-stage, founder-led research company. We independently measure the errors of machine-learned interatomic potentials (MLIPs), test corrections against preregistered gates, record any amendment made after results are seen, and publish the verdict: pass, fail or abstain. Correction is a research question here, not a product: it has held only in narrow, stated cases. Nothing we have published is peer-reviewed yet.",
+    "oneLine": "Lupine Science measures where machine-learned models of atoms go wrong, against published references and pass/fail gates set in advance, and publishes every verdict, failures included.",
     "mark": "bluebonnet field evidence",
     "canonicalColor": "#0a1628"
   },
@@ -15,22 +14,22 @@
       "id": "lupine-science",
       "name": "Lupine Science",
       "url": "https://lupine.science",
-      "role": "research program and public start page",
-      "description": "Lab-facing orientation to the scientific question, evidence status, LUPI routes, Library, live lab, and ways to extend the work."
+      "role": "company site and public start page",
+      "description": "What we measure, the results with their scope and status, and the corrections log."
     },
     {
       "id": "lupi",
       "name": "LUPI",
       "url": "https://lupi.live",
-      "role": "browser-native scientific viewer",
-      "description": "WebGPU viewer for atomistic evidence, molecular trajectories, gallery datasets, and publication-quality inspection."
+      "role": "browser viewer",
+      "description": "LUPI (lupi.live) opens structures and LAMMPS dump files in a WebGPU-capable browser with no installation."
     },
     {
       "id": "lupine-library",
       "name": "Lupine Library",
       "url": "https://library.lupine.science",
-      "role": "human knowledge surface",
-      "description": "Mobile-first research reader for reports, notes, evidence, status labels, and the public changelog."
+      "role": "public research record",
+      "description": "Reader for Lupine's public research record: tested claims about interatomic-potential error, with refutations, corrections and the evidence for each."
     },
     {
       "id": "glim-think",
@@ -42,29 +41,11 @@
   ],
   "narrative": {
     "problem": "Interatomic potentials are necessary and wrong in structured ways.",
-    "discovery": "Across many potentials and materials, prediction errors form low-dimensional geometry rather than random scatter.",
-    "system": "Lupine Science measures that geometry, tests it, publishes corrections, and keeps the claim lifecycle visible.",
+    "system": "Lupine Science measures those errors against published references and pass/fail gates set in advance, publishes every verdict, failures included, and keeps the claim lifecycle visible.",
     "viewer": "LUPI lets humans and agents inspect the evidence in the browser.",
     "library": "The Lupine Library turns the work into durable, searchable human knowledge.",
     "agents": "glim-think keeps hypotheses, evidence, refutations, corrections, and broadcasts attached to a ledger.",
-    "observerPosture": "Investors and other observers should watch the public evidence trail rather than expect a pitch-first front door."
-  },
-  "marketStrategy": {
-    "category": "error geometry for interatomic potentials",
-    "positioning": "Lupine Science is a lab-facing research corpus and evidence system for atomistic model trust.",
-    "winningThesis": "Own the trust question for interatomic potentials: what does this model get wrong, is the wrongness structured, can the evidence be inspected, and what correction target follows?",
-    "primaryWedges": [
-      "MLIP Failure Geometry Audit",
-      "Evidence Pack for a paper, dataset, or benchmark",
-      "Potential Trust Report for a material family",
-      "Ledger-backed research loop for model evaluation"
-    ],
-    "executionTemplates": [
-      "docs/templates/proof-pack.md",
-      "docs/templates/mlip-failure-geometry-audit.md"
-    ],
-    "strategyDoc": "docs/plans/market-winning-strategy.md",
-    "structuredStrategy": "docs/brand/market-strategy.json"
+    "observerPosture": "Readers evaluating the program should start from the public evidence trail and the ledger."
   },
   "scienceSpine": {
     "document": "docs/science/SCIENCE_SPINE.md",
@@ -87,7 +68,6 @@
     "error geometry of interatomic potentials",
     "lab-facing research corpus",
     "inspectable evidence",
-    "MLIP Failure Geometry Audit",
     "agentic research control plane",
     "human knowledge surface"
   ],
@@ -109,7 +89,7 @@
     "preferredOrganization": "Lupine Science",
     "preferredViewer": "LUPI",
     "preferredLibrary": "Lupine Library",
-    "preferredSentence": "Lupine Science studies the error geometry of interatomic potentials; LUPI is the browser-native viewer for inspectable evidence, and Lupine Library is the public research corpus."
+    "preferredSentence": "Lupine Science measures where machine-learned interatomic potentials go wrong; LUPI is the browser-native viewer for inspectable evidence, and Lupine Library is the public research corpus."
   },
   "publication": {
     "title": "The Causal Geometry of Prediction Errors in Interatomic Potentials",
@@ -121,7 +101,7 @@
   "founder": {
     "name": "Alex Welcing",
     "soleFounder": true,
-    "contact": "founders@lupine.science",
+    "contact": "alex@lupinesci.com",
     "note": "Single source of truth for team facts. There is ONE founder and no other team to mention. Do not present multiple people, a team, or advisors in public materials."
   }
 }

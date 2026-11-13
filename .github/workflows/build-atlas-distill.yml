@@ -9,6 +9,7 @@ on:
       - 'atlas-distill/**'
       - 'lupine-ops/**'
       - '.github/workflows/build-atlas-distill.yml'
+  workflow_dispatch:
   pull_request:
     branches: [main]
     paths:
@@ -63,7 +64,9 @@ jobs:
   build-and-deploy:
     name: Build and Deploy
     needs: test
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    # Manual only (2026-11-13): lupine-rhizo's distill is the maintained engine for
+    # the atlas-distill job; pushes here run the tests but never deploy.
+    if: github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
     permissions:
       contents: 'read'

@@ -1,39 +1,50 @@
 # Formal Proof Ledger
 
-Which empirical claims are backed by a **machine-checked Lean 4 theorem**, which are
-proven-but-synthetic, and which are deliberately *not* formalized. The Lean
-specification is the adversary of the prose: where the two disagree, the prose loses.
+> Mirrored on 2026-11-12 from [`lupine-rhizo/docs/formal-proof-ledger.md`](https://github.com/alexwelcing/lupine-rhizo/blob/main/docs/formal-proof-ledger.md), which is the maintained copy. The conjecture ledger in this repository is an unmaintained snapshot.
 
-The authoritative artifact is the [Formal Audit Report](formal-audit.md) — generated
-*by* the Lean spec, not written by hand. This ledger maps audit verdicts to the
-[conjecture ledger](conjectures/ledger.md).
+Which empirical claims have a **machine-checked Lean 4 statement** behind them, what
+that statement actually checks, and which claims are deliberately *not* formalized.
+Lean 4 checks the arithmetic and stated inequalities behind published numbers; it does
+not check the physics, the reference data or the pipeline. A Lean check is a badge
+(**Lean-checked arithmetic**), never a result status: an empirical claim with only a
+Lean check stays **Open** unless an empirical test supports it.
+
+The authoritative scope statement is the [Formal Audit](formal-audit.md) (corrected
+2026-11-04). This ledger maps its dispositions to the
+[conjecture ledger](conjectures/ledger.md) and agrees with both.
+
+**Corrected 2026-11-11.** Earlier versions of this page called the hyper-ribbon
+dimensionality claim "Proven — empirically grounded" and cited a theorem named
+`noSimpsonsInBccEam`, which does not exist in the Lean sources. Both rows are corrected
+below.
 
 ## Verdicts
 
-| Claim | Lean module / theorem | Verdict |
+| Claim | Lean module / statement | Result status · what the Lean statement checks |
 |-------|----------------------|---------|
-| Hyper-ribbon manifold dimensionality (PR/n < 0.5) | `Materials/Theory/HyperRibbonEmpirical` | **Proven — empirically grounded.** Originally consistent only with synthetic data; now grounded on the real corpus. → [conjecture](conjectures/hyper-ribbon-universality.md) |
-| Simpson's paradox in BCC elastic constants | `noSimpsonsInBccEam` (`Materials/Analysis/Causal`) | **Claim fabricated.** The causal graph has no bypass from element to error, so elemental stratification cannot produce Simpson's paradox in real data. |
-| Parameter / sloppiness bound | `Materials/Theory/ParameterBound` | Proven structural bound (analytic, not data-dependent). |
-| Validation scope & rank gate | `Materials/Scope/Validity`, `Materials/Validation/RankGate` | Proven guard conditions used by the live loop. |
-| Weak acceleration/refusal scalar gate | `Materials/Theory/WeakAcceleration` | Proven theorem-shaped guard: the scalar speedup lower bound stays >= 1 under coverage/reach/threshold conditions and does not depend on a spectral rho threshold. Full Lipschitz/reach formalization remains open. |
+| Hyper-ribbon manifold dimensionality (PR/n < 0.5) | `Materials/Theory/HyperRibbonEmpirical` · `empirical_hyper_ribbon_holds` | **Open** — descriptive; historical counts not re-verified; low PR is partly rank-limited; classical-to-MLIP alignment is not predictive (ρ = 0.26, p = 0.34). The Lean statement compares a hard-coded Float constant (`0.398… < 0.5`); it loads no data and proves no universality. → [conjecture](conjectures/hyper-ribbon-universality.md) |
+| Simpson's paradox in BCC elastic constants | `Materials/Analysis/Causal` · `simpsonsDetectedEmpirical` | **Withdrawn** — the paradox appeared only in a synthetic example; on the recorded NIST data the pooled and within-element correlations do not reverse sign (a `native_decide` computation over the recorded points). The causal-graph argument in `Materials/Theory/MetaScience` is a stated conjecture (`status := conjecture`), not a proof. |
+| Parameter / sloppiness bound | `Materials/Theory/ParameterBound` | Checked structural bound (analytic, not data-dependent). |
+| Validation scope & rank gate | `Materials/Scope/Validity`, `Materials/Validation/RankGate` | Checked guard conditions used by the live loop. |
+| Weak acceleration/refusal scalar gate | `Materials/Theory/WeakAcceleration` | Checked theorem-shaped guard: the scalar speedup lower bound stays >= 1 under coverage/reach/threshold conditions and does not depend on a spectral rho threshold. Full Lipschitz/reach formalization remains open. |
 
 ## How to read this
 
-- **Proven — empirically grounded** is the strongest tier: a Lean theorem *and* real
-  data behind it. Only the hyper-ribbon dimensionality claim currently holds it.
-- **Claim fabricated** is the most important row. The original paper asserted a
-  Simpson's paradox; the formal spec proved it *cannot exist* under the real causal
-  graph. This is self-correction enforced by machine, not by authors — and it is why
-  the BCC/FCC story is filed as [self-corrected](conjectures/bccfcc-causal-shield.md).
+- A row's **result status** comes from empirical tests, not from Lean. No empirical
+  claim on this page is currently Supported by a Lean statement alone.
+- The Simpson's-paradox row is the useful cautionary example: a striking claim made
+  on synthetic data did not hold on the recorded data, and the claim is withdrawn.
+  The general lesson that pooled numbers can hide or invert group-level behaviour is
+  better illustrated by the withdrawn pooled "1.8× gate efficacy"
+  ([errata #3](https://github.com/alexwelcing/lupine-rhizo/blob/main/docs/plans/2026-07-13-errata-and-red-team-dispositions.md)).
 - The empirical-only conjectures (d-band, MEAM-2D, Au escape, Fe outlier) are **not**
   formalized: they are statistical claims about a corpus, not theorems. We do not dress
   statistics in proof clothing.
 
 ## The epistemic stance
 
-We formalize *before* we simulate where the claim is structural, and we let the spec
-overrule the narrative. See [In the In Between](formal-methodology.md) and
+We formalize where the claim is structural, and we let the checked statement overrule
+the narrative when they disagree. See [In the In Between](formal-methodology.md) and
 [The Open Distillation Factory — Executable Vision](formal-vision.md).
 
 ## Next

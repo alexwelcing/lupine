@@ -1,6 +1,6 @@
 # atlas-distill
 
-**Mathematical discovery engine for molecular dynamics simulation data.**
+**Rust engine for analysing interatomic-potential prediction errors.**
 
 [![Tests](https://github.com/alexwelcing/lupine/actions/workflows/build-atlas-distill.yml/badge.svg)](https://github.com/alexwelcing/lupine/actions/workflows/build-atlas-distill.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
@@ -11,7 +11,7 @@
 
 - **Manifold Analysis** — PCA/SVD eigenvalue analysis of prediction errors with hyper-ribbon detection
 - **Bootstrap Uncertainty Quantification** — 95% confidence intervals for participation ratios and geometric fits
-- **Meta-Analysis** — Fixed/random-effects meta-analysis with Fisher z-transformation, DerSimonian-Laird τ², and I² heterogeneity
+- **Meta-Analysis** — Standard fixed- and random-effects meta-analysis of correlation coefficients across independent groups (Fisher z, DerSimonian–Laird τ², Cochran's Q and I², t-based prediction interval); see [Meta-analysis](#meta-analysis) for scope and the 2026-11-12 fix
 - **Simpson's Paradox Detection** — Pooled vs. within-group correlation comparison with reversal markers
 - **Multi-Potential Benchmarking** — FCC (8 metals) and BCC (7 metals) elastic constant validation
 - **Model Geometry Evidence** — Residual-SVD packets for MLIP/WBM/arena-scale model dumps, with accuracy gates and effective-rank guards
@@ -47,8 +47,10 @@ cargo run --bin atlas-distill -- manifold
 # Simpson's paradox demo
 cargo run --bin atlas-distill -- detect-paradox --bcc
 
-# Meta-analysis
-cargo run --bin atlas-distill -- meta-analyze
+# Meta-analysis of per-element correlations (writes benchmark_meta.json)
+cargo run --bin atlas-distill -- meta-analyze \
+  --input benchmarks/nist_populated_all.csv \
+  --output benchmark_meta.json
 
 # Model/reference residual geometry from a tidy benchmark dump
 cargo run --bin atlas-distill -- model-geometry \
@@ -161,7 +163,7 @@ atlas-distill/
 |---------|-------------|
 | `validate [--full] [--bcc]` | Run ensemble operator validation |
 | `manifold [--bcc]` | Analyze error manifold structure |
-| `meta-analyze [--groups]` | Run meta-analysis on correlations |
+| `meta-analyze --input <csv> \| --groups <json> [--output <json>]` | Fixed- and random-effects meta-analysis of per-group correlations |
 | `detect-paradox [--bcc] [--example]` | Detect Simpson's paradox |
 | `benchmark <file> [--manifold] [--meta]` | Load external benchmark database |
 | `model-geometry --input <csv/json> [--pair A:B]` | Distill model-to-model and model-to-reference residual geometry evidence |
@@ -178,42 +180,103 @@ atlas-distill/
 | `elastic --c11 --c12 --c44` | Compute FCC elastic properties |
 | `literature <action>` | Literature-based discovery |
 | `scan --x --y <files...>` | Cross-run relationship scanning |
-| `pipeline [--provider]` | Hermes pipeline orchestrator |
+| `pipeline [--provider]` | Multi-step analysis pipeline (legacy; each stage calls an external, provider-backed agent command-line tool) |
 | `formalize` | Export to Lean 4 specification |
 
-## Key Results
+## Meta-analysis
 
-### FCC Hyper-Ribbon Structure
+`src/meta_analysis.rs` implements standard fixed- and random-effects
+meta-analysis of correlation coefficients across independent groups: each
+group's r is Fisher z-transformed, weighted by inverse variance, pooled, and
+back-transformed; the random-effects model adds a DerSimonian–Laird estimate
+of between-group variance τ² and a t-based prediction interval. Both models
+report Cochran's Q (fixed-effect weights around the fixed-effect mean), its
+p-value and I². It pools correlations, not error magnitudes such as MAE, and
+it assumes the groups are independent. Rows that share materials or models (for example
+C11, C12 and C44 of the same metal) are not independent, and intervals built
+on such rows are anti-conservative. We withdrew our own earlier Fisher-z
+random-effects intervals built on dependent C11/C12/C44 rows for this reason
+(lupine-rhizo `paper/tms2027-proceedings/manuscript.tex`).
 
-| Potential | PR / 3 | 95% CI | R²_log | Hyper-ribbon? |
-|-----------|--------|--------|--------|---------------|
-| EAM | 1.37 | [1.14, 2.16] | 0.940 | ✅ Yes |
-| LJ | 1.17 | [1.04, 1.51] | 0.991 | ✅ Yes |
-| SW | 1.38 | [1.09, 2.08] | 0.985 | ✅ Yes |
+`meta-analyze --input` builds one group per material and skips, with a line
+on stderr, any material with fewer than 4 numeric rows or with constant
+reference or predicted values (zero variance, so r is undefined).
 
-### BCC Simpson's Paradox
+### Known issues (Fixed 2026-11-12 and 2026-11-13)
 
-- **Pooled correlation:** r = −0.435
-- **Within-group correlation:** r = +0.147
-- **Reversal magnitude:** 0.581
-- **Detection:** Complete reversal with ecological fallacy risk
+- **Q and I² in the random-effects output. Fixed 2026-11-12.**
+  `random_effects_meta` used to recompute the reported Q, its p-value and I²
+  around the random-effects pooled mean instead of the fixed-effect mean,
+  which can only make them equal or larger. Both models now report Cochran's
+  Q with fixed-effect weights around the fixed-effect mean (as metafor's QE
+  does), df = k − 1, its chi-square p-value and I² = max(0, (Q − df)/Q).
+  τ² (DerSimonian–Laird) was already computed from this Q and does not
+  change.
+- **Prediction interval quantile. Fixed 2026-11-12.** The random-effects
+  prediction interval used the normal quantile 1.96. It now uses
+  μ̂_RE ± t_{k−2, 0.975} · sqrt(τ² + SE(μ̂_RE)²) (Higgins, Thompson &
+  Spiegelhalter 2009), back-transformed with tanh. It is undefined (`NaN`,
+  written as JSON `null`) when there are fewer than three groups. The
+  t quantile is implemented in the module (no new dependency).
+- **Q p-value. Fixed 2026-11-12.** The p-value used a Wilson–Hilferty
+  approximation that was off by up to an order of magnitude in the tail
+  (2.5e-10 instead of 2.8e-11 for the demo groups in `meta_analysis.json`)
+  and was written as 0 for very large Q. It now uses the regularized
+  incomplete gamma function. Confidence intervals use z₀.₉₇₅ = 1.959963984540054 rather than
+  1.96; this moves interval ends by about 1e-5.
+- **Reference tests. Fixed 2026-11-12.** The unit tests now compare Q, df,
+  p, I², τ², the pooled estimates, CIs and prediction intervals, to 1e-6,
+  with an independent numpy/scipy implementation
+  (`tests/reference/meta_reference.py`, output committed as
+  `tests/reference/meta_reference.json`). The datasets are: a homogeneous
+  set with Q < df (so τ² = 0), a heterogeneous set, a k = 3 set, a k = 2 set
+  without a prediction interval, and the 15-element elastic-constant panel.
+  The t quantile and chi-square p-value are also checked against scipy.
+  Run `python tests/reference/meta_reference.py --check` (needs numpy and
+  scipy) to confirm that the committed JSON and the values embedded in the
+  Rust tests match a fresh run.
+- **The module was not compiled.** Until 2026-11-12 `src/main.rs` did not
+  declare `mod meta_analysis`, so neither the module nor its unit tests were
+  built or run by `cargo test`. It is now declared and exercised by the
+  `meta-analyze` command.
+- **Constant-valued groups in `meta-analyze --input`. Fixed 2026-11-13.**
+  A material with 4 or more rows whose reference or predicted values are all
+  equal has no defined correlation, but `stats::pearson_r` returns 0.0 on a
+  zero denominator, so such a group entered the pool as r = 0 with weight
+  n − 3 and pulled the pooled correlation toward zero. It is now skipped
+  ("skipping <material>: reference values are constant …" on stderr), like
+  a group with n < 4. `benchmarks/nist_populated_all.csv` has no such group:
+  re-running `meta-analyze` on it reproduces `benchmark_meta.json` byte for
+  byte, so no published number changes.
+
+Published numbers that came from this engine, before and after the 2026-11-12 fixes:
+the 15-element panel's random-effects Q went from 984 to 945, I² from
+98.6% to 98.5%, and the 95% prediction interval from [−0.64, +0.99] to
+[−0.73, +0.99]. The pooled r (0.69), its CI [0.41, 0.85] and τ (0.80) are
+unchanged. `benchmark_meta.json`, `meta_analysis.json` and
+`paper/figures/fig4_forest.{png,pdf}` were regenerated with the fixed
+engine. The dependence caveat above still applies to these intervals.
+
+## Demo commands use hand-typed fixtures
+
+`validate`, `manifold` and `detect-paradox` without an input file run on
+hand-typed fixtures in `src/validation.rs`, which the engine itself labels
+synthetic in its provenance summary. Their output demonstrates the code paths;
+it is not a Lupine result. Measured results and their status are in the
+[program README](../README.md) and the maintained conjecture ledger in
+`alexwelcing/lupine-rhizo` (`docs/conjectures/ledger.md`).
 
 ## Citation
 
-If you use `atlas-distill` in your research, please cite:
-
-```bibtex
-@unpublished{welcing2026causal,
-  author  = {Welcing, Alexander},
-  title   = {The Causal Geometry of Prediction Errors in Interatomic Potentials: A Hyper-Ribbon Manifold Analysis with Simpson's Paradox Detection},
-  year    = {2026},
-  note    = {Working paper, in preparation}
-}
-```
+No Lupine paper has been peer-reviewed or accepted yet, so there is no paper to
+cite for this tool. If you use `atlas-distill`, cite this repository
+(<https://github.com/alexwelcing/lupine>, `atlas-distill/`) and the commit you
+used. The current working draft that discusses the meta-analysis limits above is
+lupine-rhizo `paper/tms2027-proceedings/manuscript.tex`.
 
 ## License
 
-MIT License — see [LICENSE](LICENSE) for details.
+MIT — see the repository [LICENSE](../LICENSE). First-party text and data are CC BY 4.0; see [NOTICE.md](../NOTICE.md).
 
 ## Acknowledgments
 

@@ -1,8 +1,8 @@
 {
   "$schema": "https://lupine.science/schemas/lupine-science-map.v1.json",
-  "updated": "2026-06-08",
+  "updated": "2026-11-12",
   "program": "Lupine Science",
-  "firstPrinciple": "Interatomic potentials are necessary and wrong in structured ways; Lupine Science studies that structure as evidence.",
+  "firstPrinciple": "Interatomic potentials are necessary and wrong in ways worth measuring; Lupine Science measures that error against published references and gates set in advance and publishes every verdict.",
   "intendedReaders": [
     "materials-science faculty and lab directors",
     "national-lab and super-lab research leads",
@@ -11,12 +11,12 @@
     "research software collaborators",
     "reviewers who need claim status and provenance"
   ],
-  "observerPosture": "Investors and other observers should watch the public evidence trail rather than receive a pitch-first front door.",
+  "observerPosture": "Readers evaluating the program should start from the public evidence trail and the ledger.",
   "layers": [
     {
       "id": "error-geometry",
       "name": "Error geometry",
-      "question": "Do prediction errors form stable low-dimensional structure across potentials, elements, properties, and structure families?",
+      "question": "Do prediction errors form stable low-dimensional structure across potentials, elements, properties, and structure families? (Open.)",
       "evidenceSurfaces": [
         "IMMI analysis",
         "hyper-ribbon reports",
@@ -58,7 +58,7 @@
     {
       "id": "claim-lifecycle",
       "name": "Claim lifecycle",
-      "question": "Which hypotheses are proposed, supported, refuted, corrected, or open?",
+      "question": "Which claims are Supported, Open, Failed, Abstained, Refuted by us, Self-corrected or Withdrawn?",
       "evidenceSurfaces": [
         "Lupine Library",
         "CHANGELOG.md",
@@ -68,7 +68,7 @@
     {
       "id": "formal-specification",
       "name": "Formal specification",
-      "question": "Which claims can become proof obligations or theorem-shaped validation?",
+      "question": "Which arithmetic and stated inequalities behind published numbers can Lean 4 check? It does not check the physics, the reference data or the pipeline.",
       "evidenceSurfaces": [
         "lean-spec/",
         "formal proof ledger",
@@ -89,7 +89,7 @@
     {
       "id": "agentic-research-loop",
       "name": "Agentic research loop",
-      "question": "Can agents propose, test, broadcast, and correct claims without losing provenance?",
+      "question": "Can agents propose, test, broadcast, and record claims and their corrections without losing provenance?",
       "evidenceSurfaces": [
         "glim-think/",
         "Phoenix traces",

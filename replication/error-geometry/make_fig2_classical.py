@@ -46,9 +46,6 @@ b.annotate(f"max = {prs[-1]:.2f}\n(Lee-2003)", (prs[-1] + 0.05, len(prs) - 3), f
 fig.tight_layout()
 
 OUTS = [
-    HERE.parent.parent / "Kimi_Agent_Draft Assistance Team Selected" / "paper" / "figures" / "fig2_dimensionality.png",
-    HERE.parent.parent / "Kimi_Agent_Draft Assistance Team Selected" / "figures" / "fig2_dimensionality.png",
-    HERE.parent.parent / "Kimi_Agent_Draft Assistance Team Selected" / "complete_package" / "figures" / "fig2_dimensionality.png",
     HERE.parent.parent / "paper" / "figures" / "fig2_dimensionality.png",
 ]
 for out in OUTS:

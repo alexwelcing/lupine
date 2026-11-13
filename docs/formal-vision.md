@@ -63,7 +63,7 @@ These are not tests. They are **epistemic minimums**. A future commit cannot sil
 - `nistScaffoldPredictionsMissing_bool` — structural check on missing data
 
 ### Analysis: Causal Inference (9 theorems)
-- `noSimpsonsDetected` — Simpson's paradox is **fabricated** in synthetic BCC
+- `simpsonsDetectedEmpirical` (`Materials/Analysis/Causal.lean`) — Simpson's paradox is **Refuted by formal check**: on the recorded NIST data, pooled and within-element correlations do not reverse sign. The paradox appeared only in synthetic data.
 - `pooledRBelowMinus08` — pooled correlation < −0.8
 - `pooledWithinRBelowMinus09` — within-group correlation < −0.9
 - `nGroupsEqualsSeven` — exactly 7 metal groups
@@ -105,7 +105,7 @@ These are not tests. They are **epistemic minimums**. A future commit cannot sil
 - `syntheticBccFailsNistIntegrity` — synthetic BCC fails NIST integrity check
 
 ### Validation: Audit (5 theorems)
-- `simpsonVerdictContainsFabricated` — audit string contains "FABRICATED"
+- `simpsonVerdictRefutedByFormalCheck` — audit string contains "Refuted by formal check"
 - `hyperRibbonVerdictContainsConsistent` — audit string contains "CONSISTENT"
 - `auditReportNonEmpty` — report renders
 - `simpsonPooledRNegative` — pooled correlation is negative

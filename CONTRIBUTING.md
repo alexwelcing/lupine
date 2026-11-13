@@ -1,6 +1,14 @@
 # Contributing to Lupine Science
 
-This repo is a public research program, not a product page. Contributions can be code, benchmarks, claims, refutations, proofs, or documentation. The only requirement is that the contribution is inspectable, reproducible, and connected to the evidence ledger.
+This repository holds the Lupine Science program record, historical evidence, the replication kit and `atlas-distill`. Active research engines and the maintained claim ledger live in [`alexwelcing/lupine-rhizo`](https://github.com/alexwelcing/lupine-rhizo); the Library reader lives in [`alexwelcing/lupine-ledger`](https://github.com/alexwelcing/lupine-ledger).
+
+What this repository accepts:
+
+- **Refutations and replications** of a published result, with the data and commands needed to check them.
+- **Fixes to retained code** (`atlas-distill/`, `python/`, `replication/`, `lean-spec/`).
+- **Corrections to documentation** that is wrong or out of date.
+
+New research work belongs in `lupine-rhizo`. Every contribution must be inspectable, reproducible, and connected to the evidence ledger.
 
 ## Kinds of contribution
 
@@ -16,15 +24,16 @@ This repo is a public research program, not a product page. Contributions can be
 ## Workflow
 
 1. **Open an issue or claim first** unless the change is trivial. Use `docs/templates/publication.md` for scientific claims.
-2. **Work in a feature branch**. The repo is local-only; do not force-push shared history.
+2. **Work in a feature branch**. Do not force-push shared history.
 3. **Run the focused gate** for every root you touch (see [`docs/ONBOARDING.md`](./docs/ONBOARDING.md)).
 4. **Update the ledger**:
    - `CHANGELOG.md` for user-visible changes and corrections.
    - `ROOTS.md` if you add, remove, or re-tag a root.
    - `docs/decisions/` if you change architecture or ownership.
-   - `docs/conjectures/ledger.md` if you change a claim's status.
+   - the maintained ledger in `lupine-rhizo` (`docs/conjectures/ledger.md`) if you change a claim's status; this repo's copy is a snapshot.
 5. **Keep the diff minimal**. Do not refactor unrelated code.
 6. **No `sorry` in proofs** except inside doc comments describing a separate conjecture project.
+7. **Never commit credentials, local paths, personal contact details or infrastructure identifiers.**
 
 ## Verification commands
 

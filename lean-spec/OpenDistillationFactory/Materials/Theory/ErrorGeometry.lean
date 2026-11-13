@@ -8,8 +8,9 @@ import Mathlib.Tactic.Ring
 # Error-Geometry Core: the participation-ratio gauge and ribbon/consensus decoupling
 
 Formal core of the projection-law program (see
-`prereg_functional_vs_architecture_2x2.md` and `results_4x2_report.md` in the
-research workspace).
+`replication/error-geometry/prereg_functional_vs_architecture_2x2.md` and the
+archived results report
+`archive/2026-06-cross-mlip-experiments/2026-06-11-functional-vs-architecture-4x2-results-report.md`).
 
 Model: an ensemble of fitted models shares a systematic error component (bias
 `b`, the perpendicular to the family's reachable set) plus isotropic fitting

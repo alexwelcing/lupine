@@ -44,14 +44,8 @@ build-rust:
     cargo build --workspace --manifest-path atlas-distill/Cargo.toml
 
 # --- DEPLOYMENT ---
-
-# Build everything and deploy to Google Cloud Run
-publish:
-    python atlas/deploy_full.py
-
-# Verify cloud endpoints
-verify-deploy:
-    python -c "import sys; sys.path.append('atlas'); import deploy_full; deploy_full.verify()"
+# The old viewer publish/verify-deploy recipes (atlas/deploy_full.py) were
+# removed on 2026-11-12: the LUPI viewer deploys from alexwelcing/Lupi.
 
 # Hostile-territory ops base: local tools, auth, diff, and workflow impact
 ops:

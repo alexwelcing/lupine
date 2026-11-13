@@ -200,7 +200,7 @@ npx remotion render --concurrency=1
 
 ## 📄 License
 
-Apache 2.0 — Same as LUPI
+MIT — same as the repository (see `../../../../LICENSE`).
 
 ---
 

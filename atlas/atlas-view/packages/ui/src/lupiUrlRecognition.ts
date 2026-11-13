@@ -28,7 +28,6 @@ const LUPI_HOSTS = new Set([
   'www.lupi.live',
   'lupinematerials.science',
   'www.lupinematerials.science',
-  'atlas-viewer-350452481649.us-central1.run.app',
 ]);
 
 const LOCAL_VIEWER_HOSTS = new Set(['localhost', '127.0.0.1', '[::1]']);

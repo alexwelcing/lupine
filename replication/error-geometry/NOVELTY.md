@@ -1,5 +1,27 @@
 # Novelty Charter — what Paper 2 may and may not claim
 
+> **Status update, 2026-11-11.** This charter (2026-06-11) predates the
+> preregistered follow-ups, and two of its rows are now retired:
+> - **C3** is no longer "THE headline claim" and is no longer framed as a law. The
+>   foundation-MLIP layer of the conservation–rotation statement failed its
+>   preregistered Round-2 test (H1/H2a kill conditions triggered: functional-
+>   clustering effect −0.14, permutation p = 0.13; H2b cosine 0.53 against 0.8;
+>   H4 conformal coverage 86.7% against 90%). It is an open hypothesis.
+> - **C4a**'s corollary "one correction vector repairs all" is retired. On the
+>   16-metal benchmark a shared bias direction transfers, but only with the
+>   held-out reference setting the correction size (an oracle ceiling); the best
+>   no-target estimator harmed 50 of 128 cases. In a separate preregistered
+>   cross-property study, raw cross-model mode cosines up to 0.96 did not exceed a
+>   coupling-aware null (95th percentile 0.98), so high cosines alone are not
+>   evidence of a shared error mode.
+> - The four MatPES models share one training set and QET is a TensorNet-family
+>   variant, so the 4×2 design is not four independent architectures.
+>
+> Sources: [TMS proceedings manuscript](https://github.com/alexwelcing/lupine-rhizo/blob/main/paper/tms2027-proceedings/manuscript.tex),
+> [ProjectionLaw_Round2.md](../../paper2/ProjectionLaw_Round2.md),
+> [conjecture ledger](https://github.com/alexwelcing/lupine-rhizo/blob/main/docs/conjectures/ledger.md). The table below is kept as
+> the historical charter.
+
 Synthesis of three adversarial prior-art sweeps (climate/forecasting/statistics;
 ML/ensembles/sloppy-models; materials/DFT/approximation theory), 2026-06-11.
 This document governs the claims language of the law paper. Rule: every claim

@@ -10,13 +10,12 @@ submitted, accepted, or published anywhere until that field changes.
 
 **Canonical source:** `immi-paper.tex` in this directory tracks the corrected
 post-audit manuscript (ecological-fallacy terminology per the Lean audit
-T111; Born-screened MLIP section; verified Table 2). The assembled
-submission package (cover letter, supplementary, compiled PDFs, submission
-log) lives in the research workspace's `immi_submission` packages.
+T111; Born-screened MLIP section; verified Table 2). Submission
+correspondence is not kept in this public repository.
 
 ## Review-Ready Advanced Drafts
 
-Advanced Kimi-imported manuscript drafts live in `review-ready/`. They are
+Advanced manuscript drafts imported in June 2026 live in `review-ready/`. They are
 marked **ready for review**, not submission-ready:
 
 - `review-ready/paper3-lean-verification.tex`
@@ -54,12 +53,24 @@ analysis); retained for provenance only — do not include in any build.
 
 ## Provenance and corrections
 
-The 2026-06-11 audit (see research workspace `SUBMISSION_LOG.md`) replaced
+The 2026-06-11 audit replaced
 Simpson's-paradox claims with ecological-fallacy terminology (the strict
 reversal criterion of Kievit et al. was not met; the Lean audit T111 caught
 the overstatement), applied Born stability screening to the foundation-MLIP
 section, and corrected Table 2. Any copy of this paper that uses the
 Simpson's-paradox title is superseded.
+
+Corrected 2026-11-12: the `atlas-distill` meta-analysis engine computed the
+random-effects Q and I² around the random-effects mean and built the
+prediction interval with the normal quantile (see `atlas-distill/README.md`,
+"Known issues"). With the fixed engine, the random-effects row of the
+meta-analysis table and the text report Q = 945 and I² = 98.5% (were 984 and
+98.6%) and a 95% prediction interval of [−0.73, +0.99] (was [−0.64, +0.99]),
+using a t quantile with k − 2 = 13 degrees of freedom. The pooled r (0.69),
+its CI [0.41, 0.85] and τ (0.80) are unchanged. `figures/fig4_forest.{png,pdf}`
+was regenerated. The compiled PDFs (`immi-paper.pdf`, `immi-paper-latest.pdf`,
+`immi-paper-local.pdf` and `library-site/src/immi_paper.pdf`) predate this
+correction and still show the old values until they are rebuilt.
 
 ## Citation
 

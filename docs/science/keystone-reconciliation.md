@@ -17,7 +17,7 @@
 > run. Read the rest of this file with those two corrections in mind.
 
 > After reading *"A Conditional Universality Theorem for Error Geometry in
-> Machine-Learning Interatomic Potentials"* (the 20-page PDF at repo root). The paper
+> Machine-Learning Interatomic Potentials"* (the 20-page PDF, now in `archive/reports/`). The paper
 > says several things that the repo's hyper-ribbon framing — and my own
 > `RibbonProjection.lean` and the live campaign — get wrong or assume away. Page/
 > assumption references are to that PDF.

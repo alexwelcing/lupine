@@ -1,5 +1,11 @@
 # Extraction Packet: `lupine.science`
 
+> **Status: completed.** lupine.science deploys from `alexwelcing/lupine-science`
+> (Cloudflare Pages). Step 9 below is done: the old `gcp/lupine-site-router/`
+> copy was archived to `archive/lupine-site-router/` on 2026-11-11, and its
+> deploy workflow is a manual-only retired guard. The rest of this packet is
+> the original plan, kept for history.
+
 **Goal:** extract the public Lupine Science start page into a tiny repo that is
 easy to run, deploy, and verify.
 

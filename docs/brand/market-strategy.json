@@ -1,10 +1,11 @@
 {
   "$schema": "https://lupine.science/schemas/lupine-market-strategy.v1.json",
-  "updated": "2026-05-29",
+  "updated": "2026-11-12",
+  "status": "Direction: where outreach could go. None of the collaboration shapes below is an offered product today; correction is a research question, not a product.",
   "category": "error geometry for interatomic potentials",
   "positioning": "Lupine Science is a lab-facing research corpus and evidence system for atomistic model trust.",
-  "publicPosture": "The front door should orient materials labs and research leaders. Investors and other observers should watch the evidence trail rather than receive a direct surface pitch.",
-  "winningThesis": "Own the trust question for interatomic potentials: what does this model get wrong, is the wrongness structured, can the evidence be inspected, and what correction target follows?",
+  "publicPosture": "The front door should orient materials labs and research leaders. Readers evaluating the program should start from the public evidence trail and the ledger.",
+  "winningThesis": "Answer the trust question for interatomic potentials: what does this model get wrong, against which references, can the evidence be inspected, and has any proposed correction held under a test set in advance?",
   "surfaces": {
     "Lupine Science": "Research program and public start page.",
     "LUPI": "Inspectable browser-native evidence surface.",
@@ -15,17 +16,17 @@
     {
       "name": "MLIP builders",
       "need": "Diagnostics beyond MAE/RMSE.",
-      "wedge": "MLIP Failure Geometry Audit"
+      "wedge": "Independent MLIP error audit on a material family, with gates set in advance"
     },
     {
       "name": "Computational materials labs",
       "need": "Publishable, inspectable evidence.",
-      "wedge": "Evidence Pack for a paper, dataset, or benchmark"
+      "wedge": "Evidence record for a paper, dataset, or benchmark"
     },
     {
       "name": "Materials R&D teams",
-      "need": "Risk reduction before trusting potentials in expensive decisions.",
-      "wedge": "Potential Trust Report for a material family"
+      "need": "Evidence on where a potential fails before relying on it in expensive decisions.",
+      "wedge": "Error report for a material family (descriptive; no correction claim)"
     },
     {
       "name": "Agentic research infrastructure teams",
@@ -36,12 +37,11 @@
   "productLadder": [
     "Public Library and LUPI gallery",
     "Shareable LUPI evidence links and publication templates",
-    "MLIP Failure Geometry Audit",
-    "Private evidence packs and correction-target reports",
+    "Independent MLIP error audit on a material family, with gates set in advance",
+    "Private evidence records",
     "Private glim-think ledger plus LUPI evidence workspace"
   ],
   "executionTemplates": [
-    "docs/templates/proof-pack.md",
     "docs/templates/mlip-failure-geometry-audit.md"
   ],
   "narrativePlays": [
@@ -49,7 +49,7 @@
     "Refutation as Trust",
     "Inspectable Evidence",
     "Agentic Search Capture",
-    "Proof-Pack Adoption"
+    "Evidence-Record Adoption"
   ],
   "metrics": [
     "Library report reads",

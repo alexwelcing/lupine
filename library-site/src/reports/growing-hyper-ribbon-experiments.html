@@ -3,8 +3,9 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="robots" content="noindex" />
 <title>Hyper-Ribbon · Round-2 Compute Log — Lupine Science</title>
-<meta name="description" content="Real computational experiments from the KIMI research brief, run on a local RTX A4500 host against the shipped framework and corpus. Honest results, surprises, and what's blocked." />
+<meta name="description" content="Computational experiments from an AI-drafted research brief, run on a local RTX A4500 host against the shipped framework and corpus. Honest results, surprises, and what's blocked." />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" />
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" crossorigin="anonymous" />
@@ -34,11 +35,12 @@
 </nav>
 
 <div class="wrap">
+<aside class="archive-note" role="note" style="position:relative;z-index:70;max-width:880px;margin:84px auto 8px;padding:14px 18px;border:1px solid #e8b45a;border-radius:10px;background:#1a1610;color:#f1e6cf;font:15px/1.55 Georgia,serif"><b>Archived 11 November 2026 · superseded.</b> This report series (May–June 2026) was written around the hyper-ribbon universality conjecture. That reading is no longer supported: the hyper-ribbon claim is Open and descriptive, “559 potentials” are 559 model–element tensors with 423 distinct KIM ids, and low participation ratios are partly rank-limited. Kept for the record; not for citation. Current status: <a style="color:#f5d48a" href="/#/read/conjecture-ledger">Hypothesis Ledger</a> · <a style="color:#f5d48a" href="https://lupine.science/corrections/">corrections log</a>.</aside>
 <header class="hero">
   <canvas id="ribbonBg" aria-hidden="true"></canvas>
   <div class="eyebrow"><span class="partbadge">Compute Log</span> Experiments actually run · 2026-05-19</div>
   <h1 class="title" id="heroTitle">Proving the Ribbon — <em>What the Machine Said</em></h1>
-  <p class="deck">The KIMI brief asked for six experiments. Four ran for real on a local <strong>RTX A4500</strong> host; two are honestly <em>blocked</em>. No number on this page is invented — including the ones that contradict the predictions.</p>
+  <p class="deck">An AI-drafted research brief asked for six experiments. Four ran for real on a local <strong>RTX A4500</strong> host; two are honestly <em>blocked</em>. No number on this page is invented — including the ones that contradict the predictions.</p>
   <div class="byline">
     <span><b>Host</b> Python 3.14 · numpy 2.3 · RTX A4500</span>
     <span><b>Framework</b> lupine_framework (shipped, 10/10 tests)</span>
@@ -165,18 +167,18 @@
 
 <section id="s6">
   <h2><span class="sec">Back</span>Integration requests &amp; what's next</h2>
-  <p>From running it, the concrete asks back to the framework team:</p>
+  <p>From running it, the concrete requests for the framework:</p>
   <ul>
     <li><strong>Cross-paradigm escape statistic.</strong> Exp 1 shows local ΔPR is the wrong instrument — add a first-class <code>detect_paradigm_shift(element)</code> that measures classical-centroid vs MLIP-centroid separation (direction + magnitude), not just cloud dimensionality.</li>
     <li><strong>Ni follow-up.</strong> Ni is the only ΔPR&gt;0.5 element on the subset (1.42→2.34). Either a genuine second escape or a small-n artifact — needs the full 559 corpus to disambiguate.</li>
-    <li><strong>Ship the full corpus.</strong> 8/15 elements were unscoreable here for lack of classical potentials. The methodology is proven; it needs the 559-potential matrix to produce the publishable 15×5 table.</li>
+    <li><strong>Ship the full corpus.</strong> 8/15 elements were unscoreable here for lack of classical potentials. The method runs end to end on this subset; it needs the full classical-potential matrix to produce the 15×5 table.</li>
     <li><strong><code>get_eigenvalues()</code> contract.</strong> Document that it returns the rank-truncated spectrum (tail = 0) so downstream error metrics compare on the retained rank — would have prevented my harness bug.</li>
   </ul>
   <p>Everything reproducible: <a class="rawlink" href="/reports/assets/run_experiments.py" target="_blank" rel="noopener">run_experiments.py ↗</a>, <a class="rawlink" href="/reports/assets/experiment_results.json" target="_blank" rel="noopener">experiment_results.json ↗</a>. The ribbon thesis stands at the <em>global</em> level (bounded PR across the paradigm jump, bounded under property growth); the <em>per-element</em> escape definition needs sharpening to cross-paradigm — which the framework can absorb.</p>
 </section>
 
 <nav class="seriesnav" aria-label="Series navigation">
-  <a href="/reports/growing-hyper-ribbon-part-2.html"><div class="lbl">← Part 2 of series</div><div class="ttl">Validated Framework</div></a>
+  <a href="/reports/growing-hyper-ribbon-part-2.html"><div class="lbl">← Part 2 of series</div><div class="ttl">First Tests</div></a>
   <a class="next" href="https://library.lupine.science/"><div class="lbl">Library →</div><div class="ttl">Research index</div></a>
 </nav>
 <footer>

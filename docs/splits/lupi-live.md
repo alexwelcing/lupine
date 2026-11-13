@@ -1,5 +1,9 @@
 # Extraction Packet: `lupi.live`
 
+> **Update 2026-11-12:** extracted. The viewer deploys from `alexwelcing/Lupi`.
+> The legacy `atlas/deploy_slim.py`, `deploy_full.py` and `deploy_optimized.py`
+> were removed from this repo; mentions below are historical.
+
 **Goal:** extract the LUPI viewer into a dedicated repo that owns the browser
 viewer, auth, saved views, molecule search, and agent-control surface.
 

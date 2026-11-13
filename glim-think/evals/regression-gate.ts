@@ -1,8 +1,9 @@
 /**
  * Eval regression gate + Evolver auto-revert backstop.
  *
- * The Evolver (evals/evolver.ts) auto-merges prompt/criteria variants on
- * green. This is the safety net: it compares the two most recent
+ * The Evolver (evals/evolver.ts) opens pull requests for prompt/criteria
+ * variants that win its A/B test; a human reviews and merges them. This is
+ * the safety net after merge: it compares the two most recent
  * ModelScorecard claims and fails CI if any model's mean pass-rate dropped
  * more than the threshold. With AUTO_REVERT=1, a detected regression also
  * reverts the most recent `evolver:auto` commit — but only if that commit

@@ -1,3 +1,5 @@
+> **Historical draft (June 2026), superseded.** This page describes a "universal correction operator" with "DFT-accurate" predictions that could replace model ensembles. Later preregistered tests did not support that: the elastic correction is an oracle ceiling, not a deployable correction, and Round 4 found no passing correction (see the repository README, "Results, with scope", and https://lupine.science/corrections/). Kept unchanged below as a record.
+
 # Lupine: The Universal Correction Operator for Atomistic Simulation
 
 ## A 1D Geometric Law Reduces Ensemble Compute Overhead by 80% with Zero Loss in Predictive Fidelity

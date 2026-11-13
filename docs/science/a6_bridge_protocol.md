@@ -238,7 +238,7 @@ This uses the three baseline result files in
 
 ## 12. References
 
-- Repo-root PDF: *A Conditional Universality Theorem for Error Geometry in
+- Archived PDF ([`archive/reports/`](../../archive/reports/A%20Conditional%20Universality%20Theorem%20for%20Error%20Geometry%20in%20Machine-Learning%20Interatomic%20Potentials.pdf)): *A Conditional Universality Theorem for Error Geometry in
   Machine-Learning Interatomic Potentials* — assumptions A0–A6, exact and
   perturbative tubular theorems, diagnostics table p. 14–15.
 - [`keystone-reconciliation.md`](./keystone-reconciliation.md)
