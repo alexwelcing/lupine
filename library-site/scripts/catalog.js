@@ -343,7 +343,7 @@ export const CATALOG = {
       id: 'readme',
       source: 'README.md',
       title: 'Lupine — Project README',
-      subtitle: 'The error-geometry program: what is established vs. conjectured, and where to start.',
+      subtitle: 'What this monorepo holds, its status, and where to start.',
       category: 'foundations',
       tags: ['overview'],
     },
